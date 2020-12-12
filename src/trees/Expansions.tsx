@@ -12,7 +12,7 @@ import {
 import withSingleContentLoad from '../hocs/withSingleContentLoad';
 import ExpansionCard from '../components/ExpansionCard';
 import GradeTable from '../components/GradeTable';
-import { TreeItem } from '../components/Tree';
+import Tree, { TreeItem } from '../components/Tree';
 
 type ExpansionsProps = {
   content: expansionDetailed,
@@ -36,30 +36,38 @@ const Expansions: React.FC<ExpansionsProps> = ({
   return (
     <>
       <GradeTable history={history} total={total} />
-      {cards.map(card => {
-        const {
-          id: cardId,
-          name: cardName,
-        } = card;
+      <Tree
+        children={(
+          <>
+            {cards.map(card => {
+              const {
+                id: cardId,
+                name: cardName,
+              } = card;
 
-        const id = `${expansionId}-${cardId}`;
+              const id = `${expansionId}-${cardId}`;
 
-        return (
-          <TreeItem
-            key={id}
-            id={id}
-            name={formatCardName({
-              ...card,
-              name: cardName,
+              return (
+                <TreeItem
+                  key={id}
+                  id={id}
+                  name={formatCardName({
+                    ...card,
+                    name: cardName,
+                  })}
+                >
+                  <ExpansionCard
+                    cardId={cardId}
+                    expansionId={expansionId}
+                  />
+                </TreeItem>
+              )
             })}
-          >
-            <ExpansionCard
-              cardId={cardId}
-              expansionId={expansionId}
-            />
-          </TreeItem>
-        )
-      })}
+          </>
+        )}
+        id={`${expansionId}-cards`}
+        name={`${cards.length} different cards (click to view)`}
+      />
     </>
   );
 }

@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import Box from '@material-ui/core/Box';
 import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -18,9 +19,6 @@ import {
 } from '../types';
 
 const Wrapper = styled.article({
-  padding: '16px 0',
-  width: 700,
-
   'thead': {
     background: '#f5f5f5',
 
@@ -51,27 +49,29 @@ const GradeTable: React.FC<GradeTableProps> = ({
   const historicHeadingStyle = { background: '#f2f2f2' };
 
   return (
-    <Wrapper>
-      <TableContainer component={Paper}>
-        <Table aria-label="Grades table." size="small">
-          <TableHead>
-            <TableRow>
-              <TableCell rowSpan={2} style={mainHeadingStyle}>Grade</TableCell>
-              <TableCell rowSpan={2} style={mainHeadingStyle}>Total Graded</TableCell>
-              <TableCell colSpan={3} style={{ borderLeft: '3px double #ccc', ...historicHeadingStyle }}>Cards graded in the past...</TableCell>
-            </TableRow>
-            <TableRow style={historicHeadingStyle}>
-              <TableCell>1 week</TableCell>
-              <TableCell>5 weeks</TableCell>
-              <TableCell>52 weeks</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            <TableData data={flattenGrades(total)} history={getGradeChangeOverTime(history)} />
-          </TableBody>
-        </Table>
-      </TableContainer>
-    </Wrapper>
+    <Box my={2}>
+      <Wrapper>
+        <TableContainer component={Paper}>
+          <Table aria-label="Grades table." size="small">
+            <TableHead>
+              <TableRow>
+                <TableCell rowSpan={2} style={mainHeadingStyle}>Grade</TableCell>
+                <TableCell rowSpan={2} style={mainHeadingStyle}>Total Graded</TableCell>
+                <TableCell colSpan={3} style={{ borderLeft: '3px double #ccc', ...historicHeadingStyle }}>Cards graded in the past...</TableCell>
+              </TableRow>
+              <TableRow style={historicHeadingStyle}>
+                <TableCell>1 week</TableCell>
+                <TableCell>5 weeks</TableCell>
+                <TableCell>52 weeks</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              <TableData data={flattenGrades(total)} history={getGradeChangeOverTime(history)} />
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </Wrapper>
+    </Box>
   );
 }
 

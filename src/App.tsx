@@ -4,6 +4,7 @@ import {
   Route,
 } from 'react-router-dom';
 import { createGlobalStyle } from 'styled-components';
+import Container from '@material-ui/core/Container';
 import Loading from './components/Loading';
 import ExpansionList from './pages/ExpansionList';
 import PokemonList from './pages/PokemonList';
@@ -66,7 +67,7 @@ function App() {
   }
 
   return (
-    <>
+    <Container maxWidth="md">
       <GlobalStyle />
       <Router>
         <Route exact path="/">
@@ -82,7 +83,7 @@ function App() {
           <TrainerList />
         </Route>
       </Router>
-    </>
+    </Container>
   );
 }
 

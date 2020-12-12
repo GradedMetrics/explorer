@@ -13,7 +13,6 @@ import {
 } from '../utils/strings';
 import Box from '@material-ui/core/Box';
 import AutoComplete from '../components/AutoComplete';
-import Tree from '../components/Tree';
 
 type ExpansionListProps = {
   content: expansion[],
@@ -41,11 +40,12 @@ const ExpansionList: React.FC<ExpansionListProps> = ({
       />
       {selectedExpansion ? (
         <Box mt={2}>
-          <Tree
+          <Expansions expansion={selectedExpansion} />
+          {/* <Tree
             id="expansion-tree"
             children={<Expansions expansion={selectedExpansion} />}
             name={formatExpansionName(selectedExpansion)}
-          />
+          /> */}
         </Box>
       ) : undefined}
     </Box>
