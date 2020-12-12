@@ -4,31 +4,70 @@ import {
 import {
   cardSimple,
   expansion,
+  expansionDetailed,
   pokemon,
   pokemonExpansion,
   rawPokemonData,
 } from '../types';
 import {
-  formatExpansionName,
-  formatYear,
-} from '../utils/strings';
+  sortExpansions,
+} from '../utils/data';
 
 const API_URL = 'https://api.gradedmetrics.com';
 
 /**
  * Fetch JSON data from the API.
- * @param file The name of the file to fetch (with path).
+ * @param {string} file The name of the file to fetch (with path).
+ * @param {boolean} [bypassCache=false] Whether to ignore cached data (used by `version`).
  */
-const fetch = async (file: string) => {
-  const cachedData = sessionStorage.getItem(file);
+const fetch = async (file: string, bypassCache: boolean = false) => {
+  if (!bypassCache) {
+    // Check for cached data and return that instead of calling the API (default behaviour).
+    const cachedData = sessionStorage.getItem(file);
 
-  if (cachedData) {
-    return JSON.parse(cachedData);
+    if (cachedData) {
+      return JSON.parse(cachedData);
+    }
   }
 
   const data = await window.fetch(`${API_URL}/${file}.json`).then(data => data.json());
   sessionStorage.setItem(file, JSON.stringify(data));
   return data;
+}
+
+/**
+ * Get the current data version.
+ * This API grabs the cached version (if it exists) and then fetches a fresh copy of version.json
+ * from the API. If the two are not in sync it means the locally-cached data is out of date and
+ * needs updating - it does this by clearing session storage.
+ */
+export const version = async () => {
+  const cachedVersion = sessionStorage.getItem('version');
+  const version = await fetch('version', true);
+
+  if (!cachedVersion) {
+    // There is no cached data, clear session storage anyway just to be safe.
+    sessionStorage.clear();
+    return version;
+  }
+
+  const {
+    v: cachedVersionNumber,
+  } = JSON.parse(cachedVersion);
+
+  const {
+    v: newVersionNumber,
+  } = version;
+
+  if (cachedVersionNumber === newVersionNumber) {
+    // The latest version matches the cached version, do nothing.
+    return version;
+  }
+
+  // The cached version is out of date, clear session storage.
+  console.log(`New version ${newVersionNumber} detected. Upgrading from ${cachedVersionNumber}...`);
+  sessionStorage.clear();
+  return version;
 }
 
 /**
@@ -41,11 +80,71 @@ export const keys = async () => {
 }
 
 /**
+ * Individual expansion data returned from /sets/{expansionId}.json.
+ * @param {string} expansionId The ID of the expansion to fetch.
+ */
+export const getExpansion = async (expansionId: string) => {
+  const response = await fetch(`sets/${expansionId}`);
+
+  const {
+    cards,
+    ...rest
+  } = mapKeys(response);
+
+  return {
+    cards: [...cards].sort((a, b) => {
+      const {
+        name: aName,
+        number: aNumber,
+        variants: aVariants = [],
+      } = a;
+      const {
+        name: bName,
+        number: bNumber,
+        variants: bVariants = [],
+      } = b;
+
+      if (aNumber && bNumber === undefined) {
+        return 1;
+      }
+
+      if (aNumber === undefined && bNumber) {
+        return -1;
+      }
+
+      if ((aNumber === undefined && bNumber === undefined) || (aNumber === bNumber)) {
+        if (aName === bName) {
+          return aVariants.toString() > bVariants.toString() ? 1 : -1;
+        }
+
+        return aName > bName ? 1 : -1;
+      }
+
+      // @ts-ignore: Object is possibly undefined
+      return aNumber > bNumber ? 1 : -1;
+    }),
+    ...rest,
+  } as expansionDetailed;
+}
+
+/**
+ * Individual expansion card data returned from /sets/{expansionId}/{cardId}.json.
+ * @param {string} expansionId The ID of the expansion (set) which the card belongs to.
+ * @param {string} cardId The ID of the card to fetch data for.
+ */
+export const getExpansionCard = async (expansionId: string, cardId: string) => {
+  const response = await fetch(`sets/${expansionId}/${cardId}`);
+  return mapKeys(response);
+}
+
+/**
  * Pokémon expansions (sets) returned from /sets.json.
  */
 export const getExpansions = async () => {
   const data = await fetch('sets');
-  return mapKeys(Object.values(data)) as expansion[];
+  return sortExpansions(
+    mapKeys(Object.values(data)).sort()
+   ) as expansion[];
 }
 
 /**
@@ -53,8 +152,8 @@ export const getExpansions = async () => {
  * relevant cards matching that Pokémon.
  * @param name The name of the Pokémon to fetch data for.
  */
-export const getPokemon = async (name: string) => {
-  const response = await fetch(`pokemon/${name}`);
+export const getPokemon = async (base: string, name: string) => {
+  const response = await fetch(`${base}/${name}`);
 
   if (!response) {
     throw new Error(`Could not load data for Pokémon: ${name}.`);
@@ -67,17 +166,6 @@ export const getPokemon = async (name: string) => {
   }
 
   const expansions = await getExpansions();
-
-  const sortByExpansionName = (a: expansion, b: expansion) => {
-    const aName = formatExpansionName(a);
-    const bName = formatExpansionName(b);
-
-    if (aName === bName) {
-      throw new Error(`Encountered two expansions with identical formatted names: ${aName}.`)
-    }
-
-    return aName < bName ? -1 : 1;
-  }
 
   return (expansions.reduce((arr: pokemonExpansion[], expansion: expansion) => {
     const cards = (mappedResponse.data as cardSimple[]).filter(({ set: expansionId }) => expansionId === expansion.id);
@@ -93,33 +181,7 @@ export const getPokemon = async (name: string) => {
         cards,
       }
     ];
-  }, []) as pokemonExpansion[]).sort(({ expansion: a }, { expansion: b }) => {
-    const aYear = formatYear(a.year);
-    const aYearAsNumber = Number(aYear.substr(0, 4));
-    const bYear = formatYear(b.year);
-    const bYearAsNumber = Number(bYear.substr(0, 4));
-
-    if (aYearAsNumber === bYearAsNumber) {
-      const aIsMultiYear = aYear.length === 9;
-      const bIsMultiYear = bYear.length === 9;
-
-      if (aIsMultiYear && bIsMultiYear) {
-        return sortByExpansionName(a, b);
-      }
-
-      if (aIsMultiYear) {
-        return 1;
-      }
-
-      if (bIsMultiYear) {
-        return -1;
-      }
-
-      return sortByExpansionName(a, b);
-    }
-
-    return aYearAsNumber < bYearAsNumber ? -1 : 1;
-  });
+  }, []) as pokemonExpansion[]);
 }
 
 /**
@@ -128,4 +190,12 @@ export const getPokemon = async (name: string) => {
 export const getPokemonList = async () => {
   const data = await fetch('pokemon');
   return (mapKeys(data) as pokemon[]).sort(({ number: a }, { number: b }) => Number(a) > Number(b) ? 1 : -1);
+}
+
+/**
+ * Pokémon returned from /pokemon.json.
+ */
+export const getTrainerList = async () => {
+  const data = await fetch('trainers');
+  return (mapKeys(data) as pokemon[]).sort(({ name: a }, { name: b }) => a > b ? 1 : -1);
 }

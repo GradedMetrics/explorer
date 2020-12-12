@@ -1,24 +1,26 @@
 import React from 'react';
-import Loading from '../components/Loading';
 import {
-  pokemon,
+  expansion,
 } from '../types';
 import withSingleContentLoad from '../hocs/withSingleContentLoad';
 import {
-  getPokemonList,
+  getExpansions,
 } from '../utils/api';
-import Pokemon from '../trees/Pokemon';
+import Expansions from '../trees/Expansions';
+import {
+  formatExpansionName,
+} from '../utils/strings';
 
 import TreeView from '@material-ui/lab/TreeView';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import TreeItem from '@material-ui/lab/TreeItem';
 
-type PokemonListProps = {
-  content: pokemon[],
+type ExpansionListProps = {
+  content: expansion[],
 }
 
-const PokemonList: React.FC<PokemonListProps> = ({
+const ExpansionList: React.FC<ExpansionListProps> = ({
   content,
 }) => {
   type TreeProps = {
@@ -40,23 +42,29 @@ const PokemonList: React.FC<PokemonListProps> = ({
   return (
     <TreeView
       defaultCollapseIcon={<ExpandMoreIcon />}
-      defaultExpanded={['root', 'Bulbasaur']}
+      defaultExpanded={['root']}
       defaultExpandIcon={<ChevronRightIcon />}
     >
       {renderTree({
-        children: content.map(({ name, number }) => ({
-          children: <Pokemon name={name} />,
-          id: name,
-          name: `${number} - ${name}`,
-        })),
+        children: content.map(expansion => {
+          const {
+            id,
+          } = expansion;
+
+          return {
+            children: <Expansions expansion={expansion} />,
+            id,
+            name: formatExpansionName(expansion),
+          }
+        }),
         id: 'root',
-        name: 'Pokémon',
+        name: 'Expansion',
       })}
     </TreeView>
   )
 }
 
 export default withSingleContentLoad(
-  PokemonList,
-  () => getPokemonList,
+  ExpansionList,
+  () => getExpansions,
 );
