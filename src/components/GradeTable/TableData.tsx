@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import Hidden from '@material-ui/core/Hidden';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 import Tooltip from '@material-ui/core/Tooltip';
@@ -179,7 +180,7 @@ const TableData: React.FC<TableDataProps> = ({
             }}
           >
             <TableCell
-              style={percentageOfTotal ? {
+              style={percentageOfTotal !== undefined ? {
                 background: `linear-gradient(to left, ${x} 0%, rgba(205, 238, 140, 0.34) calc(${percentageOfTotal}% - 2px), rgba(205, 238, 140, 0.66) calc(${percentageOfTotal}% - 2px), transparent ${percentageOfTotal}%, transparent 100%)`
               } : {
                 background: 'rgb(205, 238, 140, 0.34)',
@@ -221,9 +222,11 @@ const TableData: React.FC<TableDataProps> = ({
               ) : undefined}
             </TableCell>
             <GradeCount data={entry} total={total} />
-            <GradeCount data={weeklyData} isHistoric compare={entry} total={totalWeekly} />
-            <GradeCount data={monthlyData} isHistoric compare={entry} total={totalMonthly} />
-            <GradeCount data={yearlyData} isHistoric compare={entry} total={totalYearly} />
+            <Hidden xsDown>
+              <GradeCount data={weeklyData} isHistoric compare={entry} total={totalWeekly} />
+              <GradeCount data={monthlyData} isHistoric compare={entry} total={totalMonthly} />
+              <GradeCount data={yearlyData} isHistoric compare={entry} total={totalYearly} />
+            </Hidden>
           </TableRow>
         );
       })}
