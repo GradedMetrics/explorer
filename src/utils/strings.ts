@@ -45,16 +45,27 @@ export const formatCardSimpleName: ((card: cardSimple) => string) = ({
   return parts.join(' ');
 }
 
-export const formatExpansionName: ((expansion: expansion) => string) = ({
+type formatExpansionNameOptions = {
+  showYear?: boolean
+}
+export const formatExpansionName: ((
+  expansion: expansion,
+  options?: formatExpansionNameOptions
+) => string) = ({
   name,
   language,
   variant,
   year,
-}) => {
-  const parts = [
-    formatYear(year),
-    name
-  ];
+}, options) => {
+  const {
+    showYear = true,
+  } = (options || {});
+
+  const parts = [name];
+
+  if (showYear) {
+    parts.unshift(formatYear(year));
+  }
 
   if (language) {
     parts.push(`[${language}]`);

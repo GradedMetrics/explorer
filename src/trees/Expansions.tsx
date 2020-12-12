@@ -9,10 +9,10 @@ import {
 import {
   formatCardName,
 } from '../utils/strings';
-import TreeItem from '@material-ui/lab/TreeItem';
 import withSingleContentLoad from '../hocs/withSingleContentLoad';
 import ExpansionCard from '../components/ExpansionCard';
 import GradeTable from '../components/GradeTable';
+import { TreeItem } from '../components/Tree';
 
 type ExpansionsProps = {
   content: expansionDetailed,
@@ -42,13 +42,13 @@ const Expansions: React.FC<ExpansionsProps> = ({
           name: cardName,
         } = card;
 
-        const cardNodeId = `${expansionId}-${cardId}`;
+        const id = `${expansionId}-${cardId}`;
 
         return (
           <TreeItem
-            key={cardNodeId}
-            nodeId={cardNodeId}
-            label={formatCardName({
+            key={id}
+            id={id}
+            name={formatCardName({
               ...card,
               name: cardName,
             })}

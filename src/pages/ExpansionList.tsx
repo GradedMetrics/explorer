@@ -9,12 +9,11 @@ import {
 import Expansions from '../trees/Expansions';
 import {
   formatExpansionName,
+  formatYear,
 } from '../utils/strings';
-
-import TreeView from '@material-ui/lab/TreeView';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import TreeItem from '@material-ui/lab/TreeItem';
+import Box from '@material-ui/core/Box';
+import AutoComplete from '../components/AutoComplete';
+import Tree from '../components/Tree';
 
 type ExpansionListProps = {
   content: expansion[],
@@ -23,45 +22,34 @@ type ExpansionListProps = {
 const ExpansionList: React.FC<ExpansionListProps> = ({
   content,
 }) => {
-  type TreeProps = {
-    children: any,
-    id: any,
-    name: any,
+  const [selectedExpansion, setSelectedExpansion] = React.useState<expansion>();
+
+  const handleSelect = (expansion: expansion) => {
+    setSelectedExpansion(expansion);
   }
 
-  const renderTree: React.FC<TreeProps> = ({
-    children,
-    id: nodeId,
-    name,
-  }) => (
-    <TreeItem key={nodeId} nodeId={nodeId} label={name}>
-      {Array.isArray(children) ? children.map((node: any) => renderTree(node)) : children}
-    </TreeItem>
-  );
-
   return (
-    <TreeView
-      defaultCollapseIcon={<ExpandMoreIcon />}
-      defaultExpanded={['root']}
-      defaultExpandIcon={<ChevronRightIcon />}
-    >
-      {renderTree({
-        children: content.map(expansion => {
-          const {
-            id,
-          } = expansion;
-
-          return {
-            children: <Expansions expansion={expansion} />,
-            id,
-            name: formatExpansionName(expansion),
-          }
-        }),
-        id: 'root',
-        name: 'Expansion',
-      })}
-    </TreeView>
-  )
+    <Box p={1}>
+      <AutoComplete
+        id="expansion-select"
+        helperText="The expansion names are what PSA has chosen to display on their card labels and may not accurately represent a Pokémon expansion. Some work has been put in to try and correct this (i.e. the expansion PSA refers to as &ldquo;Pokemon Game&rdquo; will be found here by searching for &ldquo;Base Set&rdquo; instead)."
+        label="Search for an expansion... (e.g. Base Set)"
+        options={content}
+        optionFormatter={(expansion) => formatExpansionName(expansion, { showYear: false })}
+        optionGroupFormatter={({ year }) => formatYear(year)}
+        onChange={handleSelect}
+      />
+      {selectedExpansion ? (
+        <Box mt={2}>
+          <Tree
+            id="expansion-tree"
+            children={<Expansions expansion={selectedExpansion} />}
+            name={formatExpansionName(selectedExpansion)}
+          />
+        </Box>
+      ) : undefined}
+    </Box>
+  );
 }
 
 export default withSingleContentLoad(
