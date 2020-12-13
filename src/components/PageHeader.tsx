@@ -19,12 +19,14 @@ const PageHeader: React.FC<PageHeaderProps> = ({
       <Grid
         container
         alignItems="center"
+        justify="space-around"
         spacing={2}
       >
         <Grid
           item
           xs={12}
           sm={4}
+          md={3}
         >
           <Typography
             variant="h2"
@@ -39,7 +41,8 @@ const PageHeader: React.FC<PageHeaderProps> = ({
               variant="overline"
               style={{
                 marginLeft: 76,
-                marginTop: -16
+                marginTop: -16,
+                width: 130,
               }}
             >
               API v0.{version.v}.{version['@'].toString().substr(6, 16)}
@@ -49,9 +52,12 @@ const PageHeader: React.FC<PageHeaderProps> = ({
         <Grid
           item
           xs={12}
-          sm={7}
+          sm={8}
+          md={8}
         >
-          <Navigation />
+          <Box style={{ textAlign: 'right' }}>
+            <Navigation />
+          </Box>
         </Grid>
       </Grid>
     </Box>

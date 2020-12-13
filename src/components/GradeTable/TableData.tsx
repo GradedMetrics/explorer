@@ -16,6 +16,7 @@ import {
 type GradeCountProps = {
   compare?: flattenedGrade,
   data?: flattenedGrade,
+  historyDeductsFromTotal?: boolean,
   isHistoric?: boolean,
   total?: flattenedGrade,
 }
@@ -23,18 +24,21 @@ type GradeCountProps = {
 const GradeCount: React.FC<GradeCountProps> = ({
   compare,
   data,
+  historyDeductsFromTotal = true,
   isHistoric = false,
   total,
 }) => {
+  const noData = (
+    <TableCell
+      style={{
+        background: '#fdfdfd',
+        border: 'none',
+      }}
+    />
+  );
+
   if (!data) {
-    return (
-      <TableCell
-        style={{
-          background: '#fdfdfd',
-          border: 'none',
-        }}
-      />
-    );
+    return noData;
   }
 
   const getValueStyle = () => {
@@ -51,8 +55,8 @@ const GradeCount: React.FC<GradeCountProps> = ({
       }
     }
 
-    const totalValue = isHistoric ? -total.value : total.value;
-    const dataValue = isHistoric ? -data.value : data.value;
+    const totalValue = isHistoric && historyDeductsFromTotal ? -total.value : total.value;
+    const dataValue = isHistoric && historyDeductsFromTotal ? -data.value : data.value;
 
     const percentage = (Math.floor(((100 / totalValue) * dataValue) * 100) / 10000) / 3;
 
@@ -77,22 +81,29 @@ const GradeCount: React.FC<GradeCountProps> = ({
       value: current,
     } = compare;
 
+    const offset = historyDeductsFromTotal ? current + value : current - value;
+    const percentage = historyDeductsFromTotal ? 100 - ((100 / current) * offset) : (100 / current) * offset;
+
+    if (!historyDeductsFromTotal && compare.value - value === 0) {
+      return noData;
+    }
+
     content = (
       <>
-        {-value}
+        {(historyDeductsFromTotal ? -value : compare.value - value).toLocaleString()}
         {' '}
         <Typography variant="caption" color="textSecondary" style={totalRowStyle}>
-          ({current + value})
+          ({offset.toLocaleString()})
         </Typography>
         <Typography variant="caption" color="textSecondary" display="block" style={totalRowStyle}>
-          ({Math.floor((100 - ((100 / current) * (current + value))) * 100) / 100}%)
+          ({Math.floor(percentage * 100) / 100}%)
         </Typography>
       </>
     );
   } else {
     content = (
       <>
-        {value}
+        {value.toLocaleString()}
         <Typography variant="caption" color="textSecondary" display="block">
           ({percentageOfTotal !== undefined ? percentageOfTotal : '100'}%)
         </Typography>
@@ -119,11 +130,13 @@ const GradeCount: React.FC<GradeCountProps> = ({
 type TableDataProps = {
   data: flattenedGrade[],
   history: gradeChangeOverTime,
+  historyDeductsFromTotal: boolean,
 };
 
 const TableData: React.FC<TableDataProps> = ({
   data,
   history,
+  historyDeductsFromTotal,
 }) => {
   const {
     weekly,
@@ -218,9 +231,9 @@ const TableData: React.FC<TableDataProps> = ({
             </TableCell>
             <GradeCount data={entry} total={total} />
             <Hidden xsDown>
-              <GradeCount data={weeklyData} isHistoric compare={entry} total={totalWeekly} />
-              <GradeCount data={monthlyData} isHistoric compare={entry} total={totalMonthly} />
-              <GradeCount data={yearlyData} isHistoric compare={entry} total={totalYearly} />
+              <GradeCount data={weeklyData} historyDeductsFromTotal={historyDeductsFromTotal} isHistoric compare={entry} total={totalWeekly} />
+              <GradeCount data={monthlyData} historyDeductsFromTotal={historyDeductsFromTotal} isHistoric compare={entry} total={totalMonthly} />
+              <GradeCount data={yearlyData} historyDeductsFromTotal={historyDeductsFromTotal} isHistoric compare={entry} total={totalYearly} />
             </Hidden>
           </TableRow>
         );

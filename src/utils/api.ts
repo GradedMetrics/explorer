@@ -207,3 +207,8 @@ export const getTrainerList = async (): Promise<pokemon[]> => {
   const data = await fetch('trainers');
   return (mapKeys(data) as pokemon[]).sort(({ name: a }, { name: b }) => a > b ? 1 : -1);
 }
+
+export const getHistory = async (): Promise<expansion[]> => {
+  const data = await fetch('history');
+  return mapKeys(data.reverse());
+}

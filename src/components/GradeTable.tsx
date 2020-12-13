@@ -40,11 +40,13 @@ const Wrapper = styled.article({
 
 type GradeTableProps = {
   history: gradeHistory[],
+  historyDeductsFromTotal?: boolean,
   total: grades,
 }
 
 const GradeTable: React.FC<GradeTableProps> = ({
   history,
+  historyDeductsFromTotal = true,
   total,
 }) => {
   const mainHeadingStyle = { background: '#789839', color: '#fff' };
@@ -80,7 +82,11 @@ const GradeTable: React.FC<GradeTableProps> = ({
               </Hidden>
             </TableHead>
             <TableBody>
-              <TableData data={flattenGrades(total)} history={getGradeChangeOverTime(history)} />
+              <TableData
+                data={flattenGrades(total)}
+                history={getGradeChangeOverTime(history)}
+                historyDeductsFromTotal={historyDeductsFromTotal}
+              />
             </TableBody>
           </Table>
         </TableContainer>

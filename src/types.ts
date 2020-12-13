@@ -102,8 +102,10 @@ export type grades = {
 }
 
 export type gradeHistory = {
+  cards?: number
   date: number
   grades: grades
+  total?: number
 }
 
 export type pokemon = {

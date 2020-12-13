@@ -11,6 +11,7 @@ import PageHeader from './components/PageHeader';
 import ExpansionList from './pages/ExpansionList';
 import Home from './pages/Home';
 import PokemonList from './pages/PokemonList';
+import Stats from './pages/Stats';
 import TrainerList from './pages/TrainerList';
 import {
   keys,
@@ -23,6 +24,10 @@ import {
 const GlobalStyle = createGlobalStyle({
   'html, body': {
     margin: 0,
+  },
+
+  '.MuiTab-root': {
+    minWidth: 68,
   },
 
   '.Mui-expanded': {
@@ -91,6 +96,9 @@ function App() {
           </Route>
           <Route path="/trainers">
             <TrainerList />
+          </Route>
+          <Route path="/stats">
+            <Stats />
           </Route>
         </Box>
       </Router>
