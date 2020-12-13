@@ -6,7 +6,12 @@ import {
   formatYear,
 } from '../utils/strings';
 
-export const sortExpansions = (expansions: expansion[]) => {
+/**
+ * Sort expansions by year, name and variant.
+ * @param {expansion[]} expansions The expansions to sort.
+ * @returns {expansion[]} A sorted set of expansions.
+ */
+export const sortExpansions: ((expansions: expansion[]) => expansion[]) = (expansions) => {
   const sortByExpansionName = (a: expansion, b: expansion) => {
     const aName = formatExpansionName(a);
     const bName = formatExpansionName(b);

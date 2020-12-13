@@ -4,10 +4,12 @@ import {
 import {
   cardSimple,
   expansion,
+  expansionCard,
   expansionDetailed,
   pokemon,
   pokemonExpansion,
   rawPokemonData,
+  version as versionType,
 } from '../types';
 import {
   sortExpansions,
@@ -19,8 +21,9 @@ const API_URL = 'https://api.gradedmetrics.com';
  * Fetch JSON data from the API.
  * @param {string} file The name of the file to fetch (with path).
  * @param {boolean} [bypassCache=false] Whether to ignore cached data (used by `version`).
+ * @returns {Promise<any>} API data.
  */
-const fetch = async (file: string, bypassCache: boolean = false) => {
+const fetch = async (file: string, bypassCache: boolean = false): Promise<any> => {
   if (!bypassCache) {
     // Check for cached data and return that instead of calling the API (default behaviour).
     const cachedData = sessionStorage.getItem(file);
@@ -40,10 +43,11 @@ const fetch = async (file: string, bypassCache: boolean = false) => {
  * This API grabs the cached version (if it exists) and then fetches a fresh copy of version.json
  * from the API. If the two are not in sync it means the locally-cached data is out of date and
  * needs updating - it does this by clearing session storage.
+ * @returns {Promise<versionType>} Version API data.
  */
-export const version = async () => {
+export const version = async (): Promise<versionType> => {
   const cachedVersion = sessionStorage.getItem('version');
-  const version = await fetch('version', true);
+  const version = await fetch('version', true) as versionType;
 
   if (!cachedVersion) {
     // There is no cached data, clear session storage anyway just to be safe.
@@ -53,7 +57,7 @@ export const version = async () => {
 
   const {
     v: cachedVersionNumber,
-  } = JSON.parse(cachedVersion);
+  } = JSON.parse(cachedVersion) as versionType;
 
   const {
     v: newVersionNumber,
@@ -73,8 +77,9 @@ export const version = async () => {
 /**
  * API key mapping returned from /keys.json.
  * This caches the result in session storage to be used throughout the application.
+ * @returns {Promise<Object>} Keys API data.
  */
-export const keys = async () => {
+export const keys = async (): Promise<Object> => {
   const keys = await fetch('keys');
   return keys;
 }
@@ -82,8 +87,9 @@ export const keys = async () => {
 /**
  * Individual expansion data returned from /sets/{expansionId}.json.
  * @param {string} expansionId The ID of the expansion to fetch.
+ * @returns {Promise<expansionDetailed>} Detailed Expansion API data.
  */
-export const getExpansion = async (expansionId: string) => {
+export const getExpansion = async (expansionId: string): Promise<expansionDetailed> => {
   const response = await fetch(`sets/${expansionId}`);
 
   const {
@@ -131,28 +137,32 @@ export const getExpansion = async (expansionId: string) => {
  * Individual expansion card data returned from /sets/{expansionId}/{cardId}.json.
  * @param {string} expansionId The ID of the expansion (set) which the card belongs to.
  * @param {string} cardId The ID of the card to fetch data for.
+ * @returns {Promise<expansionCard>} Expansion->Card API data.
  */
-export const getExpansionCard = async (expansionId: string, cardId: string) => {
+export const getExpansionCard = async (expansionId: string, cardId: string): Promise<expansionCard> => {
   const response = await fetch(`sets/${expansionId}/${cardId}`);
-  return mapKeys(response);
+  return mapKeys(response as expansionCard);
 }
 
 /**
  * Pokémon expansions (sets) returned from /sets.json.
+ * @returns {Promise<expansion[]>} Expansions API data.
  */
-export const getExpansions = async () => {
+export const getExpansions = async (): Promise<expansion[]> => {
   const data = await fetch('sets');
   return sortExpansions(
     mapKeys(Object.values(data)).sort()
-   ) as expansion[];
+  ) as expansion[];
 }
 
 /**
  * Individual Pokémon data returned from /pokemon/{name}.json mapped as a list of expansions with
  * relevant cards matching that Pokémon.
- * @param name The name of the Pokémon to fetch data for.
+ * @param {"pokemon"|"trainers"} base The type of content to fetch.
+ * @param {string} name The name of the Pokémon content to fetch data for.
+ * @returns {Promise<pokemonExpansion[]>} Pokémon API data.
  */
-export const getPokemon = async (base: string, name: string) => {
+export const getPokemon = async (base: "pokemon" | "trainers", name: string): Promise<pokemonExpansion[]> => {
   const response = await fetch(`${base}/${name}`);
 
   if (!response) {
@@ -186,16 +196,18 @@ export const getPokemon = async (base: string, name: string) => {
 
 /**
  * Pokémon returned from /pokemon.json.
+ * @returns {Promise<pokemon[]>} Pokémon API data.
  */
-export const getPokemonList = async () => {
+export const getPokemonList = async (): Promise<pokemon[]> => {
   const data = await fetch('pokemon');
   return (mapKeys(data) as pokemon[]).sort(({ number: a }, { number: b }) => Number(a) > Number(b) ? 1 : -1);
 }
 
 /**
- * Pokémon returned from /pokemon.json.
+ * Pokémon returned from /trainers.json.
+ * @returns {Promise<pokemon[]>} Pokémon API data.
  */
-export const getTrainerList = async () => {
+export const getTrainerList = async (): Promise<pokemon[]> => {
   const data = await fetch('trainers');
   return (mapKeys(data) as pokemon[]).sort(({ name: a }, { name: b }) => a > b ? 1 : -1);
 }

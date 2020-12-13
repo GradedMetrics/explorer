@@ -5,6 +5,11 @@ import {
   pokemon,
 } from '../types';
 
+/**
+ * Generate a human-readable card name from a card object.
+ * @param {card} card The card object.
+ * @returns {string} The formatted card name.
+ */
 export const formatCardName: ((card: card) => string) = ({
   name,
   number,
@@ -27,6 +32,11 @@ export const formatCardName: ((card: card) => string) = ({
   return parts.join(' ');
 }
 
+/**
+ * Generate a human-readable card name from a simplified card object.
+ * @param {cardSimple} card The simplified card object.
+ * @returns {string} The formatted card name.
+ */
 export const formatCardSimpleName: ((card: cardSimple) => string) = ({
   name,
   number,
@@ -48,6 +58,13 @@ export const formatCardSimpleName: ((card: cardSimple) => string) = ({
 type formatExpansionNameOptions = {
   showYear?: boolean
 }
+
+/**
+ * Generate a human-readable expansion name from an expansion object.
+ * @param {expansion} expansion The expansion object.
+ * @param {formatExpansionNameOptions} options A collection of options.
+ * @returns {string} The formatted expansion name.
+ */
 export const formatExpansionName: ((
   expansion: expansion,
   options?: formatExpansionNameOptions
@@ -57,28 +74,33 @@ export const formatExpansionName: ((
   variant,
   year,
 }, options) => {
-  const {
-    showYear = true,
-  } = (options || {});
+    const {
+      showYear = true,
+    } = (options || {});
 
-  const parts = [name];
+    const parts = [name];
 
-  if (showYear) {
-    parts.unshift(formatYear(year));
+    if (showYear) {
+      parts.unshift(formatYear(year));
+    }
+
+    if (language) {
+      parts.push(`[${language}]`);
+    }
+
+
+    if (variant) {
+      parts.push(`(${variant})`);
+    }
+
+    return parts.join(' ');
   }
 
-  if (language) {
-    parts.push(`[${language}]`);
-  }
-
-
-  if (variant) {
-    parts.push(`(${variant})`);
-  }
-
-  return parts.join(' ');
-}
-
+/**
+ * Generate a human-readable Pokémon name from a Pokémon object.
+ * @param {pokemon} pokemon The Pokémon object.
+ * @returns {string} The formatted Pokémon name.
+ */
 export const formatPokemonName: ((pokemon: pokemon) => string) = ({
   language,
   name,
@@ -101,6 +123,11 @@ export const formatPokemonName: ((pokemon: pokemon) => string) = ({
   return parts.join(' ');
 }
 
+/**
+ * Convert short-form year values (e.g. 99, 01-03) to fully-qualified years.
+ * @param {string} year The short-form year.
+ * @returns {string} A fully-qualified formatted year.
+ */
 export const formatYear: ((year: string) => string) = (year) => {
   const getFullYear = (twoDigitYear: string) => {
     if (twoDigitYear.length === 4) {

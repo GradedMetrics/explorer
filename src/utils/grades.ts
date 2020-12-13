@@ -8,6 +8,7 @@ import {
 /**
  * This flattens the grades object to allow easy rendering onto a table.
  * @param {grades} grades The grades object to flatten.
+ * @returns {flattenedGrade[]} An array of flattened grades.
  */
 export const flattenGrades: ((grades: grades) => flattenedGrade[]) = ({
   1: psa1,
@@ -157,6 +158,7 @@ export const flattenGrades: ((grades: grades) => flattenedGrade[]) = ({
  * Note that the history array is only updated if data changes, meaning weeks may be missing. This
  * accounts for that.
  * @param {gradeHistory[]} history The grade history array to parse.
+ * @returns {gradeChangeOverTime} The grade change over time.
  */
 export const getGradeChangeOverTime: ((history: gradeHistory[]) => gradeChangeOverTime) = (history) => {
   if (!Array.isArray(history) || !history.length) {
@@ -170,8 +172,6 @@ export const getGradeChangeOverTime: ((history: gradeHistory[]) => gradeChangeOv
   const WEEK_MILLISECONDS = 604800000;
   const now = Number(new Date());
 
-  console.log(history);
-
   if (now - Number(history[0].date) <= (WEEK_MILLISECONDS * 2)) {
     // If the history array has been updated in the past week, we can assume the entries to represent the weeks leading up to this point.
     weekly = history[0].grades;
@@ -182,12 +182,8 @@ export const getGradeChangeOverTime: ((history: gradeHistory[]) => gradeChangeOv
     const latest = Number(history[0].date);
     const weeksSinceLastUpdate = Math.floor((now - latest) / WEEK_MILLISECONDS);
 
-    console.log(`Defaulting to older data, weeks since: ${weeksSinceLastUpdate}`)
-
     weekly = {};
-
     monthly = weeksSinceLastUpdate <= 5 ? history[5 - weeksSinceLastUpdate].grades : {};
-
     yearly = history[52 - weeksSinceLastUpdate]?.grades;
   }
 

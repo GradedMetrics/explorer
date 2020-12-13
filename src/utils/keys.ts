@@ -18,7 +18,8 @@ export const mapKeys = (data: Object | Object[]) => {
    * This function maps the keys from the passed-in object to those stored in the key mapping
    * object. If a key is not contained in the key mapping it will default to using the original key
    * from the passed-in object.
-   * @param object - The object to normalise.
+   * @param object The object to normalise.
+   * @returns {Object} The normalised object.
    */
   const normalise: (content: any) => any = (content) => {
     if (Array.isArray(content)) {
