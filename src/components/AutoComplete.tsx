@@ -4,8 +4,10 @@
  */
 
 import React from 'react';
+import InputAdornment from '@material-ui/core/InputAdornment';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
+import SearchIcon from '@material-ui/icons/Search';
 import MUIAutocomplete from '@material-ui/lab/Autocomplete';
 import match from 'autosuggest-highlight/match';
 import parse from 'autosuggest-highlight/parse';
@@ -19,6 +21,7 @@ type AutoCompleteProps = {
   optionGroupFormatter?: (option: any) => string
   options: any[]
   onChange: (selectedOption: any) => void
+  placeholder?: string
 }
 
 const AutoComplete: React.FC<AutoCompleteProps> = ({
@@ -30,6 +33,7 @@ const AutoComplete: React.FC<AutoCompleteProps> = ({
   optionFormatter,
   optionGroupFormatter,
   onChange,
+  placeholder,
 }) => {
   let defaultInputValue;
 
@@ -39,6 +43,8 @@ const AutoComplete: React.FC<AutoCompleteProps> = ({
 
   const [inputValue, setInputValue] = React.useState<string>(defaultInputValue || '');
   const [value, setValue] = React.useState<string>(defaultSelectedOption);
+
+  console.log(placeholder)
 
   return (
     <MUIAutocomplete
@@ -60,6 +66,15 @@ const AutoComplete: React.FC<AutoCompleteProps> = ({
           helperText={helperText}
           label={label}
           variant="outlined"
+          InputProps={{
+            ...params.InputProps,
+            placeholder,
+            startAdornment: (
+              <InputAdornment position="start">
+                <SearchIcon />
+              </InputAdornment>
+            ),
+          }}
         />
       )}
       renderOption={(option, { inputValue }) => {

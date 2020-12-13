@@ -1,8 +1,8 @@
 import React from 'react';
-import styled from 'styled-components';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
+import Navigation from './Navigation';
 import {
   version,
 } from '../types';
@@ -24,7 +24,7 @@ const PageHeader: React.FC<PageHeaderProps> = ({
         <Grid
           item
           xs={12}
-          md={4}
+          sm={4}
         >
           <Typography
             variant="h2"
@@ -49,17 +49,9 @@ const PageHeader: React.FC<PageHeaderProps> = ({
         <Grid
           item
           xs={12}
-          md={8}
+          sm={7}
         >
-          <Typography
-            align="right"
-            display="block"
-            variant="caption"
-          >
-            This app aims to add quality of life improvements to <a href="https://psacard.com" rel="noreferrer noopener">PSA</a>'s population report.
-            {' '}
-            It is not associated with PSA in any way. Have a suggestion or a problem? Message <a href="https://instagram.com/pichucollector" rel="noreferrer noopener">@pichucollector</a> about it on Instagram.
-          </Typography>
+          <Navigation />
         </Grid>
       </Grid>
     </Box>

@@ -2,13 +2,15 @@ import {
   mapKeys,
 } from './keys';
 import {
+  cardExpanded,
   cardSimple,
   expansion,
   expansionCard,
   expansionDetailed,
+  mappedPokemonData,
   pokemon,
+  pokemonData,
   pokemonExpansion,
-  rawPokemonData,
   version as versionType,
 } from '../types';
 import {
@@ -160,16 +162,16 @@ export const getExpansions = async (): Promise<expansion[]> => {
  * relevant cards matching that Pokémon.
  * @param {"pokemon"|"trainers"} base The type of content to fetch.
  * @param {string} name The name of the Pokémon content to fetch data for.
- * @returns {Promise<pokemonExpansion[]>} Pokémon API data.
+ * @returns {Promise<mappedPokemonData>} Pokémon API data.
  */
-export const getPokemon = async (base: "pokemon" | "trainers", name: string): Promise<pokemonExpansion[]> => {
+export const getPokemon = async (base: "pokemon" | "trainers", name: string): Promise<mappedPokemonData> => {
   const response = await fetch(`${base}/${name}`);
 
   if (!response) {
     throw new Error(`Could not load data for Pokémon: ${name}.`);
   }
 
-  const mappedResponse = mapKeys(response) as rawPokemonData;
+  const mappedResponse = mapKeys(response) as pokemonData;
 
   if (!mappedResponse?.data) {
     throw new Error(`Pokémon data is in unexpected format?`);
@@ -177,21 +179,15 @@ export const getPokemon = async (base: "pokemon" | "trainers", name: string): Pr
 
   const expansions = await getExpansions();
 
-  return (expansions.reduce((arr: pokemonExpansion[], expansion: expansion) => {
-    const cards = (mappedResponse.data as cardSimple[]).filter(({ set: expansionId }) => expansionId === expansion.id);
+  const mappedCardData = mappedResponse.data.map((cardData: cardSimple) => ({
+    ...cardData,
+    expansion: expansions.find(({ id }) => id === cardData.set)
+  })) as cardExpanded[];
 
-    if (!cards.length) {
-      return arr;
-    }
-
-    return [
-      ...arr,
-      {
-        expansion,
-        cards,
-      }
-    ];
-  }, []) as pokemonExpansion[]);
+  return {
+    ...mappedResponse,
+    data: mappedCardData,
+  };
 }
 
 /**

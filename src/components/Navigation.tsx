@@ -4,17 +4,20 @@ import {
 } from 'react-router-dom';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
+import FaceIcon from '@material-ui/icons/Face';
+import LocalFloristIcon from '@material-ui/icons/LocalFlorist';
+import StyleIcon from '@material-ui/icons/Style';
 import Loading from './Loading';
 
 const pages = [{
   path: '/',
-  text: 'Home',
+  text: <><LocalFloristIcon /> Home</>,
 }, {
   path: '/expansions',
-  text: 'Expansions',
+  text: <><StyleIcon /> Expansions</>,
 }, {
   path: '/pokemon',
-  text: 'Pokémon',
+  text: <><FaceIcon /> Pokémon</>,
 }];
 
 const Navigation = () => {
@@ -55,15 +58,17 @@ const Navigation = () => {
 
   return (
     <Tabs
+      centered
       value={value}
       indicatorColor="primary"
       textColor="primary"
       onChange={(event, newValue) => setValue(newValue)}
       aria-label="disabled tabs example"
+      variant="fullWidth"
     >
       {pages.map(({ text }, index) => (
         <Tab
-          key={`tab-${text}`}
+          key={`tab-${index}`}
           label={text}
           value={index}
         />

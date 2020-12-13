@@ -7,7 +7,6 @@ import { createGlobalStyle } from 'styled-components';
 import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container';
 import Loading from './components/Loading';
-import Navigation from './components/Navigation';
 import PageHeader from './components/PageHeader';
 import ExpansionList from './pages/ExpansionList';
 import Home from './pages/Home';
@@ -78,9 +77,8 @@ function App() {
   return (
     <Container maxWidth="md">
       <GlobalStyle />
-      <PageHeader version={apiVersion} />
       <Router>
-        <Navigation />
+        <PageHeader version={apiVersion} />
         <Box my={3}>
           <Route exact path="/">
             <Home />

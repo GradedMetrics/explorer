@@ -32,20 +32,33 @@ export const formatCardName: ((card: card) => string) = ({
   return parts.join(' ');
 }
 
+type formatCardSimpleNameOptions = {
+  defaultName?: string
+  numberParens?: boolean
+}
+
 /**
  * Generate a human-readable card name from a simplified card object.
  * @param {cardSimple} card The simplified card object.
  * @returns {string} The formatted card name.
  */
-export const formatCardSimpleName: ((card: cardSimple) => string) = ({
+export const formatCardSimpleName: ((
+  card: cardSimple,
+  options?: formatCardSimpleNameOptions,
+) => string) = ({
   name,
   number,
   variant,
-}) => {
-  const parts = [name];
+}, options) => {
+  const {
+    defaultName,
+    numberParens = true,
+  } = (options || {});
+
+  const parts = [name || defaultName];
 
   if (number) {
-    parts.push(`(${number})`);
+    parts.push(numberParens ? `(${number})` : number);
   }
 
   if (Array.isArray(variant)) {

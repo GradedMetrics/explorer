@@ -71,7 +71,7 @@ const ExpansionList: React.FC<ExpansionListProps> = ({
 
     const newHash = urlFriendlyExpansionName(selectedExpansion);
 
-    if (hash === newHash) {
+    if (hash.substr(1, 64) === newHash) {
       return;
     }
 
@@ -97,18 +97,14 @@ const ExpansionList: React.FC<ExpansionListProps> = ({
         helperText="The expansion names are what PSA has chosen to display on their card labels and may not accurately represent a Pokémon expansion. Some work has been put in to try and correct this (i.e. the expansion PSA refers to as &ldquo;Pokemon Game&rdquo; will be found here by searching for &ldquo;Base Set&rdquo; instead)."
         label="Search for an expansion... (e.g. Base Set)"
         options={content}
-        optionFormatter={(expansion) => formatExpansionName(expansion, { showYear: false })}
+        optionFormatter={(expansion) => formatExpansionName(expansion)}
         optionGroupFormatter={({ year }) => formatYear(year)}
         onChange={handleSelect}
+        placeholder="Fossil or 2009 or Shadowless or Dutch or Foil Pack or Sticker ..."
       />
       {!isLoading && selectedExpansion ? (
         <Box mt={2}>
           <Expansions expansion={selectedExpansion} />
-          {/* <Tree
-            id="expansion-tree"
-            children={<Expansions expansion={selectedExpansion} />}
-            name={formatExpansionName(selectedExpansion)}
-          /> */}
         </Box>
       ) : undefined}
     </>

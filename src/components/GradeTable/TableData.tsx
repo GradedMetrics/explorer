@@ -3,8 +3,8 @@ import styled from 'styled-components';
 import Hidden from '@material-ui/core/Hidden';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
-import Tooltip from '@material-ui/core/Tooltip';
 import Typography from '@material-ui/core/Typography';
+import Tooltip from '../Tooltip';
 import {
   flattenedGrade,
   gradeChangeOverTime,
@@ -12,13 +12,6 @@ import {
 import {
   flattenGrades,
 } from '../../utils/grades';
-
-const Abbr = styled.abbr({
-  borderBottom: '1px dotted #ccc',
-  cursor: 'help',
-  display: 'inline-block',
-  textDecoration: 'none',
-});
 
 type GradeCountProps = {
   compare?: flattenedGrade,
@@ -112,7 +105,10 @@ const GradeCount: React.FC<GradeCountProps> = ({
       align="right"
       style={{
         ...(total ? getValueStyle() : undefined),
-        ...(!isHistoric ? { borderRight: '3px double #ccc' } : undefined),
+        ...(!isHistoric ? {
+          background: percentageOfTotal ? `linear-gradient(to right, rgba(205, 238, 140, ${percentageOfTotal / 100 / 3}) 0%, rgba(205, 238, 140, 0.34) calc(${percentageOfTotal}% - 2px), rgba(205, 238, 140, 0.66) calc(${percentageOfTotal}% - 2px), transparent ${percentageOfTotal}%, transparent 100%)` : 'transparent',
+          borderRight: '3px double #ccc'
+        } : undefined),
       }}
     >
       {content}
@@ -168,7 +164,7 @@ const TableData: React.FC<TableDataProps> = ({
         const monthlyData = flattenedMonthlyGrades.find(historyMatch);
         const yearlyData = flattenedYearlyGrades.find(historyMatch);
 
-        const x = name === 'Total' ? undefined : `rgba(205, 238, 140, ${percentageOfTotal / 100 / 3})`;
+        const percentageBackground = name === 'Total' ? undefined : `rgba(205, 238, 140, ${percentageOfTotal / 100 / 3})`;
 
         return (
           <TableRow
@@ -180,8 +176,10 @@ const TableData: React.FC<TableDataProps> = ({
             }}
           >
             <TableCell
-              style={percentageOfTotal !== undefined ? {
-                background: `linear-gradient(to left, ${x} 0%, rgba(205, 238, 140, 0.34) calc(${percentageOfTotal}% - 2px), rgba(205, 238, 140, 0.66) calc(${percentageOfTotal}% - 2px), transparent ${percentageOfTotal}%, transparent 100%)`
+              style={name === 'Total' ? {
+                background: 'rgba(205, 238, 140, 0.34)',
+              } : percentageOfTotal !== undefined ? {
+                background: `linear-gradient(to left, ${percentageBackground} 0%, rgba(205, 238, 140, 0.34) calc(${percentageOfTotal}% - 2px), rgba(205, 238, 140, 0.66) calc(${percentageOfTotal}% - 2px), transparent ${percentageOfTotal}%, transparent 100%)`
               } : {
                 background: 'rgb(205, 238, 140, 0.34)',
                 borderBottom: '1px solid #ccc',
@@ -194,7 +192,7 @@ const TableData: React.FC<TableDataProps> = ({
                   {' '}
                   <Tooltip
                     placement="right"
-                    title={(
+                    text={(
                       <>
                         Has a qualifier.
                         <br />
@@ -203,12 +201,9 @@ const TableData: React.FC<TableDataProps> = ({
                         PSA's population report does not differentiate between these.
                       </>
                     )}
+                    variant="caption"
                   >
-                    <Typography variant="caption" color="textPrimary">
-                      <Abbr>
-                        with qualifier
-                      </Abbr>
-                    </Typography>
+                    with qualifier
                   </Tooltip>
                 </>
               ) : undefined}
