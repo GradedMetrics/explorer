@@ -10,6 +10,7 @@ import Loading from './components/Loading';
 import Navigation from './components/Navigation';
 import PageHeader from './components/PageHeader';
 import ExpansionList from './pages/ExpansionList';
+import Home from './pages/Home';
 import PokemonList from './pages/PokemonList';
 import TrainerList from './pages/TrainerList';
 import {
@@ -64,13 +65,8 @@ function App() {
      */
     (async() => {
       const versionData = await version();
-      const {
-        v: versionNumber,
-        '@': versionDate,
-      } = versionData;
-  
-      await keys();
       setAPIVersion(versionData);
+      await keys();
       setLoading(false);
     })();
   }, []);
@@ -85,9 +81,9 @@ function App() {
       <PageHeader version={apiVersion} />
       <Router>
         <Navigation />
-        <Box p={1}>
+        <Box my={3}>
           <Route exact path="/">
-            Home!
+            <Home />
           </Route>
           <Route path="/expansions">
             <ExpansionList />
