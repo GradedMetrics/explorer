@@ -90,7 +90,7 @@ const ExpansionList: React.FC<ExpansionListProps> = ({
   }
 
   return (
-    <Box p={1}>
+    <>
       <AutoComplete
         defaultSelectedOption={selectedExpansion}
         id="expansion-select"
@@ -111,7 +111,7 @@ const ExpansionList: React.FC<ExpansionListProps> = ({
           /> */}
         </Box>
       ) : undefined}
-    </Box>
+    </>
   );
 }
 

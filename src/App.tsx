@@ -4,8 +4,11 @@ import {
   Route,
 } from 'react-router-dom';
 import { createGlobalStyle } from 'styled-components';
+import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container';
 import Loading from './components/Loading';
+import Navigation from './components/Navigation';
+import PageHeader from './components/PageHeader';
 import ExpansionList from './pages/ExpansionList';
 import PokemonList from './pages/PokemonList';
 import TrainerList from './pages/TrainerList';
@@ -13,8 +16,15 @@ import {
   keys,
   version,
 } from './utils/api';
+import {
+  version as versionType,
+} from './types';
 
 const GlobalStyle = createGlobalStyle({
+  'html, body': {
+    margin: 0,
+  },
+
   '.Mui-expanded': {
     '& > div > .MuiTreeItem-label': {
       fontWeight: 'bold',
@@ -43,6 +53,7 @@ const GlobalStyle = createGlobalStyle({
 });
 
 function App() {
+  const [apiVersion, setAPIVersion] = React.useState<versionType>();
   const [loading, setLoading] = React.useState<boolean>(true);
 
   React.useEffect(() => {
@@ -52,12 +63,14 @@ function App() {
      * minified keys for the sake of saving bandwidth.
      */
     (async() => {
+      const versionData = await version();
       const {
         v: versionNumber,
         '@': versionDate,
-      } = await version();
-      console.log(`Version ${versionNumber} (${new Date(versionDate).toISOString()})`)
+      } = versionData;
+  
       await keys();
+      setAPIVersion(versionData);
       setLoading(false);
     })();
   }, []);
@@ -69,19 +82,23 @@ function App() {
   return (
     <Container maxWidth="md">
       <GlobalStyle />
+      <PageHeader version={apiVersion} />
       <Router>
-        <Route exact path="/">
-          Home!
-        </Route>
-        <Route path="/expansions">
-          <ExpansionList />
-        </Route>
-        <Route path="/pokemon">
-          <PokemonList />
-        </Route>
-        <Route path="/trainers">
-          <TrainerList />
-        </Route>
+        <Navigation />
+        <Box p={1}>
+          <Route exact path="/">
+            Home!
+          </Route>
+          <Route path="/expansions">
+            <ExpansionList />
+          </Route>
+          <Route path="/pokemon">
+            <PokemonList />
+          </Route>
+          <Route path="/trainers">
+            <TrainerList />
+          </Route>
+        </Box>
       </Router>
     </Container>
   );
