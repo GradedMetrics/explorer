@@ -111,3 +111,8 @@ export type pokemonExpansion = {
   expansion: expansion,
   cards: cardSimple[],
 }
+
+export type version = {
+  v: number,
+  '@': number,
+}

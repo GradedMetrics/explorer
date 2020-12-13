@@ -11,8 +11,9 @@ import match from 'autosuggest-highlight/match';
 import parse from 'autosuggest-highlight/parse';
 
 type AutoCompleteProps = {
+  defaultSelectedOption?: any
   id: string
-  helperText?:  string,
+  helperText?:  string
   label: string
   optionFormatter: (option: any) => string
   optionGroupFormatter?: (option: any) => string
@@ -21,6 +22,7 @@ type AutoCompleteProps = {
 }
 
 const AutoComplete: React.FC<AutoCompleteProps> = ({
+  defaultSelectedOption,
   id,
   helperText,
   label,
@@ -29,6 +31,15 @@ const AutoComplete: React.FC<AutoCompleteProps> = ({
   optionGroupFormatter,
   onChange,
 }) => {
+  let defaultInputValue;
+
+  if (defaultSelectedOption) {
+    defaultInputValue = optionFormatter(defaultSelectedOption);
+  }
+
+  const [inputValue, setInputValue] = React.useState<string>(defaultInputValue || '');
+  const [value, setValue] = React.useState<string>(defaultSelectedOption);
+
   return (
     <MUIAutocomplete
       autoHighlight
@@ -36,8 +47,13 @@ const AutoComplete: React.FC<AutoCompleteProps> = ({
       groupBy={optionGroupFormatter}
       id={id}
       includeInputInList
+      inputValue={inputValue}
       options={options}
-      onChange={(event, selectedOption) => onChange(selectedOption)}
+      onChange={(event, selectedOption) => {
+        setValue(selectedOption);
+        onChange(selectedOption);
+      }}
+      onInputChange={(event, value) => setInputValue(value)}
       renderInput={(params: any) => (
         <TextField
           {...params}
@@ -65,6 +81,7 @@ const AutoComplete: React.FC<AutoCompleteProps> = ({
           </div>
         );
       }}
+      value={value}
     />
   );
 }

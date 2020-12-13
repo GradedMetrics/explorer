@@ -14,7 +14,7 @@ import withSingleContentLoad from '../hocs/withSingleContentLoad';
 import ExpansionCard from '../components/ExpansionCard';
 
 type PokemonExpansionsProps = {
-  base?: string,
+  base?: "pokemon" | "trainers",
   content: pokemonExpansion[],
   name: string,
 }
