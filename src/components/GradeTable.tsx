@@ -10,7 +10,10 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Typography from '@material-ui/core/Typography';
-import TableData from './GradeTable/TableData';
+import TableData, {
+  historicBackground,
+  totalBackground,
+} from './GradeTable/TableData';
 import {
   flattenGrades,
   getGradeChangeOverTime,
@@ -19,6 +22,11 @@ import {
   gradeHistory,
   grades,
 } from '../types';
+
+export {
+  historicBackground,
+  totalBackground,
+}
 
 const Wrapper = styled.article({
   'thead': {
@@ -74,10 +82,10 @@ const GradeTable: React.FC<GradeTableProps> = ({
                 </Hidden>
               </TableRow>
               <Hidden xsDown>
-                <TableRow style={historicHeadingStyle}>
-                  <TableCell>1 week</TableCell>
-                  <TableCell>5 weeks</TableCell>
-                  <TableCell>52 weeks</TableCell>
+                <TableRow>
+                  <TableCell style={historicHeadingStyle}>1 week</TableCell>
+                  <TableCell style={historicHeadingStyle}>5 weeks</TableCell>
+                  <TableCell style={historicHeadingStyle}>52 weeks</TableCell>
                 </TableRow>
               </Hidden>
             </TableHead>

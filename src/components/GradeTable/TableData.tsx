@@ -13,6 +13,9 @@ import {
   flattenGrades,
 } from '../../utils/grades';
 
+export const historicBackground = `255, 246, 143`;
+export const totalBackground = `205, 238, 140`;
+
 type GradeCountProps = {
   compare?: flattenedGrade,
   data?: flattenedGrade,
@@ -48,7 +51,7 @@ const GradeCount: React.FC<GradeCountProps> = ({
 
     if (data.name === 'Total') {
       return {
-        background: isHistoric ? `rgba(255, 255, 150, 0.34)` : `rgba(205, 238, 140, 0.34)`,
+        background: isHistoric ? `rgba(${historicBackground}, 0.34)` : `rgba(${totalBackground}, 0.34)`,
         borderLeft: isHistoric ? '1px solid #e0e0e0' : undefined,
         borderBottom: '1px solid #ccc',
         fontWeight: 700,
@@ -59,9 +62,10 @@ const GradeCount: React.FC<GradeCountProps> = ({
     const dataValue = isHistoric && historyDeductsFromTotal ? -data.value : data.value;
 
     const percentage = (Math.floor(((100 / totalValue) * dataValue) * 100) / 10000) / 3;
+    console.log(totalValue, dataValue, percentage);
 
     return {
-      background: isHistoric ? `rgba(255, 255, 150, ${percentage})` : `rgba(205, 238, 140, ${percentage})`,
+      background: isHistoric ? `rgba(${historicBackground}, ${percentage})` : `rgba(${totalBackground}, ${percentage})`,
       borderLeft: isHistoric ? '1px solid #e0e0e0' : undefined,
       borderTop: isHistoric ? '1px solid #e0e0e0' : undefined,
     };
@@ -117,7 +121,7 @@ const GradeCount: React.FC<GradeCountProps> = ({
       style={{
         ...(total ? getValueStyle() : undefined),
         ...(!isHistoric ? {
-          background: percentageOfTotal ? `linear-gradient(to right, rgba(205, 238, 140, ${percentageOfTotal / 100 / 3}) 0%, rgba(205, 238, 140, 0.34) calc(${percentageOfTotal}% - 2px), rgba(205, 238, 140, 0.66) calc(${percentageOfTotal}% - 2px), transparent ${percentageOfTotal}%, transparent 100%)` : 'transparent',
+          background: percentageOfTotal ? `linear-gradient(to right, rgba(${totalBackground}, ${percentageOfTotal / 100 / 3}) 0%, rgba(${totalBackground}, 0.34) calc(${percentageOfTotal}% - 2px), rgba(${totalBackground}, 0.66) calc(${percentageOfTotal}% - 2px), transparent ${percentageOfTotal}%, transparent 100%)` : `rgba(${totalBackground}, 0.34)`,
           borderRight: '3px double #ccc'
         } : undefined),
       }}
@@ -177,7 +181,7 @@ const TableData: React.FC<TableDataProps> = ({
         const monthlyData = flattenedMonthlyGrades.find(historyMatch);
         const yearlyData = flattenedYearlyGrades.find(historyMatch);
 
-        const percentageBackground = name === 'Total' ? undefined : `rgba(205, 238, 140, ${percentageOfTotal / 100 / 3})`;
+        const percentageBackground = name === 'Total' ? undefined : `rgba(${totalBackground}, ${percentageOfTotal / 100 / 3})`;
 
         return (
           <TableRow
@@ -190,11 +194,11 @@ const TableData: React.FC<TableDataProps> = ({
           >
             <TableCell
               style={name === 'Total' ? {
-                background: 'rgba(205, 238, 140, 0.34)',
+                background: `rgba(${totalBackground}, 0.34)`,
               } : percentageOfTotal !== undefined ? {
-                background: `linear-gradient(to left, ${percentageBackground} 0%, rgba(205, 238, 140, 0.34) calc(${percentageOfTotal}% - 2px), rgba(205, 238, 140, 0.66) calc(${percentageOfTotal}% - 2px), transparent ${percentageOfTotal}%, transparent 100%)`
+                background: `linear-gradient(to left, ${percentageBackground} 0%, rgba(${totalBackground}, 0.34) calc(${percentageOfTotal}% - 2px), rgba(${totalBackground}, 0.66) calc(${percentageOfTotal}% - 2px), transparent ${percentageOfTotal}%, transparent 100%)`
               } : {
-                background: 'rgb(205, 238, 140, 0.34)',
+                background: `rgba(${totalBackground}, 0.34)`,
                 borderBottom: '1px solid #ccc',
                 fontWeight: 'bold',
               }}

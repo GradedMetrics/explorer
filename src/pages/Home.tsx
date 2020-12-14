@@ -5,7 +5,10 @@ import Hidden from '@material-ui/core/Hidden';
 import Link from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
 import LocalFloristIcon from '@material-ui/icons/LocalFlorist';
-import GradeTable from '../components/GradeTable';
+import GradeTable, {
+  historicBackground,
+  totalBackground,
+} from '../components/GradeTable';
 
 const headingVariantMapping = {
   h4: 'h1',
@@ -14,13 +17,13 @@ const headingVariantMapping = {
 };
 
 const Greenie = styled.span({
-  background: 'rgba(205, 238, 140, 0.34)',
+  background: `rgba(${totalBackground}, 0.34)`,
   display: 'inline-block',
   padding: '0 4px',
 });
 
 const Yellowie = styled(Greenie)({
-  background: 'rgba(255, 255, 150, 0.34)',
+  background: `rgba(${historicBackground}, 0.34)`,
 });
 
 type VariantProps = {
@@ -166,7 +169,7 @@ const Home = () => {
             total={fakeGradeTotal}
           />
           <Typography variant="body1" paragraph>
-            Here the total example population is 100, made up of <Variant>40</Variant> PSA 10 grades, <Variant>3</Variant> PSA 9 qualifier grades, <Variant>20</Variant> PSA 9 grades, and <Variant>10</Variant> PSA 8.5 grades.
+            Here the total example population is <Variant>100</Variant>, made up of <Variant>40</Variant> PSA 10 grades, <Variant>3</Variant> PSA 9 qualifier grades, <Variant>20</Variant> PSA 9 grades, and <Variant>10</Variant> PSA 8.5 grades.
           </Typography>
           <Typography variant="body1" paragraph>
             The
