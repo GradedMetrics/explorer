@@ -13,6 +13,7 @@ import {
   formatCardSimpleName,
   formatExpansionName,
   formatYear,
+  urlFriendlyName,
 } from '../utils/strings';
 import {
   urlFriendlyCardName,
@@ -26,7 +27,7 @@ import Loading from '../components/Loading';
 import Tooltip from '../components/Tooltip';
 
 type PokemonExpansionsProps = {
-  base?: "pokemon" | "trainers",
+  base?: "misc" | "pokemon" | "trainers",
   content: mappedPokemonData,
   name: string,
 }
@@ -75,6 +76,7 @@ const PokemonExpansions: React.FC<PokemonExpansionsProps> = ({
 
     setSelectedCard(urlSelectedCard);
     setPageLoading(false);
+    //eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   React.useEffect(() => {
@@ -99,6 +101,7 @@ const PokemonExpansions: React.FC<PokemonExpansionsProps> = ({
     history.replace({
       hash: `${hashPokemon}|${newCardHash}`,
     });
+    //eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedCard]);
 
   const handleSelect = (card: cardExpanded) => {
@@ -124,7 +127,7 @@ const PokemonExpansions: React.FC<PokemonExpansionsProps> = ({
           distinct
         </Tooltip>
         {' '}
-        {pokemon} cards...
+        {pokemon} card{total === 1 ? '' : 's'}...
       </Typography>
       <AutoComplete
         defaultSelectedOption={selectedCard}
@@ -150,67 +153,9 @@ const PokemonExpansions: React.FC<PokemonExpansionsProps> = ({
       ) : undefined}
     </Box>
   );
-
-  // return (
-  //   <>
-  //     <Tree
-  //       children={(
-  //         <>
-  //           {content.map(({
-  //             expansion,
-  //             cards,
-  //           }) => {
-  //             const {
-  //               id: expansionId,
-  //               name: expansionName,
-  //               variant,
-  //             } = expansion;
-
-  //             const nodeId = `${pokemon}-${expansionName}-${expansionId}`;
-
-  //             return (
-  //               <TreeItem
-  //                 key={nodeId}
-  //                 id={nodeId}
-  //                 name={formatExpansionName(expansion)}
-  //               >
-  //                 {cards.map(card => {
-  //                   const {
-  //                     id: cardId,
-  //                     name: cardName,
-  //                   } = card;
-
-  //                   const cardNodeId = `${nodeId}-${cardId}`;
-
-  //                   return (
-  //                     <TreeItem
-  //                       key={cardNodeId}
-  //                       id={cardNodeId}
-  //                       name={formatCardSimpleName({
-  //                         ...card,
-  //                         name: cardName || pokemon,
-  //                       })}
-  //                     >
-  //                       <ExpansionCard
-  //                         cardId={cardId}
-  //                         expansionId={expansionId} 
-  //                       />
-  //                     </TreeItem>
-  //                   )
-  //                 })}
-  //               </TreeItem>
-  //             )
-  //           })}
-  //         </>
-  //       )}
-  //       id={`${pokemon}-expansions`}
-  //       name={`${content.length} different expansions (click to view)`}
-  //     />
-  //   </>
-  // );
 }
 
 export default withSingleContentLoad(
   PokemonExpansions,
-  ({ base = 'pokemon', name }: PokemonExpansionsProps) => getPokemon.bind(null, base, name)
+  ({ base = 'pokemon', name }: PokemonExpansionsProps) => getPokemon.bind(null, base, urlFriendlyName(name))
 );

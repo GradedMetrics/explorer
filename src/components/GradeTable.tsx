@@ -42,6 +42,7 @@ const Wrapper = styled.article({
       '&:first-child, &:nth-child(2)': {
         maxWidth: 171,
         minWidth: 171,
+        width: 171,
       },
 
       '&:nth-child(2)': {

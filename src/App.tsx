@@ -10,6 +10,7 @@ import Loading from './components/Loading';
 import PageHeader from './components/PageHeader';
 import ExpansionList from './pages/ExpansionList';
 import Home from './pages/Home';
+import MiscList from './pages/MiscList';
 import PokemonList from './pages/PokemonList';
 import Stats from './pages/Stats';
 import TrainerList from './pages/TrainerList';
@@ -90,6 +91,9 @@ function App() {
           </Route>
           <Route path="/expansions">
             <ExpansionList />
+          </Route>
+          <Route path="/misc">
+            <MiscList />
           </Route>
           <Route path="/pokemon">
             <PokemonList />

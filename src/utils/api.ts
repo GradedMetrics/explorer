@@ -164,7 +164,7 @@ export const getExpansions = async (): Promise<expansion[]> => {
  * @param {string} name The name of the Pokémon content to fetch data for.
  * @returns {Promise<mappedPokemonData>} Pokémon API data.
  */
-export const getPokemon = async (base: "pokemon" | "trainers", name: string): Promise<mappedPokemonData> => {
+export const getPokemon = async (base: "misc" | "pokemon" | "trainers", name: string): Promise<mappedPokemonData> => {
   const response = await fetch(`${base}/${name}`);
 
   if (!response) {
@@ -197,6 +197,15 @@ export const getPokemon = async (base: "pokemon" | "trainers", name: string): Pr
 export const getPokemonList = async (): Promise<pokemon[]> => {
   const data = await fetch('pokemon');
   return (mapKeys(data) as pokemon[]).sort(({ number: a }, { number: b }) => Number(a) > Number(b) ? 1 : -1);
+}
+
+/**
+ * Pokémon returned from /misc.json.
+ * @returns {Promise<pokemon[]>} Pokémon API data.
+ */
+export const getMiscList = async (): Promise<pokemon[]> => {
+  const data = await fetch('misc');
+  return (mapKeys(data) as pokemon[]).sort(({ name: a }, { name: b }) => a > b ? 1 : -1);
 }
 
 /**

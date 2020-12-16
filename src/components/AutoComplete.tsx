@@ -4,6 +4,7 @@
  */
 
 import React from 'react';
+import Box from '@material-ui/core/Box';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
@@ -47,57 +48,59 @@ const AutoComplete: React.FC<AutoCompleteProps> = ({
   console.log(placeholder)
 
   return (
-    <MUIAutocomplete
-      autoHighlight
-      getOptionLabel={optionFormatter}
-      groupBy={optionGroupFormatter}
-      id={id}
-      includeInputInList
-      inputValue={inputValue}
-      options={options}
-      onChange={(event, selectedOption) => {
-        setValue(selectedOption);
-        onChange(selectedOption);
-      }}
-      onInputChange={(event, value) => setInputValue(value)}
-      renderInput={(params: any) => (
-        <TextField
-          {...params}
-          helperText={helperText}
-          label={label}
-          variant="outlined"
-          InputProps={{
-            ...params.InputProps,
-            placeholder,
-            startAdornment: (
-              <InputAdornment position="start">
-                <SearchIcon />
-              </InputAdornment>
-            ),
-          }}
-        />
-      )}
-      renderOption={(option, { inputValue }) => {
-        const name = optionFormatter(option);
-        const matches = match(name, inputValue);
-        const parts = parse(name, matches);
+    <Box my={4}>
+      <MUIAutocomplete
+        autoHighlight
+        getOptionLabel={optionFormatter}
+        groupBy={optionGroupFormatter}
+        id={id}
+        includeInputInList
+        inputValue={inputValue}
+        options={options}
+        onChange={(event, selectedOption) => {
+          setValue(selectedOption);
+          onChange(selectedOption);
+        }}
+        onInputChange={(event, value) => setInputValue(value)}
+        renderInput={(params: any) => (
+          <TextField
+            {...params}
+            helperText={helperText}
+            label={label}
+            variant="outlined"
+            InputProps={{
+              ...params.InputProps,
+              placeholder,
+              startAdornment: (
+                <InputAdornment position="start">
+                  <SearchIcon />
+                </InputAdornment>
+              ),
+            }}
+          />
+        )}
+        renderOption={(option, { inputValue }) => {
+          const name = optionFormatter(option);
+          const matches = match(name, inputValue);
+          const parts = parse(name, matches);
 
-        return (
-          <div>
-            {parts.map(({ highlight, text }: any, index: number) => (
-              <Typography
-                key={index}
-                variant="caption"
-                color={highlight ? "secondary" : "textPrimary"}
-              >
-                {text}
-              </Typography>
-            ))}
-          </div>
-        );
-      }}
-      value={value}
-    />
+          return (
+            <div>
+              {parts.map(({ highlight, text }: any, index: number) => (
+                <Typography
+                  key={index}
+                  variant="caption"
+                  color={highlight ? "secondary" : "textPrimary"}
+                >
+                  {text}
+                </Typography>
+              ))}
+            </div>
+          );
+        }}
+        value={value}
+      />
+    </Box>
   );
 }
 

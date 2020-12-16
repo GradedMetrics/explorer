@@ -8,6 +8,7 @@ import BubbleChartIcon from '@material-ui/icons/BubbleChart';
 import EmojiEventsIcon from '@material-ui/icons/EmojiEvents';
 import FaceIcon from '@material-ui/icons/Face';
 import LocalFloristIcon from '@material-ui/icons/LocalFlorist';
+import NaturePeopleIcon from '@material-ui/icons/NaturePeople';
 import StyleIcon from '@material-ui/icons/Style';
 import Loading from './Loading';
 
@@ -23,6 +24,10 @@ const pages = [{
   icon: <FaceIcon />,
   path: '/pokemon',
   text: 'Pokémon',
+}, {
+  icon: <NaturePeopleIcon />,
+  path: '/misc',
+  text: 'Misc',
 }, {
   icon: <BubbleChartIcon />,
   path: '/stats',
