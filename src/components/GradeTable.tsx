@@ -39,6 +39,11 @@ const Wrapper = styled.article({
 
   'tbody': {
     'td': {
+      '&:first-child, &:nth-child(2)': {
+        maxWidth: 171,
+        minWidth: 171,
+      },
+
       '&:nth-child(2)': {
         borderRight: '1px solid #e0e0e0',
       }

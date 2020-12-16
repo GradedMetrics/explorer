@@ -121,7 +121,7 @@ const GradeCount: React.FC<GradeCountProps> = ({
       style={{
         ...(total ? getValueStyle() : undefined),
         ...(!isHistoric ? {
-          background: percentageOfTotal ? `linear-gradient(to right, rgba(${totalBackground}, ${percentageOfTotal / 100 / 3}) 0%, rgba(${totalBackground}, 0.34) calc(${percentageOfTotal}% - 2px), rgba(${totalBackground}, 0.66) calc(${percentageOfTotal}% - 2px), transparent ${percentageOfTotal}%, transparent 100%)` : `rgba(${totalBackground}, 0.34)`,
+          background: percentageOfTotal !== undefined ? `linear-gradient(to right, rgba(${totalBackground}, ${percentageOfTotal / 100 / 3}) 0%, rgba(${totalBackground}, 0.34) calc(${percentageOfTotal}% - 2px), rgba(${totalBackground}, 0.66) calc(${percentageOfTotal}% - 2px), transparent ${percentageOfTotal}%, transparent 100%)` : `rgba(${totalBackground}, 0.34)`,
           borderRight: '3px double #ccc'
         } : undefined),
       }}

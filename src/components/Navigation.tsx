@@ -5,6 +5,7 @@ import {
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import BubbleChartIcon from '@material-ui/icons/BubbleChart';
+import EmojiEventsIcon from '@material-ui/icons/EmojiEvents';
 import FaceIcon from '@material-ui/icons/Face';
 import LocalFloristIcon from '@material-ui/icons/LocalFlorist';
 import StyleIcon from '@material-ui/icons/Style';
@@ -26,6 +27,10 @@ const pages = [{
   icon: <BubbleChartIcon />,
   path: '/stats',
   text: 'Stats'
+}, {
+  icon: <EmojiEventsIcon />,
+  path: '/rankings',
+  text: 'Ranks'
 }];
 
 const Navigation = () => {
