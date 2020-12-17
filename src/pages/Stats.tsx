@@ -18,7 +18,12 @@ const TrainerList: React.FC<TrainerListProps> = ({
   content,
 }) => {
   const [total, ...history] = content;
-  console.log(content);
+
+  const {
+    cards: totalCards,
+    total: totalSets,
+  } = total;
+
   return (
     <>
       <Typography
@@ -40,6 +45,12 @@ const TrainerList: React.FC<TrainerListProps> = ({
         variant="body2"
       >
         As with the other data displayed throughout the app, this does not include graded autographs.
+      </Typography>
+      <Typography
+        paragraph
+        variant="body1"
+      >
+        PSA has graded <strong>{totalCards?.toLocaleString()}</strong> unique Pokémon cards spanning <strong>{totalSets?.toLocaleString()}</strong> sets.
       </Typography>
       <GradeTable
         history={history}

@@ -1,6 +1,7 @@
 import React from 'react';
 import {
   useHistory,
+  withRouter,
 } from 'react-router-dom';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
@@ -70,6 +71,20 @@ const Navigation = () => {
     //eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value]);
 
+  React.useEffect(() => {
+    const {
+      pathname,
+    } = history.location;
+
+    const pageIndexFromPathname = pages.findIndex(({ path }) => path === pathname);
+
+    if (value === pageIndexFromPathname) {
+      return;
+    }
+
+    setValue(pageIndexFromPathname);
+  })
+
   if (isLoading) {
     return <Loading />
   }
@@ -95,4 +110,4 @@ const Navigation = () => {
   );
 }
 
-export default Navigation;
+export default withRouter(Navigation);

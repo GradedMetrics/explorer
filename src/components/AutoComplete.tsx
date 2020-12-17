@@ -12,6 +12,7 @@ import SearchIcon from '@material-ui/icons/Search';
 import MUIAutocomplete from '@material-ui/lab/Autocomplete';
 import match from 'autosuggest-highlight/match';
 import parse from 'autosuggest-highlight/parse';
+import Loading from './Loading';
 
 type AutoCompleteProps = {
   defaultSelectedOption?: any
@@ -42,10 +43,28 @@ const AutoComplete: React.FC<AutoCompleteProps> = ({
     defaultInputValue = optionFormatter(defaultSelectedOption);
   }
 
+  const [isLoading, setLoading] = React.useState<boolean>(false);
   const [inputValue, setInputValue] = React.useState<string>(defaultInputValue || '');
   const [value, setValue] = React.useState<string>(defaultSelectedOption);
 
-  console.log(placeholder)
+  React.useEffect(() => {
+    if (defaultSelectedOption === value) {
+      return;
+    }
+
+    if (!isLoading) {
+      setLoading(true);
+      return;
+    }
+
+    setInputValue(optionFormatter(defaultSelectedOption));
+    setValue(defaultSelectedOption);
+    setLoading(false);
+  }, [defaultSelectedOption, isLoading]);
+
+  if (isLoading) {
+    return <Loading />;
+  }
 
   return (
     <Box my={4}>

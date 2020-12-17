@@ -62,7 +62,6 @@ const GradeCount: React.FC<GradeCountProps> = ({
     const dataValue = isHistoric && historyDeductsFromTotal ? -data.value : data.value;
 
     const percentage = (Math.floor(((100 / totalValue) * dataValue) * 100) / 10000) / 3;
-    console.log(totalValue, dataValue, percentage);
 
     return {
       background: isHistoric ? `rgba(${historicBackground}, ${percentage})` : `rgba(${totalBackground}, ${percentage})`,

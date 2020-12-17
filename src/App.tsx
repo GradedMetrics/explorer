@@ -27,6 +27,10 @@ const GlobalStyle = createGlobalStyle({
     margin: 0,
   },
 
+  '.MuiSvgIcon-fontSizeSmall': {
+    verticalAlign: 'top',
+  },
+
   '.MuiTab-root': {
     minWidth: 68,
   },
@@ -89,19 +93,19 @@ function App() {
           <Route exact path="/">
             <Home />
           </Route>
-          <Route path="/expansions">
+          <Route exact path="/expansions">
             <ExpansionList />
           </Route>
-          <Route path="/misc">
+          <Route exact path="/misc">
             <MiscList />
           </Route>
-          <Route path="/pokemon">
+          <Route exact path="/pokemon">
             <PokemonList />
           </Route>
-          <Route path="/trainers">
+          <Route exact path="/trainers">
             <TrainerList />
           </Route>
-          <Route path="/stats">
+          <Route exact path="/stats">
             <Stats />
           </Route>
         </Box>

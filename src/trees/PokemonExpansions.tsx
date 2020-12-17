@@ -80,6 +80,21 @@ const PokemonExpansions: React.FC<PokemonExpansionsProps> = ({
   }, []);
 
   React.useEffect(() => {
+    if (!selectedCard) {
+      return;
+    }
+
+    if (!isPageLoading) {
+      setPageLoading(true);
+      return;
+    }
+
+    setSelectedCard(undefined);
+    setPageLoading(false);
+    //eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isPageLoading, pokemon]);
+
+  React.useEffect(() => {
     if (isPageLoading) {
       return;
     }

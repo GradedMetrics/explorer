@@ -1,6 +1,8 @@
 import React from 'react';
 import {
+  Link as ReactRouterLink,
   useHistory,
+  withRouter,
 } from 'react-router-dom';
 import {
   pokemon,
@@ -17,7 +19,9 @@ import {
   urlFriendlyPokemonName,
 } from '../utils/urls';
 import Box from '@material-ui/core/Box';
+import Link from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
+import FaceIcon from '@material-ui/icons/Face';
 import NaturePeopleIcon from '@material-ui/icons/NaturePeople';
 import AutoComplete from '../components/AutoComplete';
 import Loading from '../components/Loading';
@@ -30,15 +34,14 @@ const PokemonList: React.FC<PokemonListProps> = ({
   content,
 }) => {
   const history = useHistory();
+  const {
+    hash,
+  } = history.location;
   const [selectedPokemon, setSelectedPokemon] = React.useState<pokemon>();
   const [isLoading, setLoading] = React.useState<boolean>(false);
   const [isPageLoading, setPageLoading] = React.useState<boolean>(true);
 
   React.useEffect(() => {
-    const {
-      hash,
-    } = history.location;
-
     if (!hash) {
       setPageLoading(false);
       return;
@@ -57,7 +60,7 @@ const PokemonList: React.FC<PokemonListProps> = ({
 
     setSelectedPokemon(urlSelectedPokemon);
     setPageLoading(false);
-  }, []);
+  }, [hash]);
 
   React.useEffect(() => {
     if (isPageLoading) {
@@ -65,10 +68,6 @@ const PokemonList: React.FC<PokemonListProps> = ({
     }
 
     setLoading(false);
-
-    const {
-      hash,
-    } = history.location;
 
     const newHash = urlFriendlyPokemonName(selectedPokemon);
 
@@ -105,7 +104,22 @@ const PokemonList: React.FC<PokemonListProps> = ({
         paragraph
         variant="body1"
       >
-        This page allows you to search for cards which do not feature a Pokémon in their name.
+        This page allows you to search for cards which do not feature a Pokémon in their name. This includes cards like
+        {' '}
+        <Link component={ReactRouterLink} to="#MiracleDiamond">
+          Miracle Diamond
+        </Link>
+        {' '}
+        but doesn't include cards like
+        {' '}
+        <Link component={ReactRouterLink} to="/pokemon#Pikachu|e9y8">
+          Pikachu {'{'}Illustrator, Holofoil{'}'}
+        </Link>
+        {' '} - for that you'll need to use the
+        {' '}
+        <Link component={ReactRouterLink} to="/pokemon"><FaceIcon fontSize="small" /> Pokémon</Link>
+        {' '}
+        section.
       </Typography>
       <AutoComplete
         defaultSelectedOption={selectedPokemon}
@@ -125,7 +139,7 @@ const PokemonList: React.FC<PokemonListProps> = ({
   );
 }
 
-export default withSingleContentLoad(
+export default withRouter(withSingleContentLoad(
   PokemonList,
   () => getMiscList,
-);
+));
