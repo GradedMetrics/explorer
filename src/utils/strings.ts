@@ -6,15 +6,6 @@ import {
 } from '../types';
 
 /**
- * This converts the name of a piece of content into a URL-friendly name.
- * This needs to match how the API formats friendly names to keep the data consistent.
- * @param {string} name The name to make friendly.
- */
-export const urlFriendlyName = (name: string): string => {
-  return name.replace(/[!?:/]/g, '');
-}
-
-/**
  * Generate a human-readable card name from a card object.
  * @param {card} card The card object.
  * @returns {string} The formatted card name.
@@ -181,4 +172,13 @@ export const formatYear: ((year: string) => string) = (year) => {
   }
 
   throw new Error(`Unexpected year format provided to formatYear: ${year}.`);
+}
+
+/**
+ * This converts the name of a piece of content into a URL-friendly name.
+ * This needs to match how the API formats friendly names to keep the data consistent.
+ * @param {string} name The name to make friendly.
+ */
+export const urlFriendlyName = (name: string): string => {
+  return name.replace(/[!?:/]/g, '');
 }

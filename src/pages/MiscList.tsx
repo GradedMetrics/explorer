@@ -1,13 +1,11 @@
 import React from 'react';
 import {
   Link as ReactRouterLink,
-  useHistory,
   withRouter,
 } from 'react-router-dom';
 import {
   pokemon,
 } from '../types';
-import withSingleContentLoad from '../hocs/withSingleContentLoad';
 import {
   getMiscList,
 } from '../utils/api';
@@ -18,77 +16,13 @@ import {
 import {
   urlFriendlyPokemonName,
 } from '../utils/urls';
-import Box from '@material-ui/core/Box';
 import Link from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
 import FaceIcon from '@material-ui/icons/Face';
 import NaturePeopleIcon from '@material-ui/icons/NaturePeople';
-import AutoComplete from '../components/AutoComplete';
-import Loading from '../components/Loading';
+import SearchPage from '../components/SearchPage';
 
-type PokemonListProps = {
-  content: pokemon[],
-}
-
-const PokemonList: React.FC<PokemonListProps> = ({
-  content,
-}) => {
-  const history = useHistory();
-  const {
-    hash,
-  } = history.location;
-  const [selectedPokemon, setSelectedPokemon] = React.useState<pokemon>();
-  const [isLoading, setLoading] = React.useState<boolean>(false);
-  const [isPageLoading, setPageLoading] = React.useState<boolean>(true);
-
-  React.useEffect(() => {
-    if (!hash) {
-      setPageLoading(false);
-      return;
-    }
-
-    const urlSelectedPokemon = content.find(pokemon => urlFriendlyPokemonName(pokemon) === hash.split('|')[0].substr(1, 64));
-
-    if (!urlSelectedPokemon) {
-      history.replace({
-        hash: '',
-      });
-
-      setPageLoading(false);
-      return;
-    }
-
-    setSelectedPokemon(urlSelectedPokemon);
-    setPageLoading(false);
-  }, [hash]);
-
-  React.useEffect(() => {
-    if (isPageLoading) {
-      return;
-    }
-
-    setLoading(false);
-
-    const newHash = urlFriendlyPokemonName(selectedPokemon);
-
-    if (hash.split('|')[0].substr(1, 64) === newHash) {
-      return;
-    }
-
-    history.replace({
-      hash: newHash,
-    });
-  }, [selectedPokemon]);
-
-  const handleSelect = (pokemon: pokemon) => {
-    setLoading(true);
-    setSelectedPokemon(pokemon);
-  }
-
-  if (isPageLoading) {
-    return <Loading />;
-  }
-
+const MiscList = () => {
   return (
     <>
       <Typography
@@ -121,25 +55,19 @@ const PokemonList: React.FC<PokemonListProps> = ({
         {' '}
         section.
       </Typography>
-      <AutoComplete
-        defaultSelectedOption={selectedPokemon}
-        id="pokemon-select"
+      <SearchPage
+        apiFn={getMiscList}
+        id="misc-list"
         label="Search for a card... (e.g. Lass)"
-        options={content}
-        optionFormatter={(pokemon) => formatPokemonName(pokemon)}
-        onChange={handleSelect}
+        optionFormatter={(pokemon: pokemon) => formatPokemonName(pokemon)}
         placeholder="Pokemon Collector or German ..."
-      />
-      {!isLoading && selectedPokemon ? (
-        <Box mt={2}>
+        renderResult={(selectedPokemon: pokemon) => (
           <PokemonExpansions base="misc" name={selectedPokemon.name} />
-        </Box>
-      ) : undefined}
+        )}
+        urlFriendlyName={urlFriendlyPokemonName}
+      />
     </>
   );
 }
 
-export default withRouter(withSingleContentLoad(
-  PokemonList,
-  () => getMiscList,
-));
+export default withRouter(MiscList);

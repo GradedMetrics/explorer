@@ -17,6 +17,7 @@ import {
 } from '../utils/strings';
 import {
   urlFriendlyCardName,
+  urlFriendlyPokemonName,
 } from '../utils/urls';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
@@ -80,6 +81,11 @@ const PokemonExpansions: React.FC<PokemonExpansionsProps> = ({
   }, []);
 
   React.useEffect(() => {
+    const [hashPokemon] = history.location.hash.substr(1, 64).split('|');
+    if (hashPokemon === urlFriendlyPokemonName({ name: pokemon })) {
+      return;
+    }
+
     if (!selectedCard) {
       return;
     }
@@ -110,6 +116,13 @@ const PokemonExpansions: React.FC<PokemonExpansionsProps> = ({
     const newCardHash = urlFriendlyCardName(selectedCard);
 
     if (hashCard === newCardHash) {
+      return;
+    }
+
+    if (!newCardHash) {
+      history.replace({
+        hash: hashPokemon,
+      });
       return;
     }
 
