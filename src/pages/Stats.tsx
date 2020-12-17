@@ -10,11 +10,11 @@ import {
   getHistory,
 } from '../utils/api';
 
-type TrainerListProps = {
+type StatsProps = {
   content: gradeHistory[],
 }
 
-const TrainerList: React.FC<TrainerListProps> = ({
+const Stats: React.FC<StatsProps> = ({
   content,
 }) => {
   const [total, ...history] = content;
@@ -62,6 +62,6 @@ const TrainerList: React.FC<TrainerListProps> = ({
 }
 
 export default withSingleContentLoad(
-  TrainerList,
+  Stats,
   () => getHistory,
 );

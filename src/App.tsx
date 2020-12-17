@@ -13,7 +13,6 @@ import Home from './pages/Home';
 import MiscList from './pages/MiscList';
 import PokemonList from './pages/PokemonList';
 import Stats from './pages/Stats';
-import TrainerList from './pages/TrainerList';
 import {
   keys,
   version,
@@ -101,9 +100,6 @@ function App() {
           </Route>
           <Route exact path="/pokemon">
             <PokemonList />
-          </Route>
-          <Route exact path="/trainers">
-            <TrainerList />
           </Route>
           <Route exact path="/stats">
             <Stats />

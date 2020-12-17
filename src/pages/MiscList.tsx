@@ -32,7 +32,7 @@ const MiscList = () => {
       >
         <NaturePeopleIcon />
         {' '}
-        Miscellaneous Cards
+        Miscellaneous
       </Typography>
       <Typography
         paragraph

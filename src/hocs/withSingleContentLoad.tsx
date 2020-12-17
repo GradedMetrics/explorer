@@ -17,7 +17,7 @@ const withSingleContentLoad = (WrappedComponent: React.FC<any>, apiFn: (props: a
       return <CircularProgress />;
     }
 
-    return <WrappedComponent content={content} {...props} />
+    return <WrappedComponent content={content} {...props} />;
   }
 }
 

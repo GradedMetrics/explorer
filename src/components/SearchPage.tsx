@@ -45,6 +45,11 @@ const SearchPage: React.FC<SearchPageProps> = ({
       return;
     }
 
+    if (selected && urlFriendlyName(selected) === hash.split('|')[0].substr(1, 64)) {
+      setLoading(false);
+      return;
+    }
+
     const urlSelected = content.find(pokemon => urlFriendlyName(pokemon) === hash.split('|')[0].substr(1, 64));
 
     if (!urlSelected) {
@@ -52,11 +57,12 @@ const SearchPage: React.FC<SearchPageProps> = ({
         hash: '',
       });
 
+      setSelected(undefined);
       setPageLoading(false);
       return;
     }
 
-    setSelected(urlSelected);
+    handleSelect(urlSelected);
     setPageLoading(false);
     //eslint-disable-next-line react-hooks/exhaustive-deps
   }, [hash]);

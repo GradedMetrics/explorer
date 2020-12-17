@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  withRouter,
   useHistory,
 } from 'react-router-dom';
 import {
@@ -82,6 +83,7 @@ const PokemonExpansions: React.FC<PokemonExpansionsProps> = ({
 
   React.useEffect(() => {
     const [hashPokemon] = history.location.hash.substr(1, 64).split('|');
+    
     if (hashPokemon === urlFriendlyPokemonName({ name: pokemon })) {
       return;
     }
