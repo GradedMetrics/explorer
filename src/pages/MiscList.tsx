@@ -26,11 +26,11 @@ const MiscList = () => {
   return (
     <>
       <Typography
-        paragraph
+        gutterBottom
         variant="h4"
         variantMapping={{ h4: 'h1' }}
       >
-        <NaturePeopleIcon />
+        <NaturePeopleIcon fontSize="large" />
         {' '}
         Miscellaneous
       </Typography>

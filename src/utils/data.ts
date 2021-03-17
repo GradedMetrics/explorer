@@ -17,7 +17,8 @@ export const sortExpansions: ((expansions: expansion[]) => expansion[]) = (expan
     const bName = formatExpansionName(b);
 
     if (aName === bName) {
-      throw new Error(`Encountered two expansions with identical formatted names: ${aName}.`)
+      console.error(`Encountered two expansions with identical formatted names: ${aName}.`);
+      return 0;
     }
 
     return aName < bName ? -1 : 1;

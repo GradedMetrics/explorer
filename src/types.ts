@@ -34,7 +34,6 @@ export type expansion = {
   id: string
   language?: string
   name: string
-  popularity: number
   total: number
   variant: string
   year: string
@@ -130,6 +129,35 @@ export type mappedPokemonData = {
   data: cardExpanded[]
   name: string
   total: number
+}
+
+/** Rank Info */
+export type cardRanking = {
+  set: expansion
+  id: string
+  name: string
+  number?: string
+  popIncrease: number
+  total: number
+  variants?: string[]
+}
+
+export type expansionRanking = {
+  id: string
+  language?: string
+  name: string
+  popIncrease: number
+  variant: string
+  year: string
+}
+
+export type ranking = {
+  highestPerformingMonthlyCards: cardRanking[]
+  highestPerformingWeeklyCards: cardRanking[]
+  highestPerformingYearlyCards: cardRanking[]
+  highestPerformingMonthlySets: expansionRanking[]
+  highestPerformingWeeklySets: expansionRanking[]
+  highestPerformingYearlySets: expansionRanking[]
 }
 
 export type version = {

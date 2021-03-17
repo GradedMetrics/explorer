@@ -12,6 +12,7 @@ import ExpansionList from './pages/ExpansionList';
 import Home from './pages/Home';
 import MiscList from './pages/MiscList';
 import PokemonList from './pages/PokemonList';
+import Ranks from './pages/Ranks';
 import Stats from './pages/Stats';
 import {
   keys,
@@ -26,8 +27,12 @@ const GlobalStyle = createGlobalStyle({
     margin: 0,
   },
 
-  '.MuiSvgIcon-fontSizeSmall': {
+  '.MuiSvgIcon-fontSizeSmall, .MuiSvgIcon-root': {
     verticalAlign: 'top',
+  },
+
+  '.MuiTypography-h4 .MuiSvgIcon-fontSizeLarge': {
+    lineHeight: 1.235,
   },
 
   '.MuiTab-root': {
@@ -100,6 +105,9 @@ function App() {
           </Route>
           <Route exact path="/pokemon">
             <PokemonList />
+          </Route>
+          <Route exact path="/rankings">
+            <Ranks />
           </Route>
           <Route exact path="/stats">
             <Stats />

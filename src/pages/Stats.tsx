@@ -27,11 +27,11 @@ const Stats: React.FC<StatsProps> = ({
   return (
     <>
       <Typography
-        paragraph
+        gutterBottom
         variant="h4"
         variantMapping={{ h4: 'h1' }}
       >
-        <BubbleChartIcon />
+        <BubbleChartIcon fontSize="large" />
         {' '}
         Statistics
       </Typography>

@@ -1,4 +1,5 @@
 import {
+  card,
   cardExpanded,
   cardSimple,
   expansion,
@@ -10,7 +11,7 @@ import {
  * @param {cardExpanded | cardSimple} expansion The expansion object.
  * @returns {string} A URL-friendly expansion name.
  */
-export const urlFriendlyCardName = (card?: cardExpanded | cardSimple): string => {
+export const urlFriendlyCardName = (card?: card | cardExpanded | cardSimple): string => {
   if (!card?.id) {
     return '';
   }

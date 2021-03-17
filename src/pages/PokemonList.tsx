@@ -26,11 +26,11 @@ const PokemonList = () => {
   return (
     <>
       <Typography
-        paragraph
+        gutterBottom
         variant="h4"
         variantMapping={{ h4: 'h1' }}
       >
-        <FaceIcon />
+        <FaceIcon fontSize="large" />
         {' '}
         Pokémon
       </Typography>

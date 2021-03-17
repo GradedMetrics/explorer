@@ -1,7 +1,9 @@
 import {
   card,
+  cardRanking,
   cardSimple,
   expansion,
+  expansionRanking,
   pokemon,
 } from '../types';
 
@@ -10,7 +12,7 @@ import {
  * @param {card} card The card object.
  * @returns {string} The formatted card name.
  */
-export const formatCardName: ((card: card) => string) = ({
+export const formatCardName: ((card: card | cardRanking) => string) = ({
   name,
   number,
   variants,
@@ -74,12 +76,12 @@ type formatExpansionNameOptions = {
 
 /**
  * Generate a human-readable expansion name from an expansion object.
- * @param {expansion} expansion The expansion object.
+ * @param {expansion | expansionRanking} expansion The expansion object.
  * @param {formatExpansionNameOptions} options A collection of options.
  * @returns {string} The formatted expansion name.
  */
 export const formatExpansionName: ((
-  expansion: expansion,
+  expansion: expansion | expansionRanking,
   options?: formatExpansionNameOptions
 ) => string) = ({
   name,
@@ -172,6 +174,47 @@ export const formatYear: ((year: string) => string) = (year) => {
   }
 
   throw new Error(`Unexpected year format provided to formatYear: ${year}.`);
+}
+
+/**
+ * Generate dynamic search placeholder text based on an array of cards.
+ * This takes an array like `[{ number: 4, name: 'Pikachu', variants: ['Reverse'] }, ...]` and
+ * generates a string like `4 or Pikachu or Reverse ...`
+ * @param {card[]} cards An array of cards to generate the placeholder from.
+ */
+export const getDynamicCardSearchPlaceholder = (cards: card[]): string => {
+  const getRandomArrayEntry = (arr: any[]): any => {
+    return arr[Math.floor(Math.random() * arr.length)];
+  }
+
+  if (!cards.length) {
+    return 'No results found?';
+  }
+
+  const parts = [];
+
+  // Cards with numbers.
+  const numbered = cards.filter(card => card.number !== undefined);
+  if (numbered.length) {
+    parts.push(getRandomArrayEntry(numbered).number);
+  }
+
+  // Card names.
+  parts.push(getRandomArrayEntry(cards).name);
+
+  // Card variants.
+  const variants = cards.filter(card => Array.isArray(card.variants) && card.variants.length).reduce((arr: any[], { variants }) => {
+    const unique = variants!.filter(variant => arr.indexOf(variant) === -1);
+    return [
+      ...arr,
+      ...unique,
+    ];
+  }, []);
+  if (variants.length) {
+    parts.push(getRandomArrayEntry(variants));
+  }
+
+  return `${parts.join(' or ')} ...`;
 }
 
 /**

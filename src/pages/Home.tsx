@@ -124,11 +124,11 @@ const Home = () => {
   return (
     <>
       <Typography
-        paragraph
+        gutterBottom
         variant="h4"
         variantMapping={{ h4: 'h1' }}
       >
-        <LocalFloristIcon />
+        <LocalFloristIcon fontSize="large" />
         {' '}
         Welcome!
       </Typography>

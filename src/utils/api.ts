@@ -11,6 +11,7 @@ import {
   pokemon,
   pokemonData,
   pokemonExpansion,
+  ranking,
   version as versionType,
 } from '../types';
 import {
@@ -220,4 +221,13 @@ export const getTrainerList = async (): Promise<pokemon[]> => {
 export const getHistory = async (): Promise<expansion[]> => {
   const data = await fetch('history');
   return mapKeys(data.reverse());
+}
+
+/**
+ * Ranking data returned from /ranks.json.
+ * @returns {Promise<ranking>} Ranks API data.
+ */
+export const getRanks = async (): Promise<ranking> => {
+  const data = await fetch('ranks');
+  return mapKeys(data);
 }
