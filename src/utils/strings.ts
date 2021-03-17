@@ -1,5 +1,6 @@
 import {
   card,
+  cardExpanded,
   cardRanking,
   cardSimple,
   expansion,
@@ -45,7 +46,7 @@ type formatCardSimpleNameOptions = {
  * @returns {string} The formatted card name.
  */
 export const formatCardSimpleName: ((
-  card: cardSimple,
+  card: cardSimple | cardExpanded,
   options?: formatCardSimpleNameOptions,
 ) => string) = ({
   name,

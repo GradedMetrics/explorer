@@ -12,6 +12,7 @@ import {
 import {
   formatCardSimpleName,
   formatExpansionName,
+  formatPokemonName,
   formatYear,
   urlFriendlyName,
 } from '../utils/strings';
@@ -26,6 +27,12 @@ import AutoComplete from '../components/AutoComplete';
 import ExpansionCard from '../components/ExpansionCard';
 import Loading from '../components/Loading';
 import Tooltip from '../components/Tooltip';
+
+const headingVariantMapping = {
+  h4: 'h1',
+  h5: 'h2',
+  h6: 'h3',
+}
 
 type PokemonExpansionsProps = {
   base?: "misc" | "pokemon" | "trainers",
@@ -146,6 +153,13 @@ const PokemonExpansions: React.FC<PokemonExpansionsProps> = ({
     <Box my={2}>
       <Typography
         paragraph
+        variant="h4"
+        variantMapping={headingVariantMapping}
+      >
+        {formatPokemonName(content)}
+      </Typography>
+      <Typography
+        paragraph
         variant="body1"
       >
         PSA has graded {total}
@@ -174,6 +188,13 @@ const PokemonExpansions: React.FC<PokemonExpansionsProps> = ({
       />
       {!isLoading && selectedCard ? (
         <Box mt={2}>
+          <Typography
+            paragraph
+            variant="h5"
+            variantMapping={headingVariantMapping}
+          >
+            {formatCardSimpleName(selectedCard, { defaultName: pokemon, numberParens: false, })} · {formatExpansionName(selectedCard.expansion)}
+          </Typography>
           <ExpansionCard
             cardId={selectedCard.id}
             expansionId={selectedCard.expansion.id} 

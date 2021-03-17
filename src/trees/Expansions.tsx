@@ -13,6 +13,7 @@ import {
 } from '../utils/api';
 import {
   formatCardName,
+  formatExpansionName,
   getDynamicCardSearchPlaceholder,
 } from '../utils/strings';
 import {
@@ -26,6 +27,12 @@ import ExpansionCard from '../components/ExpansionCard';
 import GradeTable from '../components/GradeTable';
 import Loading from '../components/Loading';
 
+const headingVariantMapping = {
+  h4: 'h1',
+  h5: 'h2',
+  h6: 'h3',
+}
+
 type ExpansionsProps = {
   content: expansionDetailed,
   expansion: expansion,
@@ -36,9 +43,20 @@ const Expansions: React.FC<ExpansionsProps> = ({
   expansion,
 }) => {
   const history = useHistory();
-  const [selectedCard, setSelectedCard] = React.useState<card | cardExpanded>();
+  const [selectedCard, setSelectedCard] = React.useState<card>();
   const [isLoading, setLoading] = React.useState<boolean>(false);
   const [isPageLoading, setPageLoading] = React.useState<boolean>(true);
+
+  const {
+    cards: totalCards,
+    id: expansionId,
+  } = expansion;
+
+  const {
+    cards,
+    history: gradeHistory,
+    total,
+  } = content;
 
   React.useEffect(() => {
     const {
@@ -101,20 +119,9 @@ const Expansions: React.FC<ExpansionsProps> = ({
     //eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedCard]);
 
-  const {
-    cards: totalCards,
-    id: expansionId,
-  } = expansion;
-
-  const {
-    cards,
-    history: gradeHistory,
-    total,
-  } = content;
-
   console.log(content, expansion);
 
-  const handleSelect = (card: cardExpanded) => {
+  const handleSelect = (card: card) => {
     setLoading(true);
     setSelectedCard(card);
   }
@@ -125,6 +132,13 @@ const Expansions: React.FC<ExpansionsProps> = ({
 
   return (
     <Box my={2}>
+      <Typography
+        paragraph
+        variant="h4"
+        variantMapping={headingVariantMapping}
+      >
+        {formatExpansionName(expansion)}
+      </Typography>
       <Typography
         paragraph
         variant="body1"
@@ -143,55 +157,35 @@ const Expansions: React.FC<ExpansionsProps> = ({
       {!isLoading ? (
         <Box mt={2}>
           {selectedCard ? (
-            <ExpansionCard
-              cardId={selectedCard.id}
-              expansionId={expansionId} 
-            />
+            <>
+              <Typography
+                paragraph
+                variant="h5"
+                variantMapping={headingVariantMapping}
+              >
+                {formatCardName(selectedCard)}
+              </Typography>
+              <ExpansionCard
+                cardId={selectedCard.id}
+                expansionId={expansionId} 
+              />
+            </>
           ) : (
-            <GradeTable history={gradeHistory} total={total} />
+            <>
+              <Typography
+                paragraph
+                variant="h5"
+                variantMapping={headingVariantMapping}
+              >
+                All Grades
+              </Typography>
+              <GradeTable history={gradeHistory} total={total} />
+            </>
           )}
         </Box>
       ) : undefined}
     </Box>
-  )
-
-  // return (
-  //   <>
-  //     <GradeTable history={history} total={total} />
-  //     <Tree
-  //       children={(
-  //         <>
-  //           {cards.map(card => {
-  //             const {
-  //               id: cardId,
-  //               name: cardName,
-  //             } = card;
-
-  //             const id = `${expansionId}-${cardId}`;
-
-  //             return (
-  //               <TreeItem
-  //                 key={id}
-  //                 id={id}
-  //                 name={formatCardName({
-  //                   ...card,
-  //                   name: cardName,
-  //                 })}
-  //               >
-  //                 <ExpansionCard
-  //                   cardId={cardId}
-  //                   expansionId={expansionId}
-  //                 />
-  //               </TreeItem>
-  //             )
-  //           })}
-  //         </>
-  //       )}
-  //       id={`${expansionId}-cards`}
-  //       name={`${cards.length} different cards (click to view)`}
-  //     />
-  //   </>
-  // );
+  );
 }
 
 export default withSingleContentLoad(
