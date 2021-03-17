@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  Link as ReactRouterLink,
   useHistory,
 } from 'react-router-dom';
 import {
@@ -21,7 +22,9 @@ import {
   urlFriendlyPokemonName,
 } from '../utils/urls';
 import Box from '@material-ui/core/Box';
+import Link from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
+import StyleIcon from '@material-ui/icons/Style';
 import withSingleContentLoad from '../hocs/withSingleContentLoad';
 import AutoComplete from '../components/AutoComplete';
 import ExpansionCard from '../components/ExpansionCard';
@@ -193,7 +196,13 @@ const PokemonExpansions: React.FC<PokemonExpansionsProps> = ({
             variant="h5"
             variantMapping={headingVariantMapping}
           >
-            {formatCardSimpleName(selectedCard, { defaultName: pokemon, numberParens: false, })} · {formatExpansionName(selectedCard.expansion)}
+            {formatCardSimpleName(selectedCard, { defaultName: pokemon, numberParens: false, })} 
+            {' · '}
+            <Link component={ReactRouterLink} to={`/expansions#${selectedCard.expansion.id}|${selectedCard.id}`}>
+              <StyleIcon />
+              {' '}
+              {formatExpansionName(selectedCard.expansion)}
+            </Link>
           </Typography>
           <ExpansionCard
             cardId={selectedCard.id}

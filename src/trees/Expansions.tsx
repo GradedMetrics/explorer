@@ -1,10 +1,10 @@
 import React from 'react';
 import {
+  Link as ReactRouterLink,
   useHistory,
 } from 'react-router-dom';
 import {
   card,
-  cardExpanded,
   expansion,
   expansionDetailed,
 } from '../types';
@@ -21,7 +21,10 @@ import {
 } from '../utils/urls';
 import withSingleContentLoad from '../hocs/withSingleContentLoad';
 import Box from '@material-ui/core/Box';
+import Link from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
+import FaceIcon from '@material-ui/icons/Face';
+import NaturePeopleIcon from '@material-ui/icons/NaturePeople';
 import AutoComplete from '../components/AutoComplete';
 import ExpansionCard from '../components/ExpansionCard';
 import GradeTable from '../components/GradeTable';
@@ -119,8 +122,6 @@ const Expansions: React.FC<ExpansionsProps> = ({
     //eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedCard]);
 
-  console.log(content, expansion);
-
   const handleSelect = (card: card) => {
     setLoading(true);
     setSelectedCard(card);
@@ -163,7 +164,11 @@ const Expansions: React.FC<ExpansionsProps> = ({
                 variant="h5"
                 variantMapping={headingVariantMapping}
               >
-                {formatCardName(selectedCard)}
+                <Link component={ReactRouterLink} to={`/${selectedCard.isPokemon ? 'pokemon' : 'misc'}#${selectedCard.name}|${selectedCard.id}`}>
+                  {selectedCard.isPokemon ? <FaceIcon /> : <NaturePeopleIcon />}
+                  {' '}
+                  {formatCardName(selectedCard)}
+                </Link>
               </Typography>
               <ExpansionCard
                 cardId={selectedCard.id}

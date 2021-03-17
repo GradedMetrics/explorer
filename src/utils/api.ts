@@ -94,6 +94,7 @@ export const keys = async (): Promise<Object> => {
  */
 export const getExpansion = async (expansionId: string): Promise<expansionDetailed> => {
   const response = await fetch(`sets/${expansionId}`);
+  const pokemonList = (await getPokemonList()).map(({ name }) => name);
 
   const {
     cards,
@@ -101,7 +102,10 @@ export const getExpansion = async (expansionId: string): Promise<expansionDetail
   } = mapKeys(response);
 
   return {
-    cards: [...cards].sort((a, b) => {
+    cards: [...cards].map(card => ({
+      ...card,
+      isPokemon: pokemonList.indexOf(card.name) !== -1,
+    })).sort((a, b) => {
       const {
         name: aName,
         number: aNumber,
