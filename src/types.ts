@@ -1,8 +1,8 @@
 export type card = {
   id: string
-  isPokemon: boolean
   name: string
   number?: string
+  pokemon?: string
   total: number
   variants?: string[]
   year: string

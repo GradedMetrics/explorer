@@ -104,7 +104,7 @@ export const getExpansion = async (expansionId: string): Promise<expansionDetail
   return {
     cards: [...cards].map(card => ({
       ...card,
-      isPokemon: pokemonList.indexOf(card.name) !== -1,
+      pokemon: pokemonList.find(pokemon => card.name.toLowerCase().indexOf(pokemon.toLowerCase()) !== -1),
     })).sort((a, b) => {
       const {
         name: aName,

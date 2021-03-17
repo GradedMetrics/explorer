@@ -23,8 +23,8 @@ import withSingleContentLoad from '../hocs/withSingleContentLoad';
 import Box from '@material-ui/core/Box';
 import Link from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
+import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt';
 import FaceIcon from '@material-ui/icons/Face';
-import NaturePeopleIcon from '@material-ui/icons/NaturePeople';
 import AutoComplete from '../components/AutoComplete';
 import ExpansionCard from '../components/ExpansionCard';
 import GradeTable from '../components/GradeTable';
@@ -164,16 +164,31 @@ const Expansions: React.FC<ExpansionsProps> = ({
                 variant="h5"
                 variantMapping={headingVariantMapping}
               >
-                <Link component={ReactRouterLink} to={`/${selectedCard.isPokemon ? 'pokemon' : 'misc'}#${selectedCard.name}|${selectedCard.id}`}>
-                  {selectedCard.isPokemon ? <FaceIcon /> : <NaturePeopleIcon />}
-                  {' '}
-                  {formatCardName(selectedCard)}
-                </Link>
+                {formatCardName(selectedCard)}
               </Typography>
               <ExpansionCard
                 cardId={selectedCard.id}
                 expansionId={expansionId} 
               />
+              {selectedCard.pokemon ? (
+                <Typography
+                  paragraph
+                  variant="body1"
+                  align="right"
+                >
+                  <Link component={ReactRouterLink} to={`pokemon#${selectedCard.pokemon}`}>
+                    <ArrowRightAltIcon />
+                    {' '}
+                    Find other
+                    {' '}
+                    <FaceIcon />
+                    {' '}
+                    {selectedCard.pokemon}
+                    {' '}
+                    cards...
+                  </Link>
+                </Typography>
+              ) : undefined}
             </>
           ) : (
             <>

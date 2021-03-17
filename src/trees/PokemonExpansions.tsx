@@ -24,6 +24,7 @@ import {
 import Box from '@material-ui/core/Box';
 import Link from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
+import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt';
 import StyleIcon from '@material-ui/icons/Style';
 import withSingleContentLoad from '../hocs/withSingleContentLoad';
 import AutoComplete from '../components/AutoComplete';
@@ -198,16 +199,25 @@ const PokemonExpansions: React.FC<PokemonExpansionsProps> = ({
           >
             {formatCardSimpleName(selectedCard, { defaultName: pokemon, numberParens: false, })} 
             {' · '}
-            <Link component={ReactRouterLink} to={`/expansions#${selectedCard.expansion.id}|${selectedCard.id}`}>
-              <StyleIcon />
-              {' '}
-              {formatExpansionName(selectedCard.expansion)}
-            </Link>
+            {formatExpansionName(selectedCard.expansion)}
           </Typography>
           <ExpansionCard
             cardId={selectedCard.id}
             expansionId={selectedCard.expansion.id} 
           />
+          <Typography
+            paragraph
+            variant="body1"
+            align="right"
+          >
+            <Link component={ReactRouterLink} to={`/expansions#${selectedCard.expansion.id}`}>
+              <ArrowRightAltIcon />
+              {' '}
+              <StyleIcon />
+              {' '}
+              {formatExpansionName(selectedCard.expansion)}
+            </Link>
+          </Typography>
         </Box>
       ) : undefined}
     </Box>
