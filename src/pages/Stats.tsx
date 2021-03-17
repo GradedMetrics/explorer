@@ -1,9 +1,14 @@
 import React from 'react';
 import {
+  Link as ReactRouterLink,
+} from 'react-router-dom';
+import {
   gradeHistory,
 } from '../types';
+import Link from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
 import BubbleChartIcon from '@material-ui/icons/BubbleChart';
+import LocalFloristIcon from '@material-ui/icons/LocalFlorist';
 import GradeTable from '../components/GradeTable';
 import withSingleContentLoad from '../hocs/withSingleContentLoad';
 import {
@@ -50,7 +55,21 @@ const Stats: React.FC<StatsProps> = ({
         paragraph
         variant="body1"
       >
-        PSA has graded <strong>{totalCards?.toLocaleString()}</strong> unique Pokémon cards spanning <strong>{totalSets?.toLocaleString()}</strong> sets.
+        PSA has graded <strong>{totalCards?.toLocaleString()}</strong> unique Pokémon cards spanning <strong>{totalSets?.toLocaleString()}</strong>* sets.
+      </Typography>
+      <Typography
+        paragraph
+        variant="body2"
+      >
+        * This includes over 200 normalized sets (i.e. where PSA bundle 1st Edition, Shadowless and Unlimited Base Set cards into one mammoth &ldquo;Pokemon Game&rdquo; set, this app splits those into multiple smaller sets). For more information, please see the
+        {' '}
+        <Link component={ReactRouterLink} to="/#normalization">
+          <LocalFloristIcon fontSize="small" />
+          {' '}
+          Data Normalization
+        </Link>
+        {' '}
+        section on the home page.
       </Typography>
       <GradeTable
         history={history}

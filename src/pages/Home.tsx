@@ -202,7 +202,7 @@ const Home = () => {
         </Box>
       </Box>
       <Box my={2}>
-        <Typography variant="h5" gutterBottom variantMapping={headingVariantMapping}>
+        <Typography variant="h5" gutterBottom variantMapping={headingVariantMapping} id="normalization">
           Data Normalization
         </Typography>
         <Typography variant="body1" paragraph>
