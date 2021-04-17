@@ -183,7 +183,7 @@ export const getGradeChangeOverTime: ((history: gradeHistory[]) => gradeChangeOv
     const weeksSinceLastUpdate = Math.floor((now - latest) / WEEK_MILLISECONDS);
 
     weekly = {};
-    monthly = weeksSinceLastUpdate <= 5 ? history[5 - weeksSinceLastUpdate].grades : {};
+    monthly = weeksSinceLastUpdate <= 5 ? history[5 - weeksSinceLastUpdate]?.grades : {};
     yearly = history[51 - weeksSinceLastUpdate]?.grades;
   }
 
