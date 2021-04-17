@@ -3,6 +3,7 @@ export type card = {
   name: string
   number?: string
   pokemon?: string
+  psaName?: string
   total: number
   variants?: string[]
   year: string
@@ -14,6 +15,7 @@ export type cardSimple = {
   number?: string
   popularity: number
   psa10Pop: number
+  psaName?: string
   set: string
   total: number
   variant?: string[]
@@ -26,6 +28,7 @@ export type cardExpanded = {
   number?: string
   popularity: number
   psa10Pop: number
+  psaName?: string
   total: number
   variant?: string[]
 }
@@ -112,11 +115,14 @@ export type pokemon = {
   language?: string
   name: string
   number?: number
+  psaName?: string
   translation?: string
 }
 
 export type pokemonData = {
   data: cardSimple[]
+  grades: grades
+  history: gradeHistory[]
   name: string
   total: number
 }
@@ -128,6 +134,8 @@ export type pokemonExpansion = {
 
 export type mappedPokemonData = {
   data: cardExpanded[]
+  grades: grades
+  history: gradeHistory[]
   name: string
   total: number
 }
@@ -139,6 +147,7 @@ export type cardRanking = {
   name: string
   number?: string
   popIncrease: number
+  psaName?: string
   total: number
   variants?: string[]
 }

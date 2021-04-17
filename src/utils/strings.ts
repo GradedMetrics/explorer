@@ -16,6 +16,7 @@ import {
 export const formatCardName: ((card: card | cardRanking) => string) = ({
   name,
   number,
+  psaName,
   variants,
 }) => {
   const parts = [];
@@ -27,6 +28,10 @@ export const formatCardName: ((card: card | cardRanking) => string) = ({
   }
 
   parts.push(name);
+
+  if (psaName) {
+    parts.push(`“${psaName}”`);
+  }
 
   if (Array.isArray(variants)) {
     parts.push(`{${variants.join(', ')}}`);
@@ -51,6 +56,7 @@ export const formatCardSimpleName: ((
 ) => string) = ({
   name,
   number,
+  psaName,
   variant,
 }, options) => {
   const {
@@ -62,6 +68,10 @@ export const formatCardSimpleName: ((
 
   if (number) {
     parts.push(numberParens ? `(${number})` : number);
+  }
+
+  if (psaName) {
+    parts.push(`“${psaName}”`);
   }
 
   if (Array.isArray(variant)) {
@@ -112,20 +122,33 @@ export const formatExpansionName: ((
     return parts.join(' ');
   }
 
+type formatPokemonOptions = {
+  hideNumber?: boolean
+}
+
 /**
  * Generate a human-readable Pokémon name from a Pokémon object.
  * @param {pokemon} pokemon The Pokémon object.
  * @returns {string} The formatted Pokémon name.
  */
-export const formatPokemonName: ((pokemon: pokemon) => string) = ({
+export const formatPokemonName: ((pokemon: pokemon, options?: formatPokemonOptions) => string) = ({
   language,
   name,
   number,
+  psaName,
   translation,
-}) => {
+}, options = {}) => {
+  const {
+    hideNumber = false,
+  } = options;
+
+  if (psaName) {
+    console.log(psaName);
+  }
+
   const parts = [];
 
-  if (number) {
+  if (!hideNumber && number) {
     parts.push(number);
     parts.push('-');
   }
@@ -214,6 +237,41 @@ export const getDynamicCardSearchPlaceholder = (cards: card[]): string => {
   if (variants.length) {
     parts.push(getRandomArrayEntry(variants));
   }
+
+  return `${parts.join(' or ')} ...`;
+}
+
+export const getDynamicCardExpandedSearchPlaceholder = (cards: cardExpanded[]): string => {
+  const getRandomArrayEntry = (arr: any[]): any => {
+    return arr[Math.floor(Math.random() * arr.length)];
+  }
+
+  if (!cards.length) {
+    return 'No results found?';
+  }
+
+  const parts = [];
+
+  // Cards with numbers.
+  const numbered = cards.filter(card => card.number !== undefined);
+  if (numbered.length) {
+    parts.push(getRandomArrayEntry(numbered).number);
+  }
+
+  // Card variants.
+  const variants = cards.filter(card => Array.isArray(card.variant) && card.variant.length).reduce((arr: any[], { variant: variants }) => {
+    const unique = variants!.filter(entry => arr.indexOf(entry) === -1);
+    return [
+      ...arr,
+      ...unique,
+    ];
+  }, []) as string[];
+  if (variants.length) {
+    parts.push(getRandomArrayEntry(variants));
+  }
+
+  // Card expansion.
+  parts.push(getRandomArrayEntry(cards).expansion.name);
 
   return `${parts.join(' or ')} ...`;
 }

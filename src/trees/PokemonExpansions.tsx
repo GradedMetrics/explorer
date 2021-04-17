@@ -15,6 +15,7 @@ import {
   formatExpansionName,
   formatPokemonName,
   formatYear,
+  getDynamicCardExpandedSearchPlaceholder,
   urlFriendlyName,
 } from '../utils/strings';
 import {
@@ -29,6 +30,7 @@ import StyleIcon from '@material-ui/icons/Style';
 import withSingleContentLoad from '../hocs/withSingleContentLoad';
 import AutoComplete from '../components/AutoComplete';
 import ExpansionCard from '../components/ExpansionCard';
+import GradeTable from '../components/GradeTable';
 import Loading from '../components/Loading';
 import Tooltip from '../components/Tooltip';
 
@@ -55,8 +57,12 @@ const PokemonExpansions: React.FC<PokemonExpansionsProps> = ({
 
   const {
     data,
+    grades,
+    history: gradeHistory,
     total,
   } = content;
+
+  console.log(content);
 
   React.useEffect(() => {
     const {
@@ -153,6 +159,8 @@ const PokemonExpansions: React.FC<PokemonExpansionsProps> = ({
     return <Loading />;
   }
 
+  console.log(selectedCard);
+
   return (
     <Box my={2}>
       <Typography
@@ -188,36 +196,51 @@ const PokemonExpansions: React.FC<PokemonExpansionsProps> = ({
           return formatYear(expansion.year);
         }}
         onChange={handleSelect}
-        placeholder="123 or Holofoil or Japanese or Gold Star ..."
+        placeholder={getDynamicCardExpandedSearchPlaceholder(data)}
       />
-      {!isLoading && selectedCard ? (
+      {!isLoading ? (
         <Box mt={2}>
-          <Typography
-            paragraph
-            variant="h5"
-            variantMapping={headingVariantMapping}
-          >
-            {formatCardSimpleName(selectedCard, { defaultName: pokemon, numberParens: false, })} 
-            {' · '}
-            {formatExpansionName(selectedCard.expansion)}
-          </Typography>
-          <ExpansionCard
-            cardId={selectedCard.id}
-            expansionId={selectedCard.expansion.id} 
-          />
-          <Typography
-            paragraph
-            variant="body1"
-            align="right"
-          >
-            <Link component={ReactRouterLink} to={`/expansions#${selectedCard.expansion.id}`}>
-              <ArrowRightAltIcon />
-              {' '}
-              <StyleIcon />
-              {' '}
-              {formatExpansionName(selectedCard.expansion)}
-            </Link>
-          </Typography>
+          {selectedCard ? (
+            <>
+              <Typography
+                paragraph
+                variant="h5"
+                variantMapping={headingVariantMapping}
+              >
+                {formatCardSimpleName(selectedCard, { defaultName: pokemon, numberParens: false, })} 
+                {' · '}
+                {formatExpansionName(selectedCard.expansion)}
+              </Typography>
+              <ExpansionCard
+                cardId={selectedCard.id}
+                expansionId={selectedCard.expansion.id} 
+              />
+              <Typography
+                paragraph
+                variant="body1"
+                align="right"
+              >
+                <Link component={ReactRouterLink} to={`/expansions#${selectedCard.expansion.id}`}>
+                  <ArrowRightAltIcon />
+                  {' '}
+                  <StyleIcon />
+                  {' '}
+                  {formatExpansionName(selectedCard.expansion)}
+                </Link>
+              </Typography>
+            </>
+          ) : (
+            <>
+              <Typography
+                paragraph
+                variant="h5"
+                variantMapping={headingVariantMapping}
+              >
+                All Grades
+              </Typography>
+              <GradeTable history={gradeHistory} total={grades} />
+            </>
+          )}
         </Box>
       ) : undefined}
     </Box>

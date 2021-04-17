@@ -59,7 +59,7 @@ const MiscList = () => {
         apiFn={getMiscList}
         id="misc-list"
         label="Search for a card... (e.g. Lass)"
-        optionFormatter={(pokemon: pokemon) => formatPokemonName(pokemon)}
+        optionFormatter={(pokemon: pokemon) => formatPokemonName(pokemon, { hideNumber: true })}
         placeholder="Pokemon Collector or German ..."
         renderResult={(selectedPokemon: pokemon) => (
           <PokemonExpansions base="misc" name={selectedPokemon.name} />
