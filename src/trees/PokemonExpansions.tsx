@@ -29,6 +29,7 @@ import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt';
 import StyleIcon from '@material-ui/icons/Style';
 import withSingleContentLoad from '../hocs/withSingleContentLoad';
 import AutoComplete from '../components/AutoComplete';
+import CardName from '../components/CardName';
 import ExpansionCard from '../components/ExpansionCard';
 import GradeTable from '../components/GradeTable';
 import Loading from '../components/Loading';
@@ -62,7 +63,15 @@ const PokemonExpansions: React.FC<PokemonExpansionsProps> = ({
     total,
   } = content;
 
-  console.log(content);
+  React.useEffect(() => {
+    if (!data) {
+      return;
+    }
+
+    if (data.length === 1) {
+      setSelectedCard(data[0]);
+    }
+  }, [data]);
 
   React.useEffect(() => {
     const {
@@ -159,8 +168,6 @@ const PokemonExpansions: React.FC<PokemonExpansionsProps> = ({
     return <Loading />;
   }
 
-  console.log(selectedCard);
-
   return (
     <Box my={2}>
       <Typography
@@ -186,6 +193,7 @@ const PokemonExpansions: React.FC<PokemonExpansionsProps> = ({
       </Typography>
       <AutoComplete
         defaultSelectedOption={selectedCard}
+        disabled={data.length === 1}
         id={`${pokemon}-expansions`}
         label={`Select a ${pokemon} card...`}
         options={data}
@@ -202,15 +210,13 @@ const PokemonExpansions: React.FC<PokemonExpansionsProps> = ({
         <Box mt={2}>
           {selectedCard ? (
             <>
-              <Typography
-                paragraph
+              <CardName
+                card={selectedCard}
+                defaultName={pokemon}
+                showExpansion
                 variant="h5"
                 variantMapping={headingVariantMapping}
-              >
-                {formatCardSimpleName(selectedCard, { defaultName: pokemon, numberParens: false, })} 
-                {' · '}
-                {formatExpansionName(selectedCard.expansion)}
-              </Typography>
+              />
               <ExpansionCard
                 cardId={selectedCard.id}
                 expansionId={selectedCard.expansion.id} 

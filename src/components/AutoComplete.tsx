@@ -16,6 +16,7 @@ import Loading from './Loading';
 
 type AutoCompleteProps = {
   defaultSelectedOption?: any
+  disabled?: boolean
   id: string
   helperText?:  string
   label: string
@@ -28,6 +29,7 @@ type AutoCompleteProps = {
 
 const AutoComplete: React.FC<AutoCompleteProps> = ({
   defaultSelectedOption,
+  disabled = false,
   id,
   helperText,
   label,
@@ -70,6 +72,7 @@ const AutoComplete: React.FC<AutoCompleteProps> = ({
     <Box my={4}>
       <MUIAutocomplete
         autoHighlight
+        disabled={disabled}
         getOptionLabel={optionFormatter}
         groupBy={optionGroupFormatter}
         id={id}
