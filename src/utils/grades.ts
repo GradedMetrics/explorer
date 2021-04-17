@@ -175,7 +175,7 @@ export const getGradeChangeOverTime: ((history: gradeHistory[]) => gradeChangeOv
   if (now - Number(history[0].date) <= (WEEK_MILLISECONDS * 2)) {
     // If the history array has been updated in the past week, we can assume the entries to represent the weeks leading up to this point.
     weekly = history[0].grades;
-    monthly = history[5]?.grades;
+    monthly = history[4]?.grades;
     yearly = history[51]?.grades;
   } else {
     // Otherwise we need to calculate how many weeks have passed since the last history change occurred.
