@@ -6,6 +6,8 @@ import {
 import Box from '@material-ui/core/Box';
 import Link from '@material-ui/core/Link';
 import Paper from '@material-ui/core/Paper';
+import Tab from '@material-ui/core/Tab';
+import Tabs from '@material-ui/core/Tabs';
 import Typography from '@material-ui/core/Typography';
 import AddIcon from '@material-ui/icons/Add';
 import {
@@ -30,16 +32,8 @@ type RankSegmentProps = {
   title: string
 }
 
-const CustomBox = styled.div({
-  background: 'linear-gradient(135deg, rgba(205,238,143,0.1) 0%,rgba(255,246,143,0.1) 100%)',
-});
-
-const CustomH3 = styled.h3({
-  fontWeight: 300,
-})
-
 const RankListElement = styled.ol({
-  listStyle: 'none',
+  listStyle: 'decimal',
   margin: '16px 0 0',
   padding: 0,
 
@@ -62,20 +56,20 @@ const RankListElement = styled.ol({
 
 type RankListProps = {
   data?: cardRanking[] | expansionRanking[]
+  hidden: boolean
 };
 
 const RankList: React.FC<RankListProps> = ({
   data,
+  hidden,
 }) => {
-  if (!Array.isArray(data) || !data.length) {
+  if (hidden || !Array.isArray(data) || !data.length) {
     return <></>;
   }
 
-  console.log(data);
-
   if ((data[0] as cardRanking).set) {
     return (
-      <RankListElement>
+      <Box component={RankListElement} my={2} p={2}>
         {(data as cardRanking[]).map((card, index) => {
           return (
             <Typography
@@ -94,12 +88,12 @@ const RankList: React.FC<RankListProps> = ({
             </Typography>
           )
         })}
-      </RankListElement>
+      </Box>
     )
   }
 
   return (
-    <RankListElement>
+    <Box component={RankListElement} my={2} p={2}>
       {(data as expansionRanking[]).map((expansion, index) => {
         return (
           <Typography
@@ -118,7 +112,7 @@ const RankList: React.FC<RankListProps> = ({
           </Typography>
         )
       })}
-    </RankListElement>
+    </Box>
   )
 }
 
@@ -128,6 +122,8 @@ const RankSegment: React.FC<RankSegmentProps> = ({
   yearly,
   title,
 }) => {
+  const [selected, setSelected] = React.useState<number>(0);
+
   return (
     <Box mt={4} mb={6}>
       <Typography
@@ -137,45 +133,20 @@ const RankSegment: React.FC<RankSegmentProps> = ({
       >
         {title}
       </Typography>
-      <Paper>
-        <Box component={CustomBox} my={2} p={4}>
-          <Typography
-            component={CustomH3}
-            gutterBottom
-            variant="h6"
-            variantMapping={headingVariantMapping}
-          >
-            In the past week...
-          </Typography>
-          <RankList data={weekly} />
-        </Box>
-      </Paper>
-      <Paper>
-        <Box component={CustomBox} my={2} p={4}>
-          <Typography
-            component={CustomH3}
-            gutterBottom
-            variant="h6"
-            variantMapping={headingVariantMapping}
-          >
-            In the past month...
-          </Typography>
-          <RankList data={monthly} />
-        </Box>
-      </Paper>
-      <Paper>
-        <Box component={CustomBox} my={2} p={4}>
-          <Typography
-            component={CustomH3}
-            gutterBottom
-            variant="h6"
-            variantMapping={headingVariantMapping}
-          >
-            In the past year...
-          </Typography>
-          <RankList data={yearly} />
-        </Box>
-      </Paper>
+      <Tabs
+        value={selected}
+        indicatorColor="primary"
+        textColor="primary"
+        onChange={(_, newValue) => setSelected(newValue)}
+        aria-label="ranking data"
+      >
+        <Tab label="Weekly" />
+        <Tab label="Monthly" />
+        <Tab label="Yearly" />
+      </Tabs>
+      <RankList data={weekly} hidden={selected !== 0} />
+      <RankList data={monthly} hidden={selected !== 1} />
+      <RankList data={yearly} hidden={selected !== 2} />
     </Box>
   )
 }

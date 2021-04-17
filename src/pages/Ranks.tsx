@@ -2,6 +2,7 @@ import React from 'react';
 import {
   ranking,
 } from '../types';
+import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
 import FormatListNumberedIcon from '@material-ui/icons/FormatListNumbered';
 import RankSegment from '../components/RankSegment';
@@ -60,6 +61,7 @@ const Ranks: React.FC<RanksProps> = ({
         yearly={highestPerformingYearlyCards}
         title="Top 3 most graded cards..."
       />
+      <Divider />
       <RankSegment
         monthly={highestPerformingMonthlySets}
         weekly={highestPerformingWeeklySets}
