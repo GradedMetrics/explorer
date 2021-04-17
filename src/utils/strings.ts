@@ -71,7 +71,7 @@ export const formatCardSimpleName: ((
   }
 
   if (psaName) {
-    parts.push(`“${psaName}”`);
+    parts[0] += '*';
   }
 
   if (Array.isArray(variant)) {
@@ -203,7 +203,7 @@ export const formatYear: ((year: string) => string) = (year) => {
 /**
  * Generate dynamic search placeholder text based on an array of cards.
  * This takes an array like `[{ number: 4, name: 'Pikachu', variants: ['Reverse'] }, ...]` and
- * generates a string like `4 or Pikachu or Reverse ...`
+ * generates a string like `e.g. 4 or Pikachu or Reverse ...`
  * @param {card[]} cards An array of cards to generate the placeholder from.
  */
 export const getDynamicCardSearchPlaceholder = (cards: card[]): string => {
@@ -215,30 +215,48 @@ export const getDynamicCardSearchPlaceholder = (cards: card[]): string => {
     return 'No results found?';
   }
 
-  const parts = [];
+  const parts: any[] = [];
 
-  // Cards with numbers.
-  const numbered = cards.filter(card => card.number !== undefined);
-  if (numbered.length) {
-    parts.push(getRandomArrayEntry(numbered).number);
+  const populatePartsArray = () => {
+    // Cards with numbers.
+    const numbered = cards.filter(card => card.number !== undefined);
+    if (numbered.length) {
+      parts.push(getRandomArrayEntry(numbered).number);
+    }
+  
+    // Card names.
+    parts.push(getRandomArrayEntry(cards).name);
+  
+    // Card variants.
+    const variants = cards.filter(card => Array.isArray(card.variants) && card.variants.length).reduce((arr: any[], { variants }) => {
+      const unique = variants!.filter(variant => arr.indexOf(variant) === -1);
+      return [
+        ...arr,
+        ...unique,
+      ];
+    }, []);
+    if (variants.length) {
+      parts.push(getRandomArrayEntry(variants));
+    }
   }
 
-  // Card names.
-  parts.push(getRandomArrayEntry(cards).name);
+  populatePartsArray();
 
-  // Card variants.
-  const variants = cards.filter(card => Array.isArray(card.variants) && card.variants.length).reduce((arr: any[], { variants }) => {
-    const unique = variants!.filter(variant => arr.indexOf(variant) === -1);
-    return [
-      ...arr,
-      ...unique,
-    ];
-  }, []);
-  if (variants.length) {
-    parts.push(getRandomArrayEntry(variants));
+  if (cards.length > 1 && parts.length === 1) {
+    /** 
+     * If there was only one placeholder suggestion but multiple cards exist, grab another card to
+     * include as well. This prevents ending up with a result like "e.g. Pikachu ..." and instead
+     * gives a result like "e.g. Pikachu or Dugtrio ...".
+     */
+    populatePartsArray();
+    
+    if (parts[0] === parts[1]) {
+      // This ensures we don't end up with a placeholder like "e.g. Hitmonchan or Hitmonchan ...".
+      delete parts[1];
+    }
   }
 
-  return `${parts.join(' or ')} ...`;
+  return `e.g. ${parts.join(' or ')} ...`;
 }
 
 export const getDynamicCardExpandedSearchPlaceholder = (cards: cardExpanded[]): string => {
