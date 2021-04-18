@@ -295,6 +295,13 @@ export const getDynamicCardExpandedSearchPlaceholder = (cards: cardExpanded[]): 
 }
 
 /**
+ * Convert a shortened identifier into its longer number version.
+ * @param {string} identifier The identifer returned from the API.
+ * @returns {number} The raw identifier used by PSA.
+ */
+export const getRawIdentifier: (identifier: string) => number = (identifier) => parseInt(identifier.split('-')[0], 36);
+
+/**
  * This converts the name of a piece of content into a URL-friendly name.
  * This needs to match how the API formats friendly names to keep the data consistent.
  * @param {string} name The name to make friendly.

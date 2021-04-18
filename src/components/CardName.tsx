@@ -16,7 +16,7 @@ const headingVariantMapping = {
   h6: 'h3',
 }
 
-const Asterisk = withTheme(styled('span')`
+const Asterisk = withTheme(styled.span`
   color: ${props => props.theme.palette.secondary.main}
 `);
 
@@ -68,7 +68,7 @@ const CardName: React.FC<CardNameProps> = ({
         <Typography variant="body2">
           <Asterisk>*</Asterisk>
           {' '}
-          PSA label this card as &ldquo;{psaName}&rdquo;. This has been renamed either as a correction or to match other similar cards.
+          PSA label this card as &ldquo;{psaName}&rdquo;. This has been renamed here either as a correction or to match similar cards.
         </Typography>
       ) : undefined}
     </Box>

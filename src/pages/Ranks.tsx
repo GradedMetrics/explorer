@@ -59,14 +59,14 @@ const Ranks: React.FC<RanksProps> = ({
         monthly={highestPerformingMonthlyCards}
         weekly={highestPerformingWeeklyCards}
         yearly={highestPerformingYearlyCards}
-        title="Top 3 most graded cards..."
+        title="Most graded cards..."
       />
       <Divider />
       <RankSegment
         monthly={highestPerformingMonthlySets}
         weekly={highestPerformingWeeklySets}
         yearly={highestPerformingYearlySets}
-        title="Top 3 most graded sets..."
+        title="Most graded sets..."
       />
     </>
   );

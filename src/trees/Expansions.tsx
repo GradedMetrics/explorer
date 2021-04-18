@@ -3,6 +3,8 @@ import {
   Link as ReactRouterLink,
   useHistory,
 } from 'react-router-dom';
+import styled from 'styled-components';
+import { withTheme } from "@material-ui/core/styles"
 import {
   card,
   expansion,
@@ -15,6 +17,7 @@ import {
   formatCardName,
   formatExpansionName,
   getDynamicCardSearchPlaceholder,
+  getRawIdentifier,
 } from '../utils/strings';
 import {
   urlFriendlyCardName,
@@ -29,12 +32,17 @@ import AutoComplete from '../components/AutoComplete';
 import ExpansionCard from '../components/ExpansionCard';
 import GradeTable from '../components/GradeTable';
 import Loading from '../components/Loading';
+import PSALogo from '../assets/psa-logo.png';
 
 const headingVariantMapping = {
   h4: 'h1',
   h5: 'h2',
   h6: 'h3',
 }
+
+const Muted = withTheme(styled.span`
+  color: ${props => { console.log(props); return props.theme.palette.text.secondary }}
+`);
 
 type ExpansionsProps = {
   content: expansionDetailed,
@@ -200,6 +208,25 @@ const Expansions: React.FC<ExpansionsProps> = ({
                 All Grades
               </Typography>
               <GradeTable history={gradeHistory} total={total} />
+              <Typography
+                paragraph
+                variant="body1"
+                align="right"
+              >
+                <Link
+                  href={`https://www.psacard.com/pop/tcg-cards/!/!/${getRawIdentifier(expansionId)}`}
+                  target="blank"
+                  rel="noopener"
+                >
+                  <ArrowRightAltIcon />
+                  {' '}
+                  <img src={PSALogo} height="14px" style={{verticalAlign: '-6%'}} /> 
+                  {' '}
+                  View the set on PSA's pop report
+                </Link>
+                {' '}
+                <Muted>(opens in new tab)</Muted>
+              </Typography>
             </>
           )}
         </Box>

@@ -42,23 +42,26 @@ const ExpansionList = () => {
       </Typography>
       <Typography
         paragraph
-        variant="body1"
+        variant="body2"
       >
-        A fair amount of work has been put in to make PSA's data more usable, for example where they bundle all 1st Edition and unlimited Neo Genesis cards into one big set, this app separates them as
+        A fair amount of work has been put in to make PSA's data more usable. As an example, PSA refer to Pokémon's Base Set as &lsquo;Pokemon Game&rsquo; and bundle all 1st Edition, shadowless and unlimited cards (to name a few) into one big set; this app renames the set and separates it into different subsets:
         {' '}
-        <Link component={ReactRouterLink} to="/expansions#1acv-1">
-          Neo Genesis (1st Edition)
+        <Link component={ReactRouterLink} to="/expansions#18ll-1">
+          Base Set (1st Edition)
+        </Link>,
+        {' '}
+        <Link component={ReactRouterLink} to="/expansions#18ll-3">
+          Base Set (Shadowless)
         </Link>
         {' '}
         and
         {' '}
-        <Link component={ReactRouterLink} to="/expansions#1acv">
-          Neo Genesis
+        <Link component={ReactRouterLink} to="/expansions#18ll">
+          Base Set
         </Link>.
       </Typography>
       <SearchPage
         apiFn={getExpansions}
-        helperText="The expansion names are what PSA has chosen to display on their card labels and may not accurately represent a Pokémon expansion. Some work has been put in to try and correct this (i.e. the expansion PSA refers to as &ldquo;Pokemon Game&rdquo; will be found here by searching for &ldquo;Base Set&rdquo; instead)."
         id="expansion-select"
         label="Search for an expansion... (e.g. Base Set)"
         optionFormatter={(expansion: expansion) => formatExpansionName(expansion)}

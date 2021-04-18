@@ -36,7 +36,7 @@ const pages = [{
 }, {
   icon: <FormatListNumberedIcon />,
   path: '/rankings',
-  text: 'Ranks'
+  text: 'Top 10'
 }];
 
 const Navigation = () => {
