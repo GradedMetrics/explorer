@@ -4,7 +4,7 @@ import {
   useHistory,
 } from 'react-router-dom';
 import styled from 'styled-components';
-import { withTheme } from "@material-ui/core/styles"
+import { withTheme } from '@material-ui/core/styles';
 import {
   card,
   expansion,

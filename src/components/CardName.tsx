@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { withTheme } from "@material-ui/core/styles"
+import { withTheme } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 import Typography, { TypographyProps } from '@material-ui/core/Typography';
 import {
@@ -9,12 +9,6 @@ import {
 import {
   cardExpanded,
 } from '../types';
-
-const headingVariantMapping = {
-  h4: 'h1',
-  h5: 'h2',
-  h6: 'h3',
-}
 
 const Asterisk = withTheme(styled.span`
   color: ${props => props.theme.palette.secondary.main}

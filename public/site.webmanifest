@@ -1,6 +1,6 @@
 {
-    "name": "Explorer",
-    "short_name": "Explorer",
+    "name": "Grade Explorer",
+    "short_name": "Grade Explorer",
     "icons": [
         {
             "src": "/android-chrome-192x192.png",

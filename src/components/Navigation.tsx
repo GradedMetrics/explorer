@@ -1,10 +1,16 @@
 import React from 'react';
 import {
+  NavLink as ReactRouterLink,
   useHistory,
   withRouter,
 } from 'react-router-dom';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
+import AppBar from '@material-ui/core/AppBar';
+import Box from '@material-ui/core/Box';
+import Link from '@material-ui/core/Link';
+import Paper from '@material-ui/core/Paper';
+import { makeStyles } from '@material-ui/core/styles';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
 import BubbleChartIcon from '@material-ui/icons/BubbleChart';
 import FaceIcon from '@material-ui/icons/Face';
 import FormatListNumberedIcon from '@material-ui/icons/FormatListNumbered';
@@ -13,11 +19,42 @@ import NaturePeopleIcon from '@material-ui/icons/NaturePeople';
 import StyleIcon from '@material-ui/icons/Style';
 import Loading from './Loading';
 
+const useStyles = makeStyles((theme) => {
+  console.log(theme);
+  return ({
+  link: {
+    borderBottom: '2px solid transparent',
+    color: theme.palette.text.primary,
+    margin: theme.spacing(1),
+    padding: theme.spacing(1),
+    textAlign: 'center',
+    textDecoration: 'none',
+    width: 80,
+
+    '&:hover, &:focus': {
+      borderBottomColor: theme.palette.grey[300],
+      textDecoration: 'none',
+    },
+  },
+  linkActive: {
+    borderBottomColor: theme.palette.secondary.main,
+    color: theme.palette.text.primary,
+
+    '&:hover, &:focus': {
+      borderBottomColor: theme.palette.secondary.main,
+    },
+  },
+  linkText: {
+    display: 'block',
+    fontSize: 18,
+    marginTop: theme.spacing(1),
+  },
+  toolbar: {
+    justifyContent: 'center',
+  },
+})});
+
 const pages = [{
-  icon: <LocalFloristIcon />,
-  path: '/',
-  text: 'Home',
-}, {
   icon: <StyleIcon />,
   path: '/expansions',
   text: 'Sets',
@@ -40,73 +77,29 @@ const pages = [{
 }];
 
 const Navigation = () => {
-  const history = useHistory();
-  const [isLoading, setLoading] = React.useState<boolean>(true);
-  const [value, setValue] = React.useState<number>(0);
-
-  React.useEffect(() => {
-    setValue(pages.findIndex(({ path }) => path === history.location.pathname));
-    setLoading(false);
-    //eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  React.useEffect(() => {
-    if (isLoading || value === undefined) {
-      return;
-    }
-
-    const {
-      pathname,
-    } = history.location;
-
-    const selectedPagePath = pages[value].path;
-
-    if (pathname === selectedPagePath) {
-      return;
-    }
-
-    history.replace({
-      pathname: selectedPagePath,
-    });
-    //eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [value]);
-
-  React.useEffect(() => {
-    const {
-      pathname,
-    } = history.location;
-
-    const pageIndexFromPathname = pages.findIndex(({ path }) => path === pathname);
-
-    if (value === pageIndexFromPathname) {
-      return;
-    }
-
-    setValue(pageIndexFromPathname);
-  })
-
-  if (isLoading) {
-    return <Loading />
-  }
+  const classes = useStyles();
 
   return (
-    <Tabs
-      value={value}
-      indicatorColor="primary"
-      textColor="primary"
-      onChange={(event, newValue) => setValue(newValue)}
-      aria-label="Explorer navigation links"
-      variant="fullWidth"
-    >
-      {pages.map(({ icon, text }, index) => (
-        <Tab
-          key={`tab-${index}`}
-          icon={icon}
-          label={text}
-          value={index}
-        />
-      ))}
-    </Tabs>
+    <Box alignContent="center">
+      <Toolbar className={classes.toolbar} disableGutters>
+        {pages.map(({ icon, path, text }) => (
+          <Link
+            key={path}
+            component={ReactRouterLink}
+            activeClassName={classes.linkActive}
+            className={classes.link}
+            to={path}
+          >
+            <Typography component="span">
+              {icon}
+              <Typography component="span" className={classes.linkText}>
+                {text}
+              </Typography>
+            </Typography>
+          </Link>
+        ))}
+      </Toolbar>
+    </Box>
   );
 }
 

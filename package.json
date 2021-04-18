@@ -1,5 +1,5 @@
 {
-  "name": "explorer",
+  "name": "grade-explorer",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

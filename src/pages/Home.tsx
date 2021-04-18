@@ -9,6 +9,7 @@ import GradeTable, {
   historicBackground,
   totalBackground,
 } from '../components/GradeTable';
+import PSALogo from '../assets/psa-logo.png';
 
 const headingVariantMapping = {
   h4: 'h1',
@@ -55,7 +56,7 @@ const fakeGradeTotal = {
     qualifier: 3,
   },
   '8': {
-    half: 10
+    half: 17
   }
 };
 
@@ -83,7 +84,7 @@ fakeGradeHistory[0] = {
 }
 
 // 5 weeks
-fakeGradeHistory[5] = {
+fakeGradeHistory[4] = {
   date: Number(new Date()),
   grades: {
     total: {
@@ -115,7 +116,7 @@ fakeGradeHistory[51] = {
       grade: -10,
     },
     '8': {
-      half: -10,
+      half: -15,
     }
   }
 }
@@ -133,18 +134,24 @@ const Home = () => {
         Welcome!
       </Typography>
       <Typography variant="body1" paragraph>
-        This app aims to add quality of life improvements to <Link href="https://psacard.com" rel="noreferrer noopener">PSA</Link>'s population report. It only focusses on Pokémon cards and ignores autograph grades.
-        It is not associated with PSA in any way.
+        Professional Sports Authenticator (<img src={PSALogo} height="16px" style={{verticalAlign: '-6%'}} alt="PSA" />; <Link href="https://psacard.com" rel="noopener">https://psacard.com</Link>)
+        {' '}
+        is the largest and most trusted third-party trading card authentication and grading company in the world - or at least that's what it says on their website.
+        {' '}
+        They've been grading Pokémon cards for over 20 years and have graded well over 1 million of them.
       </Typography>
       <Typography variant="body1" paragraph>
-        This app is in its infancy - more content and features will be added over time.
+        This web app - which isn't associated with PSA in any way - aims to add quality of life improvements to the <Link href="https://www.psacard.com/pop" rel="noopener">PSA Population Report</Link>, focussing specifically on Pokémon cards.
       </Typography>
       <Typography variant="body1" paragraph>
         Use the tabs above to navigate between the different sections.
       </Typography>
+      <Typography variant="body1" paragraph>
+        This app is in its infancy - more content and features will be added over time.
+      </Typography>
       <Box my={2}>
         <Typography variant="h5" gutterBottom variantMapping={headingVariantMapping}>
-          I need to get in touch!
+          I need to get in touch!!!
         </Typography>
         <Typography variant="body1">
           Have a suggestion? Run into a problem? Message <Link href="https://instagram.com/pichucollector" rel="noreferrer noopener">@pichucollector</Link> on Instagram.
@@ -152,7 +159,7 @@ const Home = () => {
       </Box>
       <Box my={2}>
         <Typography variant="h5" gutterBottom variantMapping={headingVariantMapping}>
-          How does this work?
+          How does this app work?
         </Typography>
         <Typography variant="body1" paragraph>
           Each Pokémon card and Pokémon set features a grade population table which shows the population for each grade that entry has received. This is no different to PSA's own population report, it just adds a layer of separation and displays the data vertically instead of horizontally.
@@ -169,17 +176,17 @@ const Home = () => {
             total={fakeGradeTotal}
           />
           <Typography variant="body1" paragraph>
-            Here the total example population is <Variant>100</Variant>, made up of <Variant>40</Variant> PSA 10 grades, <Variant>3</Variant> PSA 9 qualifier grades, <Variant>20</Variant> PSA 9 grades, and <Variant>10</Variant> PSA 8.5 grades.
+            The Total Graded column reveals that the total example population is <Variant>100</Variant> and is made up of <Variant>40</Variant> PSA 10 grades, <Variant>3</Variant> PSA 9 qualifier grades, <Variant>20</Variant> PSA 9 grades, and <Variant>17</Variant> PSA 8.5 grades.
           </Typography>
           <Typography variant="body1" paragraph>
             The
             {' '}
             <Greenie>green background</Greenie>
             {' '}
-            between the grade name and the population represents the overall percentage that grade makes up in relation to the total population, allowing for quickly seeing which grades have the largest (or smallest) shares - for the PSA 10 grade, <Variant>4</Variant> represents <Variant>40%</Variant> of the total population, so this green background makes up 40% of the total area.
+            between the grade name and the population represents the overall percentage that grade makes up in relation to the total population, allowing for quickly seeing which grades have the largest (or smallest) shares - the PSA 10 grade, with a population of <Variant>40</Variant>, makes up <Variant>40%</Variant> of the total population meaning this green background makes up 40% of the total area.
           </Typography>
           <Typography variant="body1" paragraph>
-            In the past &lsquo;1 week&rsquo; <Variant>6</Variant> new entries were graded, made up of <Variant>1</Variant> new PSA 10 (accounting for <Variant>2.5%</Variant> of the total PSA 10 population) and <Variant>5</Variant> new PSA 9s (accounting for <Variant>25%</Variant> of the total PSA 9 population). No new PSA 9 qualifier or PSA 8.5 grades were added at all.
+            In the past week, <Variant>6</Variant> new entries were graded, made up of <Variant>1</Variant> new PSA 10 (accounting for <Variant>2.5%</Variant> of the total PSA 10 population) and <Variant>5</Variant> new PSA 9s (accounting for <Variant>25%</Variant> of the total PSA 9 population). No new PSA 9 qualifier or PSA 8.5 grades were added at all.
           </Typography>
           <Hidden smUp>
             <Typography variant="caption" paragraph>
@@ -194,7 +201,7 @@ const Home = () => {
             on each historic grade change represents the overall percentage that grade makes up in relation to all of the other grades achieved in that time period. In the past week the background of the PSA 9 grade is more prominent than that of the PSA 10 grade because it accounted for more of the overall number graded in that period (<Variant>5</Variant>/<Variant>6</Variant> compared with <Variant>1</Variant>/<Variant>6</Variant>).
           </Typography>
           <Typography variant="body1" paragraph>
-            In the past &lsquo;5 weeks&rsquo; <Variant>2</Variant> PSA 10 grades and <Variant>5</Variant> PSA 9 grades have been added along with <Variant>10</Variant> PSA 8.5 grades. These numbers include the numbers from the &lsquo;1 week&rsquo; column, allowing us to say that 1 of the <Variant>2</Variant> PSA 10 grades which appeared in the past 5 weeks was from the past week and the other happened at some point between 5 weeks ago and the end of the week before last. Here the yellow background on the PSA 9 grade is less prominent as the PSA 8.5 grade accounts for a larger share of the total graded in this period. 
+            In the past 5 weeks, <Variant>2</Variant> PSA 10 grades and <Variant>5</Variant> PSA 9 grades have been added along with <Variant>10</Variant> PSA 8.5 grades. These numbers include the numbers from the &lsquo;1 week&rsquo; column, allowing us to say that 1 of the <Variant>2</Variant> PSA 10 grades which appeared in the past 5 weeks was from the past week and the other happened at some point between 5 weeks ago and the end of the week before last. Here the yellow background on the PSA 9 grade is less prominent as the PSA 8.5 grade accounts for a larger share of the total graded in this period. 
           </Typography>
           <Typography>
             None of the <Variant>3</Variant> PSA 9 qualifier grades were graded in the past 52 weeks, so nothing is displayed in the historic section.
@@ -206,7 +213,7 @@ const Home = () => {
           Data Normalization
         </Typography>
         <Typography variant="body1" paragraph>
-          One of the major quality of life improvements this app deals with is PSA label inconsistencies. There are two different approaches this app takes to dealing with this:
+          One of the major quality of life improvements this app deals with is PSA label inconsistencies. There are several different approaches this app takes to dealing with this:
         </Typography>
         <Box my={2}>
           <Typography variant="h6" gutterBottom variantMapping={headingVariantMapping}>
@@ -224,6 +231,7 @@ const Home = () => {
             <Variant>Shadowless</Variant>,{' '}
             <Variant>Trainer Deck A</Variant>,{' '}
             <Variant>Trainer Deck B</Variant>,{' '}
+            <Variant>&copy; 1999-2000</Variant>,{' '}
             <Variant>No Rarity Symbol</Variant>,{' '}
             <Variant>Blue Back</Variant>,{' '}
             <Variant>Green Back</Variant>,{' '}
@@ -245,7 +253,7 @@ const Home = () => {
             <Variant>Series III</Variant>.
           </Typography>
           <Typography variant="body1" paragraph>
-            In this app, a 1st Edition card will never appear in the same set as an Unlimited card or a Shadowless card, for example - they'll all be contained within their own single-variant set.
+            The variants above are unique to each set and will only contain cards which include that variant. A 1st Edition card will never appear in an Unlimited set, for example.
           </Typography>
           <Typography variant="body1" paragraph>
             Set variants will appear after a set's name in regular brackets (e.g.
@@ -315,6 +323,14 @@ const Home = () => {
             {' '}&ldquo;
             <Typography variant="body1" color="secondary" variantMapping={{ body1: 'span', }}>Pikachu 025 {'{'}Reverse holofoil{'}'}</Typography>
             &rdquo;).
+          </Typography>
+        </Box>
+        <Box my={2}>
+          <Typography variant="h6" gutterBottom variantMapping={headingVariantMapping}>
+            Typos, Corrections and Conformity
+          </Typography>
+          <Typography variant="body1" paragraph>
+            This app tries its best to correct any typos present in PSA's data, along with making sure commonly-repeated names all conform with one another. A card which has had its name changed in this way will include an asterisk (<Typography variant="body1" color="secondary" variantMapping={{ body1: 'span', }}>*</Typography>) beside its name wherever it appears and will detail what the change was on the card's page.
           </Typography>
         </Box>
       </Box>
