@@ -134,7 +134,7 @@ const Home = () => {
         Welcome!
       </Typography>
       <Typography variant="body1" paragraph>
-        Professional Sports Authenticator (<img src={PSALogo} height="16px" style={{verticalAlign: '-6%'}} alt="PSA" />; <Link href="https://psacard.com" rel="noopener">https://psacard.com</Link>)
+        Professional Sports Authenticator (<img src={PSALogo} height="16px" style={{verticalAlign: '-6%'}} alt="PSA Logo" />; <Link href="https://psacard.com" rel="noopener">https://psacard.com</Link>)
         {' '}
         is the largest and most trusted third-party trading card authentication and grading company in the world - or at least that's what it says on their website.
         {' '}

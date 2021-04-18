@@ -4,18 +4,18 @@ import {
   useHistory,
 } from 'react-router-dom';
 import {
-  cardExpanded,
-  mappedPokemonData,
+  card,
+  pokemonData,
 } from '../types';
 import {
   getPokemon,
 } from '../utils/api';
 import {
-  formatCardSimpleName,
+  formatCardName,
   formatExpansionName,
   formatPokemonName,
   formatYear,
-  getDynamicCardExpandedSearchPlaceholder,
+  getDynamicCardSearchPlaceholder,
   urlFriendlyName,
 } from '../utils/strings';
 import {
@@ -43,7 +43,7 @@ const headingVariantMapping = {
 
 type PokemonExpansionsProps = {
   base?: "misc" | "pokemon" | "trainers",
-  content: mappedPokemonData,
+  content: pokemonData,
   name: string,
 }
 
@@ -52,7 +52,7 @@ const PokemonExpansions: React.FC<PokemonExpansionsProps> = ({
   name: pokemon
 }) => {
   const history = useHistory();
-  const [selectedCard, setSelectedCard] = React.useState<cardExpanded>();
+  const [selectedCard, setSelectedCard] = React.useState<card>();
   const [isLoading, setLoading] = React.useState<boolean>(false);
   const [isPageLoading, setPageLoading] = React.useState<boolean>(true);
 
@@ -64,7 +64,7 @@ const PokemonExpansions: React.FC<PokemonExpansionsProps> = ({
   } = content;
 
   React.useEffect(() => {
-    if (!data) {
+    if (!Array.isArray(data)) {
       return;
     }
 
@@ -159,7 +159,7 @@ const PokemonExpansions: React.FC<PokemonExpansionsProps> = ({
     //eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedCard]);
 
-  const handleSelect = (card: cardExpanded) => {
+  const handleSelect = (card: card) => {
     setLoading(true);
     setSelectedCard(card);
   }
@@ -198,13 +198,13 @@ const PokemonExpansions: React.FC<PokemonExpansionsProps> = ({
         label={`Select a ${pokemon} card...`}
         options={data}
         optionFormatter={({ expansion, ...rest }) => {
-          return `${formatCardSimpleName(rest, { defaultName: pokemon, numberParens: false, })} · ${formatExpansionName(expansion)}`;
+          return `${formatCardName(rest, { defaultName: pokemon, numberParens: false, })} · ${formatExpansionName(expansion)}`;
         }}
         optionGroupFormatter={({ expansion }) => {
           return formatYear(expansion.year);
         }}
         onChange={handleSelect}
-        placeholder={getDynamicCardExpandedSearchPlaceholder(data)}
+        placeholder={getDynamicCardSearchPlaceholder(data)}
       />
       {!isLoading ? (
         <Box mt={2}>
@@ -219,19 +219,19 @@ const PokemonExpansions: React.FC<PokemonExpansionsProps> = ({
               />
               <ExpansionCard
                 cardId={selectedCard.id}
-                expansionId={selectedCard.expansion.id} 
+                expansionId={selectedCard.expansion!.id} 
               />
               <Typography
                 paragraph
                 variant="body1"
                 align="right"
               >
-                <Link component={ReactRouterLink} to={`/expansions#${selectedCard.expansion.id}`}>
+                <Link component={ReactRouterLink} to={`/expansions#${selectedCard.expansion!.id}`}>
                   <ArrowRightAltIcon />
                   {' '}
                   <StyleIcon />
                   {' '}
-                  {formatExpansionName(selectedCard.expansion)}
+                  {formatExpansionName(selectedCard.expansion!)}
                 </Link>
               </Typography>
             </>

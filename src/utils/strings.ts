@@ -1,81 +1,69 @@
 import {
   card,
-  cardExpanded,
   cardRanking,
-  cardSimple,
   expansion,
   expansionRanking,
   pokemon,
 } from '../types';
 
+type formatCardNameOptions = {
+  defaultName?: string
+  numberParens?: boolean
+  numberPrefix?: boolean
+}
+
 /**
  * Generate a human-readable card name from a card object.
  * @param {card} card The card object.
+ * @param {formatCardNameOptions} options Name format options
  * @returns {string} The formatted card name.
  */
-export const formatCardName: ((card: card | cardRanking) => string) = ({
+export const formatCardName: ((card: card | cardRanking, options?: formatCardNameOptions) => string) = ({
   name,
   number,
   psaName,
   variants,
-}) => {
+}, options = {}) => {
+  const {
+    defaultName,
+    numberParens = true,
+    numberPrefix = false,
+  } = (options || {});
+
   const parts = [];
 
-  if (number) {
-    parts.push(`#${number} :`);
-  } else {
-    parts.push('#-- :')
+  const includeFormattedNumber = () => {
+    if (!number) {
+      return;
+    }
+    
+    if (numberPrefix) {
+      parts.push(`#${number} :`);
+      return;
+    }
+
+    if (numberParens) {
+      parts.push(`(${number})`);
+      return;
+    }
+
+    parts.push(number);
+  };
+
+  const includeFormattedName = () => {
+    parts.push(`${name || defaultName}${psaName ? '*' : ''}`);
   }
-
-  parts.push(name);
-
-  if (psaName) {
-    parts.push(`“${psaName}”`);
+  
+  if (numberPrefix) {
+    includeFormattedNumber();
+    includeFormattedName();
+  } else {
+    includeFormattedName();
+    includeFormattedNumber();
   }
 
   if (Array.isArray(variants)) {
     parts.push(`{${variants.join(', ')}}`);
-  }
-
-  return parts.join(' ');
-}
-
-type formatCardSimpleNameOptions = {
-  defaultName?: string
-  numberParens?: boolean
-}
-
-/**
- * Generate a human-readable card name from a simplified card object.
- * @param {cardSimple} card The simplified card object.
- * @returns {string} The formatted card name.
- */
-export const formatCardSimpleName: ((
-  card: cardSimple | cardExpanded,
-  options?: formatCardSimpleNameOptions,
-) => string) = ({
-  name,
-  number,
-  psaName,
-  variant,
-}, options) => {
-  const {
-    defaultName,
-    numberParens = true,
-  } = (options || {});
-
-  const parts = [name || defaultName];
-
-  if (number) {
-    parts.push(numberParens ? `(${number})` : number);
-  }
-
-  if (psaName) {
-    parts[0] += '*';
-  }
-
-  if (Array.isArray(variant)) {
-    parts.push(`{${variant.join(', ')}}`);
   }
 
   return parts.join(' ');
@@ -257,41 +245,6 @@ export const getDynamicCardSearchPlaceholder = (cards: card[]): string => {
   }
 
   return `e.g. ${parts.join(' or ')} ...`;
-}
-
-export const getDynamicCardExpandedSearchPlaceholder = (cards: cardExpanded[]): string => {
-  const getRandomArrayEntry = (arr: any[]): any => {
-    return arr[Math.floor(Math.random() * arr.length)];
-  }
-
-  if (!cards.length) {
-    return 'No results found?';
-  }
-
-  const parts = [];
-
-  // Cards with numbers.
-  const numbered = cards.filter(card => card.number !== undefined);
-  if (numbered.length) {
-    parts.push(getRandomArrayEntry(numbered).number);
-  }
-
-  // Card variants.
-  const variants = cards.filter(card => Array.isArray(card.variant) && card.variant.length).reduce((arr: any[], { variant: variants }) => {
-    const unique = variants!.filter(entry => arr.indexOf(entry) === -1);
-    return [
-      ...arr,
-      ...unique,
-    ];
-  }, []) as string[];
-  if (variants.length) {
-    parts.push(getRandomArrayEntry(variants));
-  }
-
-  // Card expansion.
-  parts.push(getRandomArrayEntry(cards).expansion.name);
-
-  return `${parts.join(' or ')} ...`;
 }
 
 /**

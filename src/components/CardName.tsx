@@ -7,7 +7,7 @@ import {
   formatExpansionName,
 } from '../utils/strings';
 import {
-  cardExpanded,
+  card,
 } from '../types';
 
 const Asterisk = withTheme(styled.span`
@@ -15,48 +15,36 @@ const Asterisk = withTheme(styled.span`
 `);
 
 type CardNameProps = {
-  card: cardExpanded
+  card: card
   defaultName?: string
   showExpansion?: boolean
+  showNumberAsPrefix?: boolean
 } & TypographyProps;
 
 const CardName: React.FC<CardNameProps> = ({
   card,
   defaultName = '',
   showExpansion = false,
+  showNumberAsPrefix = false,
   ...typographyProps
 }) => {
   const {
+    expansion,
     name,
     number,
     psaName,
-    variant,
+    variants,
   } = card;
-
-  const parts = [];
-
-  parts.push(name || defaultName);
-
-  if (psaName) {
-    parts.push(<Asterisk>*</Asterisk>);
-  }
-
-  if (number) {
-    parts.push(` ${number}`);
-  }
-
-  if (Array.isArray(variant)) {
-    parts.push(` {${variant.join(', ')}}`);
-  }
-
-  if (showExpansion) {
-    parts.push(` · ${formatExpansionName(card.expansion)}`)
-  }
 
   return (
     <Box mb={2}>
       <Typography {...typographyProps} gutterBottom={!!psaName}>
-        {parts}
+        {number && showNumberAsPrefix ? `#${number} : ` : undefined}
+        {name || defaultName}
+        {psaName ? <Asterisk>*</Asterisk> : undefined}
+        {number && !showNumberAsPrefix ? ` ${number}` : undefined}
+        {Array.isArray(variants) ? ` {${variants.join(', ')}}` : undefined}
+        {showExpansion && expansion ? ` · ${formatExpansionName(expansion)}` : undefined}
       </Typography>
       {psaName ? (
         <Typography variant="body2">

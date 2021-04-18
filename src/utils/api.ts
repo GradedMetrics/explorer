@@ -2,12 +2,10 @@ import {
   mapKeys,
 } from './keys';
 import {
-  cardExpanded,
-  cardSimple,
+  card,
   expansion,
   expansionCard,
   expansionDetailed,
-  mappedPokemonData,
   pokemon,
   pokemonData,
   pokemonExpansion,
@@ -167,9 +165,9 @@ export const getExpansions = async (): Promise<expansion[]> => {
  * relevant cards matching that Pokémon.
  * @param {"pokemon"|"trainers"} base The type of content to fetch.
  * @param {string} name The name of the Pokémon content to fetch data for.
- * @returns {Promise<mappedPokemonData>} Pokémon API data.
+ * @returns {Promise<pokemonData>} Pokémon API data.
  */
-export const getPokemon = async (base: "misc" | "pokemon" | "trainers", name: string): Promise<mappedPokemonData> => {
+export const getPokemon = async (base: "misc" | "pokemon" | "trainers", name: string): Promise<pokemonData> => {
   const response = await fetch(`${base}/${name}`);
 
   if (!response) {
@@ -184,10 +182,10 @@ export const getPokemon = async (base: "misc" | "pokemon" | "trainers", name: st
 
   const expansions = await getExpansions();
 
-  const mappedCardData = mappedResponse.data.map((cardData: cardSimple) => ({
+  const mappedCardData = mappedResponse.data.map((cardData: card) => ({
     ...cardData,
     expansion: expansions.find(({ id }) => id === cardData.set)
-  })) as cardExpanded[];
+  })) as card[];
 
   return {
     ...mappedResponse,

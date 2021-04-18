@@ -24,6 +24,7 @@ import {
 } from '../utils/urls';
 import withSingleContentLoad from '../hocs/withSingleContentLoad';
 import Box from '@material-ui/core/Box';
+import CardName from '../components/CardName';
 import Link from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
 import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt';
@@ -68,6 +69,16 @@ const Expansions: React.FC<ExpansionsProps> = ({
     history: gradeHistory,
     total,
   } = content;
+
+  React.useEffect(() => {
+    if (!Array.isArray(cards)) {
+      return;
+    }
+
+    if (cards.length === 1) {
+      setSelectedCard(cards[0]);
+    }
+  }, [cards]);
 
   React.useEffect(() => {
     const {
@@ -152,14 +163,15 @@ const Expansions: React.FC<ExpansionsProps> = ({
         paragraph
         variant="body1"
       >
-        There are {totalCards} different cards in this set...
+        There {totalCards === 1 ? 'is only 1 card in this set' : `are ${totalCards} different cards in this set`}...
       </Typography>
       <AutoComplete
         defaultSelectedOption={selectedCard}
+        disabled={cards.length === 1}
         id={`expansion-${expansionId}`}
         label={`Select a card...`}
         options={cards}
-        optionFormatter={formatCardName}
+        optionFormatter={(card) => formatCardName(card, { numberPrefix: true })}
         onChange={handleSelect}
         placeholder={getDynamicCardSearchPlaceholder(cards)}
       />
@@ -167,13 +179,12 @@ const Expansions: React.FC<ExpansionsProps> = ({
         <Box mt={2}>
           {selectedCard ? (
             <>
-              <Typography
-                paragraph
+              <CardName
+                card={selectedCard}
+                showNumberAsPrefix={true}
                 variant="h5"
                 variantMapping={headingVariantMapping}
-              >
-                {formatCardName(selectedCard)}
-              </Typography>
+              />
               <ExpansionCard
                 cardId={selectedCard.id}
                 expansionId={expansionId} 
@@ -220,7 +231,7 @@ const Expansions: React.FC<ExpansionsProps> = ({
                 >
                   <ArrowRightAltIcon />
                   {' '}
-                  <img src={PSALogo} height="14px" style={{verticalAlign: '-6%'}} /> 
+                  <img src={PSALogo} height="14px" style={{verticalAlign: '-6%'}} alt="PSA Logo" /> 
                   {' '}
                   View the set on PSA's pop report
                 </Link>

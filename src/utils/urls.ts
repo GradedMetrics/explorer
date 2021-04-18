@@ -1,17 +1,15 @@
 import {
   card,
-  cardExpanded,
-  cardSimple,
   expansion,
   pokemon,
 } from '../types';
 
 /**
  * Create a URL-friendly card name from a card object.
- * @param {cardExpanded | cardSimple} expansion The expansion object.
+ * @param {card} expansion The expansion object.
  * @returns {string} A URL-friendly expansion name.
  */
-export const urlFriendlyCardName = (card?: card | cardExpanded | cardSimple): string => {
+export const urlFriendlyCardName = (card?: card): string => {
   if (!card?.id) {
     return '';
   }

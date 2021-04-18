@@ -1,36 +1,15 @@
 export type card = {
+  expansion?: expansion
   id: string
-  name: string
+  name?: string
   number?: string
   pokemon?: string
+  psa10Pop?: number
   psaName?: string
+  set?: string
   total: number
   variants?: string[]
-  year: string
-}
-
-export type cardSimple = {
-  id: string
-  name?: string
-  number?: string
-  popularity: number
-  psa10Pop: number
-  psaName?: string
-  set: string
-  total: number
-  variant?: string[]
-}
-
-export type cardExpanded = {
-  expansion: expansion
-  id: string
-  name?: string
-  number?: string
-  popularity: number
-  psa10Pop: number
-  psaName?: string
-  total: number
-  variant?: string[]
+  year?: string
 }
 
 export type expansion = {
@@ -120,7 +99,7 @@ export type pokemon = {
 }
 
 export type pokemonData = {
-  data: cardSimple[]
+  data: card[]
   grades: grades
   history: gradeHistory[]
   name: string
@@ -129,15 +108,7 @@ export type pokemonData = {
 
 export type pokemonExpansion = {
   expansion: expansion
-  cards: cardSimple[]
-}
-
-export type mappedPokemonData = {
-  data: cardExpanded[]
-  grades: grades
-  history: gradeHistory[]
-  name: string
-  total: number
+  cards: card[]
 }
 
 /** Rank Info */
