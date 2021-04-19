@@ -35,6 +35,11 @@ const useStyles = makeStyles((theme) => {
       borderBottomColor: theme.palette.grey[300],
       textDecoration: 'none',
     },
+
+    [theme.breakpoints.down('sm')]: {
+      margin: theme.spacing(1) / 2,
+      padding: theme.spacing(1) / 2,
+    },
   },
   linkActive: {
     borderBottomColor: theme.palette.secondary.main,
@@ -48,6 +53,11 @@ const useStyles = makeStyles((theme) => {
     display: 'block',
     fontSize: 18,
     marginTop: theme.spacing(1),
+
+    [theme.breakpoints.down('sm')]: {
+      fontSize: 14,
+      marginTop: theme.spacing(1) / 2,
+    },
   },
   toolbar: {
     justifyContent: 'center',

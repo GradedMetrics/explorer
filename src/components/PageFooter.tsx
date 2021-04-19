@@ -13,7 +13,6 @@ const socialButtonProps: CSSProperties = {
   backgroundPosition: '10px 50%',
   backgroundRepeat: 'no-repeat',
   backgroundSize: 16,
-  borderRadius: 8,
   boxSizing: 'border-box',
   color: '#fff',
   display: 'inline-block',
@@ -28,10 +27,11 @@ const socialButtonProps: CSSProperties = {
   }
 };
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
   discord: {
     backgroundColor: '#7289DA',
     backgroundImage: `url(${DiscordIcon})`,
+    marginRight: theme.spacing(2),
     ...socialButtonProps
   },
   patreon: {
@@ -39,7 +39,7 @@ const useStyles = makeStyles({
     backgroundImage: `url(${PatreonIcon})`,
     ...socialButtonProps
   }
-});
+}));
 
 const PageFooter = () => {
   const classes = useStyles();
@@ -63,18 +63,15 @@ const PageFooter = () => {
         <Typography variant="caption" display="block" color="textSecondary" paragraph>
           <Link
             className={classes.discord}
-            href="https://www.patreon.com/bePatron?u=47497967"
+            href="https://discord.gg/WNbxZJ93"
+            target="blank"
           >
             Join the Discord!
           </Link>
-        </Typography>
-        <Typography variant="subtitle2" display="block" color="textSecondary" gutterBottom>
-          Want to support the app?
-        </Typography>
-        <Typography variant="caption" display="block" color="textSecondary">
           <Link
             className={classes.patreon}
             href="https://www.patreon.com/bePatron?u=47497967"
+            target="blank"
           >
             Become a Patron!
           </Link>

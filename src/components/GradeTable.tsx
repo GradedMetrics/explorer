@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { withTheme } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 import Hidden from '@material-ui/core/Hidden';
 import Paper from '@material-ui/core/Paper';
@@ -28,7 +29,7 @@ export {
   totalBackground,
 }
 
-const Wrapper = styled.article({
+const Wrapper = withTheme(styled.article(({ theme }) => ({
   'thead': {
     background: '#f5f5f5',
 
@@ -43,6 +44,12 @@ const Wrapper = styled.article({
         maxWidth: 171,
         minWidth: 171,
         width: 171,
+
+        [theme.breakpoints.down('sm')]: {
+          maxWidth: 122,
+          minWidth: 122,
+          width: 122,
+        },
       },
 
       '&:nth-child(2)': {
@@ -50,7 +57,7 @@ const Wrapper = styled.article({
       }
     }
   }
-});
+})));
 
 type GradeTableProps = {
   history: gradeHistory[],
