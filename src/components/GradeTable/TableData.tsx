@@ -210,11 +210,15 @@ const TableData: React.FC<TableDataProps> = ({
                     placement="right"
                     text={(
                       <>
-                        Has a qualifier.
-                        <br />
-                        Qualifiers reduce the grade by 1 full point and may be one of the following: MC (miscut), MK (marked), OC (off-center), OF (out of focus), PD (print defect), or ST (stained).
-                        <br />
-                        PSA's population report does not differentiate between these.
+                        <Typography variant="body2" paragraph>
+                          Has a qualifier.
+                        </Typography>
+                        <Typography variant="body2" paragraph>
+                          Qualifiers reduce the grade by 1 full point and may be one of the following: MC (miscut), MK (marked), OC (off-center), OF (out of focus), PD (print defect), or ST (stained).
+                        </Typography>
+                        <Typography variant="body2">
+                          PSA's population report does not differentiate between these.
+                        </Typography>
                       </>
                     )}
                     variant="caption"

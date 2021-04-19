@@ -31,8 +31,12 @@ const Tooltip: React.FC<AutoCompleteProps> = ({
   return (
     <MUITooltip
       placement={placement}
-      title={text}
-      >
+      title={typeof text === 'string' ? (
+        <Typography variant="body2">
+          {text}
+        </Typography>
+      ) : text}
+    >
       <Typography
         color="textPrimary"
         display="inline"

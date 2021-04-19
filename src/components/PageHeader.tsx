@@ -24,12 +24,12 @@ const useStyles = makeStyles(theme => ({
     }
   },
   linkActive: {
-    color: theme.palette.text.primary,
+    color: theme.palette.secondary.main,
     cursor: 'default',
     textDecoration: 'none',
 
     '&:active, &:hover, &:focus': {
-      color: theme.palette.text.primary,
+      color: theme.palette.secondary.main,
       textDecoration: 'none',
     }
   },
@@ -64,9 +64,7 @@ const PageHeader: React.FC<PageHeaderProps> = ({
           to="/"
           exact
         >
-          <Typography
-            variant="h2"
-          >
+          <Typography variant="h2">
             <span className={classes.subtitle}>Poké</span>
             Metrics
           </Typography>

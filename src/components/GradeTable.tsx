@@ -82,7 +82,7 @@ const GradeTable: React.FC<GradeTableProps> = ({
             <TableHead>
               <TableRow>
                 <TableCell rowSpan={2} style={mainHeadingStyle}>Grade</TableCell>
-                <TableCell rowSpan={2} style={mainHeadingStyle}>Total Graded</TableCell>
+                <TableCell rowSpan={2} style={{ ...mainHeadingStyle, textAlign: 'right' }}>Total Graded</TableCell>
                 <Hidden xsDown>
                   <TableCell colSpan={3} style={{ borderLeft: '3px double #ccc', ...historicHeadingStyle }}>Cards graded in the past...</TableCell>
                 </Hidden>

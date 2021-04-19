@@ -184,6 +184,7 @@ const PokemonExpansions: React.FC<PokemonExpansionsProps> = ({
         PSA has graded {total}
         {' '}
         <Tooltip
+          placement="right"
           text="Cards which are not identical (i.e. from different sets or different variants)."
         >
           distinct
