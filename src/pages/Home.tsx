@@ -9,6 +9,7 @@ import GradeTable, {
   historicBackground,
   totalBackground,
 } from '../components/GradeTable';
+import DiscordLogo from '../assets/discord-logo.png';
 import PSALogo from '../assets/psa-logo.png';
 
 const headingVariantMapping = {
@@ -134,7 +135,13 @@ const Home = () => {
         Welcome!
       </Typography>
       <Typography variant="body1" paragraph>
-        Professional Sports Authenticator (<img src={PSALogo} height="16px" style={{verticalAlign: '-6%'}} alt="PSA Logo" />; <Link href="https://psacard.com" rel="noopener">https://psacard.com</Link>)
+        Professional Sports Authenticator (
+        <Link href="https://psacard.com" rel="noopener" target="blank">
+          <img src={PSALogo} height="16px" style={{verticalAlign: '-6%'}} alt="PSA Logo" />
+          {' '}
+          https://psacard.com
+        </Link>
+        )
         {' '}
         is the largest and most trusted third-party trading card authentication and grading company in the world - or at least that's what it says on their website.
         {' '}
@@ -154,7 +161,19 @@ const Home = () => {
           I need to get in touch!!!
         </Typography>
         <Typography variant="body1">
-          Have a suggestion? Run into a problem? Message <Link href="https://instagram.com/pichucollector" rel="noreferrer noopener">@pichucollector</Link> on Instagram.
+          Have a suggestion? Run into a problem? Hop into the
+          {' '}
+          <Link href="https://discord.gg/WNbxZJ93" rel="noopener">
+            <img src={DiscordLogo} height="40px" style={{marginBottom: '-17px'}} alt="Discord Logo" />
+          </Link>
+          {' '}
+          server (
+          <Link href="https://discord.gg/WNbxZJ93" rel="noopener">https://discord.gg/WNbxZJ93</Link>
+          ) or message
+          {' '}
+          <Link href="https://instagram.com/pichucollector" rel="noopener">@pichucollector</Link>
+          {' '}
+          on Instagram.
         </Typography>
       </Box>
       <Box my={2}>
@@ -333,20 +352,6 @@ const Home = () => {
             This app tries its best to correct any typos present in PSA's data, along with making sure commonly-repeated names all conform with one another. A card which has had its name changed in this way will include an asterisk (<Typography variant="body1" color="secondary" variantMapping={{ body1: 'span', }}>*</Typography>) beside its name wherever it appears and will detail what the change was on the card's page.
           </Typography>
         </Box>
-      </Box>
-      <Box my={2}>
-        <Typography variant="overline" display="block" color="textSecondary">
-          &copy; Graded Metrics
-        </Typography>
-        <Typography variant="caption" display="block" color="textSecondary">
-          Operated by <Link href="https://instagram.com/pichucollector" rel="noreferrer noopener">@pichucollector</Link>.
-        </Typography>
-        <Typography variant="caption" display="block" color="textSecondary">
-          Want to hack this to bits? The UI is <Link href="https://github.com/pokemetrics/explorer" rel="noreferrer noopener">open source</Link>.
-        </Typography>
-        <Typography variant="caption" display="block" color="textSecondary">
-          Want to read a blog all about Pichu? Of course you do! <Link href="https://pichu.blog" rel="noreferrer noopener">pichu.blog</Link>.
-        </Typography>
       </Box>
     </>
   );

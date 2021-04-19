@@ -7,6 +7,7 @@ import { createGlobalStyle } from 'styled-components';
 import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container';
 import Loading from './components/Loading';
+import PageFooter from './components/PageFooter';
 import PageHeader from './components/PageHeader';
 import ExpansionList from './pages/ExpansionList';
 import Home from './pages/Home';
@@ -89,32 +90,35 @@ function App() {
   }
 
   return (
-    <Container maxWidth="md">
+    <>
       <GlobalStyle />
-      <Router>
-        <PageHeader version={apiVersion} />
-        <Box my={3}>
-          <Route exact path="/">
-            <Home />
-          </Route>
-          <Route exact path="/expansions">
-            <ExpansionList />
-          </Route>
-          <Route exact path="/misc">
-            <MiscList />
-          </Route>
-          <Route exact path="/pokemon">
-            <PokemonList />
-          </Route>
-          <Route exact path="/rankings">
-            <Ranks />
-          </Route>
-          <Route exact path="/stats">
-            <Stats />
-          </Route>
-        </Box>
-      </Router>
-    </Container>
+      <Container maxWidth="md">
+        <Router>
+          <PageHeader version={apiVersion} />
+          <Box my={3}>
+            <Route exact path="/">
+              <Home />
+            </Route>
+            <Route exact path="/expansions">
+              <ExpansionList />
+            </Route>
+            <Route exact path="/misc">
+              <MiscList />
+            </Route>
+            <Route exact path="/pokemon">
+              <PokemonList />
+            </Route>
+            <Route exact path="/rankings">
+              <Ranks />
+            </Route>
+            <Route exact path="/stats">
+              <Stats />
+            </Route>
+          </Box>
+        </Router>
+      </Container>
+      <PageFooter />
+    </>
   );
 }
 
