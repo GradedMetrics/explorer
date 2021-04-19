@@ -342,7 +342,7 @@ const Home = () => {
           Operated by <Link href="https://instagram.com/pichucollector" rel="noreferrer noopener">@pichucollector</Link>.
         </Typography>
         <Typography variant="caption" display="block" color="textSecondary">
-          Want to hack this to bits? The UI is <Link href="https://github.com/gradedmetrics/explorer" rel="noreferrer noopener">open source</Link>.
+          Want to hack this to bits? The UI is <Link href="https://github.com/pokemetrics/explorer" rel="noreferrer noopener">open source</Link>.
         </Typography>
         <Typography variant="caption" display="block" color="textSecondary">
           Want to read a blog all about Pichu? Of course you do! <Link href="https://pichu.blog" rel="noreferrer noopener">pichu.blog</Link>.

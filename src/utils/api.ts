@@ -16,7 +16,7 @@ import {
   sortExpansions,
 } from '../utils/data';
 
-const API_URL = 'https://api.gradedmetrics.com';
+const API_URL = 'https://api.pokemetrics.org';
 
 /**
  * Fetch JSON data from the API.

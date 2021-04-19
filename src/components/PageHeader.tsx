@@ -35,13 +35,14 @@ const useStyles = makeStyles(theme => ({
   },
   subtitle: {
     color: theme.palette.grey[600],
-    display: 'block',
-    marginBottom: -23,
-    marginLeft: -88,
   },
   title: {
     margin: '0 auto',
   },
+  version: {
+    marginTop: -10,
+    textAlign: 'center',
+  }
 }));
 
 type PageHeaderProps = {
@@ -66,20 +67,16 @@ const PageHeader: React.FC<PageHeaderProps> = ({
           <Typography
             variant="h2"
           >
-            <span className={classes.subtitle}>Grade</span>
-            Explorer
+            <span className={classes.subtitle}>Poké</span>
+            Metrics
           </Typography>
           {version ? (
             <Typography
               align="left"
               color="textSecondary"
+              className={classes.version}
               display="block"
               variant="overline"
-              style={{
-                marginLeft: 76,
-                marginTop: -16,
-                width: 130,
-              }}
             >
               API v0.{version.v}.{version['@'].toString().substr(6, 16)}
             </Typography>
