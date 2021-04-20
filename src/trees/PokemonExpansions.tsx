@@ -42,7 +42,7 @@ const headingVariantMapping = {
 }
 
 type PokemonExpansionsProps = {
-  base?: "misc" | "pokemon" | "trainers",
+  base?: "misc" | "pokemon",
   content: pokemonData,
   name: string,
 }
@@ -55,6 +55,8 @@ const PokemonExpansions: React.FC<PokemonExpansionsProps> = ({
   const [selectedCard, setSelectedCard] = React.useState<card>();
   const [isLoading, setLoading] = React.useState<boolean>(false);
   const [isPageLoading, setPageLoading] = React.useState<boolean>(true);
+
+  console.log(content);
 
   const {
     data,

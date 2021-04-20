@@ -38,14 +38,18 @@ const CardName: React.FC<CardNameProps> = ({
 
   return (
     <Box mb={2}>
-      <Typography {...typographyProps} gutterBottom={!!psaName}>
+      <Typography {...typographyProps} gutterBottom={!showExpansion && !!psaName}>
         {number && showNumberAsPrefix ? `#${number} : ` : undefined}
         {name || defaultName}
         {psaName ? <Asterisk>*</Asterisk> : undefined}
         {number && !showNumberAsPrefix ? ` ${number}` : undefined}
         {Array.isArray(variants) ? ` {${variants.join(', ')}}` : undefined}
-        {showExpansion && expansion ? ` · ${formatExpansionName(expansion)}` : undefined}
       </Typography>
+      {showExpansion && expansion ? (
+        <Typography variant="subtitle1" gutterBottom={!!psaName}>
+          {formatExpansionName(expansion)}
+        </Typography>
+      ) : undefined}
       {psaName ? (
         <Typography variant="body2">
           <Asterisk>*</Asterisk>

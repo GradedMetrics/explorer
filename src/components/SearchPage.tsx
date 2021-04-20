@@ -111,7 +111,6 @@ const SearchPage: React.FC<SearchPageProps> = ({
       {!isLoading && selected ? (
         <Box mt={2}>
           {renderResult(selected)}
-          {/* <PokemonExpansions base="misc" name={selectedPokemon.name} /> */}
         </Box>
       ) : undefined}
     </>

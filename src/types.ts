@@ -6,6 +6,8 @@ export type card = {
   pokemon?: string
   psa10Pop?: number
   psaName?: string
+  rank?: number
+  rankTotal?: number
   set?: string
   total: number
   variants?: string[]
@@ -95,6 +97,9 @@ export type pokemon = {
   name: string
   number?: number
   psaName?: string
+  rank?: number
+  rankTotal?: number
+  total?: number
   translation?: string
 }
 
@@ -104,11 +109,6 @@ export type pokemonData = {
   history: gradeHistory[]
   name: string
   total: number
-}
-
-export type pokemonExpansion = {
-  expansion: expansion
-  cards: card[]
 }
 
 /** Rank Info */

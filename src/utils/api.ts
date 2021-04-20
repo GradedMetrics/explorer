@@ -8,7 +8,6 @@ import {
   expansionDetailed,
   pokemon,
   pokemonData,
-  pokemonExpansion,
   ranking,
   version as versionType,
 } from '../types';
@@ -92,7 +91,8 @@ export const keys = async (): Promise<Object> => {
  */
 export const getExpansion = async (expansionId: string): Promise<expansionDetailed> => {
   const response = await fetch(`sets/${expansionId}`);
-  const pokemonList = (await getPokemonList()).map(({ name }) => name);
+  const miscList = await getMiscList();
+  const pokemonList = await getPokemonList();
 
   const {
     cards,
@@ -102,8 +102,25 @@ export const getExpansion = async (expansionId: string): Promise<expansionDetail
   return {
     cards: [...cards].map(card => ({
       ...card,
-      pokemon: pokemonList.find(pokemon => card.name.toLowerCase().indexOf(pokemon.toLowerCase()) !== -1),
-    })).sort((a, b) => {
+      pokemon: pokemonList.find(pokemon => card.name.toLowerCase().indexOf(pokemon.name.toLowerCase()) !== -1),
+    })).map(card => {
+      const output = {
+        ...card,
+        pokemon:  card.pokemon?.name,
+      }
+
+      if (output.pokemon) {
+        output.rank = card.pokemon.rank;
+        output.rankTotal = card.pokemon.total;
+      } else {
+        const miscData = miscList.find(misc => card.name.toLowerCase() === misc.name.toLowerCase());
+
+        output.rank = miscData?.rank;
+        output.rankTotal = miscData?.total;
+      }
+
+      return output
+    }).sort((a, b) => {
       const {
         name: aName,
         number: aNumber,
@@ -163,11 +180,11 @@ export const getExpansions = async (): Promise<expansion[]> => {
 /**
  * Individual Pokémon data returned from /pokemon/{name}.json mapped as a list of expansions with
  * relevant cards matching that Pokémon.
- * @param {"pokemon"|"trainers"} base The type of content to fetch.
+ * @param {"misc"|"pokemon"} base The type of content to fetch.
  * @param {string} name The name of the Pokémon content to fetch data for.
  * @returns {Promise<pokemonData>} Pokémon API data.
  */
-export const getPokemon = async (base: "misc" | "pokemon" | "trainers", name: string): Promise<pokemonData> => {
+export const getPokemon = async (base: "misc" | "pokemon", name: string): Promise<pokemonData> => {
   const response = await fetch(`${base}/${name}`);
 
   if (!response) {
@@ -193,13 +210,27 @@ export const getPokemon = async (base: "misc" | "pokemon" | "trainers", name: st
   };
 }
 
+const withRankInfo = (entry: pokemon, ranks: pokemon[]) => {
+  const rankData = ranks.find(rankEntry => rankEntry.name === entry.name);
+
+  return {
+    rank: rankData?.rank,
+    total: rankData?.total,
+  };
+}
+
 /**
  * Pokémon returned from /pokemon.json.
  * @returns {Promise<pokemon[]>} Pokémon API data.
  */
 export const getPokemonList = async (): Promise<pokemon[]> => {
   const data = await fetch('pokemon');
-  return (mapKeys(data) as pokemon[]).sort(({ number: a }, { number: b }) => Number(a) > Number(b) ? 1 : -1);
+  const ranks = await getPokemonRanks();
+
+  return (mapKeys(data) as pokemon[]).sort(({ number: a }, { number: b }) => Number(a) > Number(b) ? 1 : -1).map(entry => ({
+    ...entry,
+    ...withRankInfo(entry, ranks)
+  }));
 }
 
 /**
@@ -208,16 +239,12 @@ export const getPokemonList = async (): Promise<pokemon[]> => {
  */
 export const getMiscList = async (): Promise<pokemon[]> => {
   const data = await fetch('misc');
-  return (mapKeys(data) as pokemon[]).sort(({ name: a }, { name: b }) => a > b ? 1 : -1);
-}
+  const ranks = await getMiscRanks();
 
-/**
- * Pokémon returned from /trainers.json.
- * @returns {Promise<pokemon[]>} Pokémon API data.
- */
-export const getTrainerList = async (): Promise<pokemon[]> => {
-  const data = await fetch('trainers');
-  return (mapKeys(data) as pokemon[]).sort(({ name: a }, { name: b }) => a > b ? 1 : -1);
+  return (mapKeys(data) as pokemon[]).sort(({ name: a }, { name: b }) => a.toLowerCase() > b.toLowerCase() ? 1 : -1).map(entry => ({
+    ...entry,
+    ...withRankInfo(entry, ranks)
+  }));
 }
 
 export const getHistory = async (): Promise<expansion[]> => {
@@ -231,5 +258,23 @@ export const getHistory = async (): Promise<expansion[]> => {
  */
 export const getRanks = async (): Promise<ranking> => {
   const data = await fetch('ranks');
+  return mapKeys(data);
+}
+
+/**
+ * Ranking data returned from /misc-ranks.json.
+ * @returns {Promise<pokemon[]>} Misc ranks API data.
+ */
+export const getMiscRanks = async (): Promise<pokemon[]> => {
+  const data = await fetch('misc-ranks');
+  return mapKeys(data);
+}
+
+/**
+ * Ranking data returned from /pokemon-ranks.json.
+ * @returns {Promise<pokemon[]>} Pokémon ranks API data.
+ */
+export const getPokemonRanks = async (): Promise<pokemon[]> => {
+  const data = await fetch('pokemon-ranks');
   return mapKeys(data);
 }

@@ -38,7 +38,7 @@ const PokemonList = () => {
         paragraph
         variant="body1"
       >
-        This page allows you to search for cards belonging to specific Pokémon, like
+        This page allows you to search for entries belonging to specific Pokémon, like
         {' '}
         <Link component={ReactRouterLink} to="#Pichu">
           Pichu
@@ -61,7 +61,7 @@ const PokemonList = () => {
         paragraph
         variant="body1"
       >
-        Cards which do not feature a Pokémon in their name can be found in the
+        Entries which do not feature a Pokémon in their name can be found in the
         {' '}
         <Link component={ReactRouterLink} to="/misc"><NaturePeopleIcon fontSize="small" /> Misc</Link>
         {' '}

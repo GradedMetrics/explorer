@@ -11,6 +11,8 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Typography from '@material-ui/core/Typography';
+import Modal from './Modal';
+import GradeTableHelp from '../help/GradeTable';
 import TableData, {
   historicBackground,
   totalBackground,
@@ -60,12 +62,14 @@ const Wrapper = withTheme(styled.article(({ theme }) => ({
 })));
 
 type GradeTableProps = {
-  history: gradeHistory[],
-  historyDeductsFromTotal?: boolean,
+  hideHelpButton?: boolean
+  history: gradeHistory[]
+  historyDeductsFromTotal?: boolean
   total: grades,
 }
 
 const GradeTable: React.FC<GradeTableProps> = ({
+  hideHelpButton = false,
   history,
   historyDeductsFromTotal = true,
   total,
@@ -84,6 +88,13 @@ const GradeTable: React.FC<GradeTableProps> = ({
       </Typography>
       </Hidden>
       <Wrapper>
+        {hideHelpButton ? undefined : (
+          <Box mt={1} textAlign="right">
+            <Modal isHelp opener="How do I use this table?" mobileLink="/help#grade-table">
+              <GradeTableHelp />
+            </Modal>
+          </Box>
+        )}
         <TableContainer component={Paper}>
           <Table aria-label="Grades table." size="small">
             <TableHead>

@@ -3,12 +3,11 @@ import {
   Link as ReactRouterLink,
   useHistory,
 } from 'react-router-dom';
-import styled from 'styled-components';
-import { withTheme } from '@material-ui/core/styles';
 import {
   card,
   expansion,
   expansionDetailed,
+  pokemon,
 } from '../types';
 import {
   getExpansion,
@@ -17,10 +16,10 @@ import {
   formatCardName,
   formatExpansionName,
   getDynamicCardSearchPlaceholder,
-  getRawIdentifier,
 } from '../utils/strings';
 import {
   urlFriendlyCardName,
+  urlFriendlyPokemonName,
 } from '../utils/urls';
 import withSingleContentLoad from '../hocs/withSingleContentLoad';
 import Box from '@material-ui/core/Box';
@@ -29,21 +28,18 @@ import Link from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
 import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt';
 import FaceIcon from '@material-ui/icons/Face';
+import NaturePeopleIcon from '@material-ui/icons/NaturePeople';
 import AutoComplete from '../components/AutoComplete';
 import ExpansionCard from '../components/ExpansionCard';
 import GradeTable from '../components/GradeTable';
 import Loading from '../components/Loading';
-import PSALogo from '../assets/psa-logo.png';
+import PSASetLink from '../components/PSASetLink';
 
 const headingVariantMapping = {
   h4: 'h1',
   h5: 'h2',
   h6: 'h3',
 }
-
-const Muted = withTheme(styled.span`
-  color: ${props => { console.log(props); return props.theme.palette.text.secondary }}
-`);
 
 type ExpansionsProps = {
   content: expansionDetailed,
@@ -189,13 +185,16 @@ const Expansions: React.FC<ExpansionsProps> = ({
                 cardId={selectedCard.id}
                 expansionId={expansionId} 
               />
+              {totalCards === 1 ? (
+                <PSASetLink id={expansionId} />
+              ) : undefined}
               {selectedCard.pokemon ? (
                 <Typography
                   paragraph
                   variant="body1"
                   align="right"
                 >
-                  <Link component={ReactRouterLink} to={`pokemon#${selectedCard.pokemon}`}>
+                  <Link component={ReactRouterLink} to={`pokemon#${urlFriendlyPokemonName(selectedCard as pokemon)}`}>
                     <ArrowRightAltIcon />
                     {' '}
                     Find other
@@ -207,7 +206,25 @@ const Expansions: React.FC<ExpansionsProps> = ({
                     cards...
                   </Link>
                 </Typography>
-              ) : undefined}
+              ) : (
+                <Typography
+                  paragraph
+                  variant="body1"
+                  align="right"
+                >
+                  <Link component={ReactRouterLink} to={`misc#${urlFriendlyPokemonName(selectedCard as pokemon)}`}>
+                    <ArrowRightAltIcon />
+                    {' '}
+                    Find other
+                    {' '}
+                    <NaturePeopleIcon />
+                    {' '}
+                    {selectedCard.name}
+                    {' '}
+                    cards...
+                  </Link>
+                </Typography>
+              )}
             </>
           ) : (
             <>
@@ -219,25 +236,7 @@ const Expansions: React.FC<ExpansionsProps> = ({
                 All Grades
               </Typography>
               <GradeTable history={gradeHistory} total={total} />
-              <Typography
-                paragraph
-                variant="body1"
-                align="right"
-              >
-                <Link
-                  href={`https://www.psacard.com/pop/tcg-cards/!/!/${getRawIdentifier(expansionId)}`}
-                  target="blank"
-                  rel="noopener"
-                >
-                  <ArrowRightAltIcon />
-                  {' '}
-                  <img src={PSALogo} height="14px" style={{verticalAlign: '-6%'}} alt="PSA Logo" /> 
-                  {' '}
-                  View the set on PSA's pop report
-                </Link>
-                {' '}
-                <Muted>(opens in new tab)</Muted>
-              </Typography>
+              <PSASetLink id={expansionId} />
             </>
           )}
         </Box>

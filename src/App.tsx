@@ -10,6 +10,7 @@ import Loading from './components/Loading';
 import PageFooter from './components/PageFooter';
 import PageHeader from './components/PageHeader';
 import ExpansionList from './pages/ExpansionList';
+import Help from './pages/Help';
 import Home from './pages/Home';
 import MiscList from './pages/MiscList';
 import PokemonList from './pages/PokemonList';
@@ -98,6 +99,9 @@ function App() {
           <Box my={3}>
             <Route exact path="/">
               <Home />
+            </Route>
+            <Route exact path="/help">
+              <Help />
             </Route>
             <Route exact path="/expansions">
               <ExpansionList />
