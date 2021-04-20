@@ -82,7 +82,7 @@ const RankList: React.FC<RankListProps> = ({
                 {' '}
                 {card.popIncrease.toLocaleString()}
               </Typography>
-              <Link component={ReactRouterLink} to={`/expansions#${card.set.id}|${Number(card.id).toString(36)}`}>
+              <Link component={ReactRouterLink} to={`/sets/${card.set.id}/${Number(card.id).toString(36)}`}>
                 {formatCardName(card)} {formatExpansionName(card.set)}
               </Link>
             </Typography>
@@ -106,7 +106,7 @@ const RankList: React.FC<RankListProps> = ({
               {' '}
               {expansion.popIncrease.toLocaleString()}
             </Typography>
-            <Link component={ReactRouterLink} to={`/expansions#${expansion.id}`}>
+            <Link component={ReactRouterLink} to={`/sets/${expansion.id}`}>
               {formatExpansionName(expansion)}
             </Link>
           </Typography>

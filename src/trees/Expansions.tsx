@@ -78,26 +78,21 @@ const Expansions: React.FC<ExpansionsProps> = ({
 
   React.useEffect(() => {
     const {
-      hash,
+      pathname,
     } = history.location;
 
-    if (!hash) {
+    const [pathExpansion, pathCard] = pathname.substr(6, 64).split('/');
+
+    if (!pathCard) {
       setPageLoading(false);
       return;
     }
 
-    const [hashExpansion, hashCard] = hash.substr(1, 64).split('|');
-
-    if (!hashCard) {
-      setPageLoading(false);
-      return;
-    }
-
-    const urlSelectedCard = cards.find(({ id }) => id === hashCard.substr(0, 16));
+    const urlSelectedCard = cards.find(({ id }) => id === pathCard.substr(0, 16));
 
     if (!urlSelectedCard) {
       history.replace({
-        hash: hashExpansion,
+        pathname: `/sets/${pathExpansion}`,
       });
 
       setPageLoading(false);
@@ -113,26 +108,26 @@ const Expansions: React.FC<ExpansionsProps> = ({
     setLoading(false);
 
     const {
-      hash,
+      pathname,
     } = history.location;
     
-    const [hashExpansion, hashCard] = hash.substr(1, 64).split('|');
+    const [pathExpansion, pathCard] = pathname.substr(6, 64).split('/');
 
-    const newCardHash = urlFriendlyCardName(selectedCard);
+    const newPathCard = urlFriendlyCardName(selectedCard);
 
-    if (hashCard === newCardHash) {
+    if (pathCard === newPathCard) {
       return;
     }
 
-    if (!newCardHash) {
+    if (!newPathCard) {
       history.replace({
-        hash: hashExpansion,
+        pathname: `/sets/${pathExpansion}`,
       });
       return;
     }
 
     history.replace({
-      hash: `${hashExpansion}|${newCardHash}`,
+      pathname: `/sets/${pathExpansion}/${newPathCard}`,
     });
     //eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedCard]);

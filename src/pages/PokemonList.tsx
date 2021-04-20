@@ -40,19 +40,19 @@ const PokemonList = () => {
       >
         This page allows you to search for entries belonging to specific Pokémon, like
         {' '}
-        <Link component={ReactRouterLink} to="#Pichu">
+        <Link component={ReactRouterLink} to="/pokemon/Pichu">
           Pichu
         </Link>.
         {' '}
         This allows you to search for cards like 
         {' '}
-        <Link component={ReactRouterLink} to="#Charizard|bnrw">
+        <Link component={ReactRouterLink} to="/pokemon/Charizard/bnrw">
           Charizard 4 {'{'}Holofoil{'}'} · 1999 Base Set (1st Edition)
         </Link>
         {' '}
         but also includes trainer cards like
         {' '}
-        <Link component={ReactRouterLink} to="#Venusaur|1g1w7">
+        <Link component={ReactRouterLink} to="/pokemon/Venusaur/1g1w7">
           Venusaur Spirit Link 89 · 2016 XY Evolutions
         </Link>
         .
@@ -69,12 +69,13 @@ const PokemonList = () => {
       </Typography>
       <SearchPage
         apiFn={getPokemonList}
+        basePath="/pokemon"
         id="pokemon-select"
         label="Search for a Pokémon... (e.g. Pikachu)"
         optionFormatter={(pokemon: pokemon) => formatPokemonName(pokemon)}
         placeholder="Pikachu or 025 or German ..."
         renderResult={(selectedPokemon: pokemon) => (
-          <PokemonExpansions name={selectedPokemon.name} />
+          <PokemonExpansions base="pokemon" name={selectedPokemon.name} />
         )}
         urlFriendlyName={urlFriendlyPokemonName}
       />

@@ -61,7 +61,7 @@ const useStyles = makeStyles((theme) => {
 
 const pages = [{
   icon: <StyleIcon />,
-  path: '/expansions',
+  path: '/sets',
   text: 'Sets',
 }, {
   icon: <FaceIcon />,

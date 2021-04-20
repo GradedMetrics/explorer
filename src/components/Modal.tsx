@@ -4,7 +4,7 @@ import {
 } from 'react-router-dom';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
-import Link from '@material-ui/core/Box';
+import Link from '@material-ui/core/Link';
 import MUIModal from '@material-ui/core/Modal';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
@@ -44,7 +44,7 @@ const Modal: React.FC<ModalProps> = ({
     return (
       <Link
         component={ReactRouterLink}
-        to={mobileLink}
+        to={mobileLink!}
       >
         <Typography variant="button" color="primary">
           {isHelp ? (

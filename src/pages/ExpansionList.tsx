@@ -46,22 +46,23 @@ const ExpansionList = () => {
       >
         A fair amount of work has been put in to make PSA's data more usable. As an example, PSA refer to Pokémon's Base Set as &lsquo;Pokemon Game&rsquo; and bundle all 1st Edition, shadowless and unlimited cards (to name a few) into one big set; this app renames the set and separates it into different subsets:
         {' '}
-        <Link component={ReactRouterLink} to="/expansions#18ll-1">
+        <Link component={ReactRouterLink} to="/sets/18ll-1">
           Base Set (1st Edition)
         </Link>,
         {' '}
-        <Link component={ReactRouterLink} to="/expansions#18ll-3">
+        <Link component={ReactRouterLink} to="/sets/18ll-3">
           Base Set (Shadowless)
         </Link>
         {' '}
         and
         {' '}
-        <Link component={ReactRouterLink} to="/expansions#18ll">
+        <Link component={ReactRouterLink} to="/sets/18ll">
           Base Set
         </Link>.
       </Typography>
       <SearchPage
         apiFn={getExpansions}
+        basePath="/sets"
         id="expansion-select"
         label="Search for an expansion... (e.g. Base Set)"
         optionFormatter={(expansion: expansion) => formatExpansionName(expansion)}

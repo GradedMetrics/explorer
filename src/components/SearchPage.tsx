@@ -8,19 +8,21 @@ import Loading from '../components/Loading';
 import withSingleContentLoad from '../hocs/withSingleContentLoad';
 
 type SearchPageProps = {
-  apiFn: () => Promise<any>,
-  content: any[],
-  id: string,
-  helperText?: string,
-  label: string,
-  optionFormatter: (entry: any) => string,
-  optionGroupFormatter?: (entry: any) => string,
-  placeholder: string,
-  renderResult: (entry: any) => React.ReactNode,
-  urlFriendlyName: (entry: any) => string,
+  apiFn: () => Promise<any>
+  basePath: string
+  content: any[]
+  id: string
+  helperText?: string
+  label: string
+  optionFormatter: (entry: any) => string
+  optionGroupFormatter?: (entry: any) => string
+  placeholder: string
+  renderResult: (entry: any) => React.ReactNode
+  urlFriendlyName: (entry: any) => string
 }
 
 const SearchPage: React.FC<SearchPageProps> = ({
+  basePath,
   content = [],
   helperText,
   id,
@@ -33,28 +35,30 @@ const SearchPage: React.FC<SearchPageProps> = ({
 }) => {
   const history = useHistory();
   const {
-    hash,
+    pathname,
   } = history.location;
   const [selected, setSelected] = React.useState<any>();
   const [isLoading, setLoading] = React.useState<boolean>(false);
   const [isPageLoading, setPageLoading] = React.useState<boolean>(true);
 
   React.useEffect(() => {
-    if (!hash) {
+    if (pathname === basePath) {
       setPageLoading(false);
       return;
     }
 
-    if (selected && urlFriendlyName(selected) === hash.split('|')[0].substr(1, 64)) {
+    const [pathSelected] = pathname.substr(1 + basePath.length, 64).split('/');
+
+    if (selected && urlFriendlyName(selected) === pathSelected) {
       setLoading(false);
       return;
     }
 
-    const urlSelected = content.find(pokemon => urlFriendlyName(pokemon) === hash.split('|')[0].substr(1, 64));
+    const urlSelected = content.find(pokemon => urlFriendlyName(pokemon) === pathSelected);
 
     if (!urlSelected) {
       history.replace({
-        hash: '',
+        pathname: basePath,
       });
 
       setSelected(undefined);
@@ -65,7 +69,7 @@ const SearchPage: React.FC<SearchPageProps> = ({
     handleSelect(urlSelected);
     setPageLoading(false);
     //eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [hash]);
+  }, [pathname]);
 
   React.useEffect(() => {
     if (isPageLoading) {
@@ -74,14 +78,22 @@ const SearchPage: React.FC<SearchPageProps> = ({
 
     setLoading(false);
 
-    const newHash = urlFriendlyName(selected);
+    const [pathSelected] = pathname.substr(1 + basePath.length, 64).split('/');
+    const newPathSelected = urlFriendlyName(selected);
  
-    if (hash.split('|')[0].substr(1, 64) === newHash) {
+    if (pathSelected === newPathSelected) {
+      return;
+    }
+
+    if (!newPathSelected) {
+      history.replace({
+        pathname: basePath,
+      });
       return;
     }
 
     history.replace({
-      hash: newHash,
+      pathname: `${basePath}/${newPathSelected}`,
     });
     //eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selected]);

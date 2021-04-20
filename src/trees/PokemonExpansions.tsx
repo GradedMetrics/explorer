@@ -42,12 +42,13 @@ const headingVariantMapping = {
 }
 
 type PokemonExpansionsProps = {
-  base?: "misc" | "pokemon",
+  base: "misc" | "pokemon",
   content: pokemonData,
   name: string,
 }
 
 const PokemonExpansions: React.FC<PokemonExpansionsProps> = ({
+  base,
   content,
   name: pokemon
 }) => {
@@ -56,7 +57,7 @@ const PokemonExpansions: React.FC<PokemonExpansionsProps> = ({
   const [isLoading, setLoading] = React.useState<boolean>(false);
   const [isPageLoading, setPageLoading] = React.useState<boolean>(true);
 
-  console.log(content);
+  const basePathLength = `/${base}`.length;
 
   const {
     data,
@@ -77,26 +78,21 @@ const PokemonExpansions: React.FC<PokemonExpansionsProps> = ({
 
   React.useEffect(() => {
     const {
-      hash,
+      pathname,
     } = history.location;
 
-    if (!hash) {
+    const [pathPokemon, pathCard] = pathname.substr(1 + basePathLength, 64).split('/');
+
+    if (!pathCard) {
       setPageLoading(false);
       return;
     }
 
-    const [hashPokemon, hashCard] = hash.substr(1, 64).split('|');
-
-    if (!hashCard) {
-      setPageLoading(false);
-      return;
-    }
-
-    const urlSelectedCard = data.find(({ id }) => id === hashCard.substr(0, 16));
+    const urlSelectedCard = data.find(({ id }) => id === pathCard.substr(0, 16));
 
     if (!urlSelectedCard) {
       history.replace({
-        hash: hashPokemon,
+        pathname: `/${base}/${pathPokemon}`,
       });
 
       setPageLoading(false);
@@ -109,9 +105,14 @@ const PokemonExpansions: React.FC<PokemonExpansionsProps> = ({
   }, []);
 
   React.useEffect(() => {
-    const [hashPokemon] = history.location.hash.substr(1, 64).split('|');
+    const {
+      pathname,
+    } = history.location;
+  
+    const [pathPokemon] = pathname.substr(1 + basePathLength, 64).split('/');
+    console.log(pathPokemon);
     
-    if (hashPokemon === urlFriendlyPokemonName({ name: pokemon })) {
+    if (pathPokemon === urlFriendlyPokemonName({ name: pokemon })) {
       return;
     }
 
@@ -137,26 +138,25 @@ const PokemonExpansions: React.FC<PokemonExpansionsProps> = ({
     setLoading(false);
 
     const {
-      hash,
+      pathname,
     } = history.location;
     
-    const [hashPokemon, hashCard] = hash.substr(1, 64).split('|');
+    const [pathPokemon, pathCard] = pathname.substr(1 + basePathLength, 64).split('/');
+    const newPathCard = urlFriendlyCardName(selectedCard);
 
-    const newCardHash = urlFriendlyCardName(selectedCard);
-
-    if (hashCard === newCardHash) {
+    if (pathCard === newPathCard) {
       return;
     }
 
-    if (!newCardHash) {
+    if (!newPathCard) {
       history.replace({
-        hash: hashPokemon,
+        pathname: `/${base}/${pathPokemon}`,
       });
       return;
     }
 
     history.replace({
-      hash: `${hashPokemon}|${newCardHash}`,
+      pathname: `/${base}/${pathPokemon}/${newPathCard}`,
     });
     //eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedCard]);
@@ -229,7 +229,7 @@ const PokemonExpansions: React.FC<PokemonExpansionsProps> = ({
                 variant="body1"
                 align="right"
               >
-                <Link component={ReactRouterLink} to={`/expansions#${selectedCard.expansion!.id}`}>
+                <Link component={ReactRouterLink} to={`/sets/${selectedCard.expansion!.id}`}>
                   <ArrowRightAltIcon />
                   {' '}
                   <StyleIcon />

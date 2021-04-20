@@ -103,13 +103,13 @@ function App() {
             <Route exact path="/help">
               <Help />
             </Route>
-            <Route exact path="/expansions">
+            <Route path="/sets">
               <ExpansionList />
             </Route>
-            <Route exact path="/misc">
+            <Route path="/misc">
               <MiscList />
             </Route>
-            <Route exact path="/pokemon">
+            <Route path="/pokemon">
               <PokemonList />
             </Route>
             <Route exact path="/rankings">
