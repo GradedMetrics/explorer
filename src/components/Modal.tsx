@@ -6,8 +6,9 @@ import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import Link from '@material-ui/core/Link';
 import MUIModal from '@material-ui/core/Modal';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 import ContactSupportIcon from '@material-ui/icons/ContactSupport';
 
 const useStyles = makeStyles((theme) => ({
@@ -37,10 +38,12 @@ const Modal: React.FC<ModalProps> = ({
   mobileLink,
   opener,
 }) => {
+  const theme = useTheme();
+  const matches = useMediaQuery(theme.breakpoints.down('md'));
   const classes = useStyles();
   const [isOpen, setOpen] = React.useState<boolean>(false);
 
-  if (mobileLink) {
+  if (mobileLink && matches) {
     return (
       <Link
         component={ReactRouterLink}

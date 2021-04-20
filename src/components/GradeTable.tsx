@@ -88,13 +88,6 @@ const GradeTable: React.FC<GradeTableProps> = ({
       </Typography>
       </Hidden>
       <Wrapper>
-        {hideHelpButton ? undefined : (
-          <Box mt={1} textAlign="right">
-            <Modal isHelp opener="How do I use this table?" mobileLink="/help#grade-table">
-              <GradeTableHelp />
-            </Modal>
-          </Box>
-        )}
         <TableContainer component={Paper}>
           <Table aria-label="Grades table." size="small">
             <TableHead>
@@ -122,6 +115,13 @@ const GradeTable: React.FC<GradeTableProps> = ({
             </TableBody>
           </Table>
         </TableContainer>
+        {hideHelpButton ? undefined : (
+          <Box mt={1} textAlign="right">
+            <Modal isHelp opener="How do I use this table?" mobileLink="/help#grade-table">
+              <GradeTableHelp />
+            </Modal>
+          </Box>
+        )}
       </Wrapper>
     </Box>
   );

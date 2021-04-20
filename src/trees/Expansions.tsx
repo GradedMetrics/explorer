@@ -105,6 +105,10 @@ const Expansions: React.FC<ExpansionsProps> = ({
   }, []);
 
   React.useEffect(() => {
+    if (isPageLoading) {
+      return;
+    }
+
     setLoading(false);
 
     const {
@@ -112,7 +116,6 @@ const Expansions: React.FC<ExpansionsProps> = ({
     } = history.location;
     
     const [pathExpansion, pathCard] = pathname.substr(6, 64).split('/');
-
     const newPathCard = urlFriendlyCardName(selectedCard);
 
     if (pathCard === newPathCard) {

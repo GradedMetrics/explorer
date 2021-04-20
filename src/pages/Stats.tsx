@@ -8,7 +8,7 @@ import {
 import Link from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
 import BubbleChartIcon from '@material-ui/icons/BubbleChart';
-import LocalFloristIcon from '@material-ui/icons/LocalFlorist';
+import ContactSupportIcon from '@material-ui/icons/ContactSupport';
 import GradeTable from '../components/GradeTable';
 import withSingleContentLoad from '../hocs/withSingleContentLoad';
 import {
@@ -63,13 +63,13 @@ const Stats: React.FC<StatsProps> = ({
       >
         * This includes over 200 normalized sets (i.e. where PSA bundle 1st Edition, Shadowless and Unlimited Base Set cards into one mammoth &ldquo;Pokemon Game&rdquo; set, this app splits those into multiple smaller sets). For more information, please see the
         {' '}
-        <Link component={ReactRouterLink} to="/#normalization">
-          <LocalFloristIcon fontSize="small" />
+        <Link component={ReactRouterLink} to="/help#data-normalization">
+          <ContactSupportIcon fontSize="small" />
           {' '}
           Data Normalization
         </Link>
         {' '}
-        section on the home page.
+        help section.
       </Typography>
       <GradeTable
         history={history}
