@@ -1,0 +1,48 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="description" content="There's nothing sensible here on this page.">
+    <meta property="og:url" content="https://pokemetrics.org/404">
+    <meta property="og:title" content="The Coveted 404 Page on PokéMetrics.org">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://pokemetrics.org/logo.png">
+    <meta property="og:description" content="There's nothing sensible here on this page.">
+    <meta property="og:site_name" content="PokéMetrics.org">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:creator" content="@pichucollector">
+    <meta name="twitter:site" content="@pokemetrics">
+    <meta name="twitter:title" content="The Coveted 404 Page on PokéMetrics.org">
+    <meta name="twitter:description" content="There's nothing sensible here on this page.">
+    <meta name="twitter:image" content="https://pokemetrics.org/logo.png">
+    <meta name="article:section" content="Expansions">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="apple-mobile-web-app-title" content="PokéMetrics">
+    <meta name="application-name" content="PokéMetrics">
+    <meta name="msapplication-TileColor" content="#333333">
+    <meta name="theme-color" content="#ffffff">
+    <meta property="fb:app_id" content="284188523203099"/>
+    <link rel="icon" type="image/png" href="https://pokemetrics.org/favicon.ico">
+    <title>The Coveted 404 Page on PokéMetrics.org</title>
+    <script>
+      const segmentCount = 0;
+      const l = window.location;
+      window.location.replace((
+        l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '')
+        + l.pathname.split('/').slice(0, 1 + segmentCount).join('/') + '/?p=/'
+        + l.pathname.slice(1).split('/').slice(segmentCount).join('/').replace(/&/g, '~and~')
+        + (l.search ? '&q=' + l.search.slice(1).replace(/&/g, '~and~') : '')
+        + l.hash
+      ).replace(/\/$/, ''));
+    </script>
+  </head>
+  <body>
+    <h1>404</h1>
+    <p>There's nothing sensible here on this page.</p>
+    <noscript>JavaScript is required to run PokéMetrics.</noscript>
+  </body>
+</html>
