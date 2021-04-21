@@ -50,7 +50,7 @@ const PokemonList = () => {
           Charizard 4 {'{'}Holofoil{'}'} · 1999 Base Set (1st Edition)
         </Link>
         {' '}
-        but also includes trainer cards like
+        and also includes trainer cards like
         {' '}
         <Link component={ReactRouterLink} to="/pokemon/Venusaur/1g1w7">
           Venusaur Spirit Link 89 · 2016 XY Evolutions
@@ -63,7 +63,7 @@ const PokemonList = () => {
       >
         Entries which do not feature a Pokémon in their name can be found in the
         {' '}
-        <Link component={ReactRouterLink} to="/misc"><NaturePeopleIcon fontSize="small" /> Misc</Link>
+        <Link component={ReactRouterLink} to="/misc"><NaturePeopleIcon fontSize="small" /> Miscellaneous</Link>
         {' '}
         section.
       </Typography>
