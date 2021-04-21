@@ -40,5 +40,5 @@ export const urlFriendlyPokemonName = (pokemon?: pokemon): string => {
     return '';
   }
 
-  return pokemon.name.replace(/ /g, '');
+  return pokemon.name.replace(/[!?:/]/g, '');
 }

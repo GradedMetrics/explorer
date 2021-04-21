@@ -192,7 +192,7 @@ const Expansions: React.FC<ExpansionsProps> = ({
                   variant="body1"
                   align="right"
                 >
-                  <Link component={ReactRouterLink} to={`pokemon#${urlFriendlyPokemonName(selectedCard as pokemon)}`}>
+                  <Link component={ReactRouterLink} to={`/pokemon/${urlFriendlyPokemonName(selectedCard as pokemon)}`}>
                     <ArrowRightAltIcon />
                     {' '}
                     Find other
@@ -210,7 +210,7 @@ const Expansions: React.FC<ExpansionsProps> = ({
                   variant="body1"
                   align="right"
                 >
-                  <Link component={ReactRouterLink} to={`misc#${urlFriendlyPokemonName(selectedCard as pokemon)}`}>
+                  <Link component={ReactRouterLink} to={`/misc/${urlFriendlyPokemonName(selectedCard as pokemon)}`}>
                     <ArrowRightAltIcon />
                     {' '}
                     Find other
