@@ -2,13 +2,18 @@ import React from 'react';
 import {
   BrowserRouter as Router,
   Route,
+  Switch,
 } from 'react-router-dom';
 import { createGlobalStyle } from 'styled-components';
 import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container';
+import Link from '@material-ui/core/Link';
+import PowerOffIcon from '@material-ui/icons/PowerOff';
+import Banner from './components/Banner';
 import Loading from './components/Loading';
 import PageFooter from './components/PageFooter';
 import PageHeader from './components/PageHeader';
+import Error404 from './pages/Error404';
 import ExpansionList from './pages/ExpansionList';
 import Help from './pages/Help';
 import Home from './pages/Home';
@@ -93,31 +98,42 @@ function App() {
   return (
     <>
       <GlobalStyle />
+      <Link href="https://discord.gg/WNbxZJ93" style={{ textDecoration: 'none' }} rel="noopener">
+        <Banner
+          icon={<PowerOffIcon />}
+          text="Beta test active. #beta on Discord."
+        />
+      </Link>
       <Container maxWidth="md">
         <Router>
           <PageHeader version={apiVersion} />
           <Box my={3}>
-            <Route exact path="/">
-              <Home />
-            </Route>
-            <Route exact path="/help">
-              <Help />
-            </Route>
-            <Route path="/sets">
-              <ExpansionList />
-            </Route>
-            <Route path="/misc">
-              <MiscList />
-            </Route>
-            <Route path="/pokemon">
-              <PokemonList />
-            </Route>
-            <Route exact path="/rankings">
-              <Ranks />
-            </Route>
-            <Route exact path="/stats">
-              <Stats />
-            </Route>
+            <Switch>
+              <Route exact path="/">
+                <Home />
+              </Route>
+              <Route exact path="/help">
+                <Help />
+              </Route>
+              <Route path="/sets">
+                <ExpansionList />
+              </Route>
+              <Route path="/misc">
+                <MiscList />
+              </Route>
+              <Route path="/pokemon">
+                <PokemonList />
+              </Route>
+              <Route exact path="/rankings">
+                <Ranks />
+              </Route>
+              <Route exact path="/stats">
+                <Stats />
+              </Route>
+              <Route path="*">
+                <Error404 />
+              </Route>
+            </Switch>
           </Box>
         </Router>
       </Container>
