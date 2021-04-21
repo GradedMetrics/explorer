@@ -26,7 +26,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "react-scripts build && (robocopy /move /E build ../pokemetrics.org/docs/) ^& IF %ERRORLEVEL% LSS 8 SET ERRORLEVEL = 0",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
