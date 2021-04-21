@@ -11,6 +11,7 @@ const withSingleContentLoad = (WrappedComponent: React.FC<any>, apiFn: (props: a
         setContent(await apiFn(props)());
         setLoading(false);
       })();
+      //eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     if (isLoading) {

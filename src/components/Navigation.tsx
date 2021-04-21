@@ -14,9 +14,7 @@ import FormatListNumberedIcon from '@material-ui/icons/FormatListNumbered';
 import NaturePeopleIcon from '@material-ui/icons/NaturePeople';
 import StyleIcon from '@material-ui/icons/Style';
 
-const useStyles = makeStyles((theme) => {
-  console.log(theme);
-  return ({
+const useStyles = makeStyles((theme) => ({
   link: {
     borderBottom: '2px solid transparent',
     color: theme.palette.text.primary,
@@ -57,7 +55,7 @@ const useStyles = makeStyles((theme) => {
   toolbar: {
     justifyContent: 'center',
   },
-})});
+}));
 
 const pages = [{
   icon: <StyleIcon />,

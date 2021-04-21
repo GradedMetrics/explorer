@@ -10,7 +10,7 @@ import {
 import PSALogo from '../assets/psa-logo.png';
 
 const Muted = withTheme(styled.span`
-  color: ${props => { console.log(props); return props.theme.palette.text.secondary }}
+  color: ${props => props.theme.palette.text.secondary}
 `);
 
 type PSASetLinkProps = {

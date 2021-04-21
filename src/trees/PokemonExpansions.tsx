@@ -110,7 +110,6 @@ const PokemonExpansions: React.FC<PokemonExpansionsProps> = ({
     } = history.location;
   
     const [pathPokemon] = pathname.substr(1 + basePathLength, 64).split('/');
-    console.log(pathPokemon);
     
     if (pathPokemon === urlFriendlyPokemonName({ name: pokemon })) {
       return;

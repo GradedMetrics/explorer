@@ -2,16 +2,11 @@ import React from 'react';
 import {
   Link as ReactRouterLink,
 } from 'react-router-dom';
-import styled from 'styled-components';
 import Box from '@material-ui/core/Box';
 import Link from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
 import ContactSupportIcon from '@material-ui/icons/ContactSupport';
 import LocalFloristIcon from '@material-ui/icons/LocalFlorist';
-import {
-  historicBackground,
-  totalBackground,
-} from '../components/GradeTable';
 import DiscordLogo from '../assets/discord-logo.png';
 import PSALogo from '../assets/psa-logo.png';
 

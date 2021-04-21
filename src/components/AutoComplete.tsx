@@ -62,6 +62,7 @@ const AutoComplete: React.FC<AutoCompleteProps> = ({
     setInputValue(optionFormatter(defaultSelectedOption));
     setValue(defaultSelectedOption);
     setLoading(false);
+    //eslint-disable-next-line react-hooks/exhaustive-deps
   }, [defaultSelectedOption, isLoading]);
 
   if (isLoading) {

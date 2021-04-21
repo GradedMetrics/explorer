@@ -130,10 +130,6 @@ export const formatPokemonName: ((pokemon: pokemon, options?: formatPokemonOptio
     hideNumber = false,
   } = options;
 
-  if (psaName) {
-    console.log(psaName);
-  }
-
   const parts = [];
 
   if (!hideNumber && number) {

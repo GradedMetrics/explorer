@@ -5,7 +5,6 @@ import {
 } from 'react-router-dom';
 import Box from '@material-ui/core/Box';
 import Link from '@material-ui/core/Link';
-import Paper from '@material-ui/core/Paper';
 import Tab from '@material-ui/core/Tab';
 import Tabs from '@material-ui/core/Tabs';
 import Typography from '@material-ui/core/Typography';
@@ -76,6 +75,7 @@ const RankList: React.FC<RankListProps> = ({
               component="li"
               paragraph={index !== data.length - 1}
               variant="button"
+              key={card.id}
             >
               <Typography display="block" variant="body2">
                 <AddIcon fontSize="small" />
@@ -100,6 +100,7 @@ const RankList: React.FC<RankListProps> = ({
             component="li"
             paragraph={index !== data.length - 1}
             variant="button"
+            key={expansion.id}
           >
             <Typography display="block" variant="body2">
               <AddIcon fontSize="small" />

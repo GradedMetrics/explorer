@@ -12,12 +12,6 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import DataNormalization from '../help/DataNormalization';
 import GradeTableHelp from '../help/GradeTable';
 
-const headingVariantMapping = {
-  h4: 'h1',
-  h5: 'h2',
-  h6: 'h3',
-};
-
 const Help = () => {
   const history = useHistory();
   const {
