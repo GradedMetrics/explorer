@@ -130,9 +130,9 @@ const GradeCount: React.FC<GradeCountProps> = ({
 }
 
 type TableDataProps = {
-  data: flattenedGrade[],
-  history: gradeChangeOverTime,
-  historyDeductsFromTotal: boolean,
+  data: flattenedGrade[]
+  history: gradeChangeOverTime
+  historyDeductsFromTotal: boolean
 };
 
 const TableData: React.FC<TableDataProps> = ({

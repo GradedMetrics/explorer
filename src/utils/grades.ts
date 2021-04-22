@@ -157,52 +157,66 @@ export const flattenGrades: ((grades: grades) => flattenedGrade[]) = ({
  * This takes a full grade history array and determines the weekly, monthly and yearly change.
  * Note that the history array is only updated if data changes, meaning weeks may be missing. This
  * accounts for that.
- * @param {gradeHistory[]} history The grade history array to parse.
+ * @param {gradeHistory[]} contentHistory The grade history array to parse.
+ * @param {gradeHistory[]} allHistory
  * @returns {gradeChangeOverTime} The grade change over time.
  */
-export const getGradeChangeOverTime: ((history: gradeHistory[]) => gradeChangeOverTime) = (history) => {
-  if (!Array.isArray(history) || !history.length) {
+export const getGradeChangeOverTime: ((
+  contentHistory: gradeHistory[],
+  allHistory: gradeHistory[]
+) => gradeChangeOverTime) = (contentHistory, allHistory) => {
+  if (!Array.isArray(contentHistory) || !contentHistory.length) {
     return {} as gradeChangeOverTime;
   }
 
-  let weekly;
+  const WEEK_INDEX = 0; // 1 week
+  const MONTH_INDEX = 4; // 5 weeks
+  const YEAR_INDEX = 51; // 52 weeks
+
+  let weekly = {};
   let monthly;
   let yearly;
 
-  const WEEK_MILLISECONDS = 604800000;
-  const now = Number(new Date());
+  console.log(contentHistory, allHistory);
 
-  if (now - Number(history[0].date) <= (WEEK_MILLISECONDS * 2)) {
-    // If the history array has been updated in the past week, we can assume the entries to represent the weeks leading up to this point.
-    weekly = history[0].grades;
-    monthly = history[4]?.grades;
-    yearly = history[51]?.grades;
+  const hasDirectMatch = (index: number) => {
+    // Compare the content history with the full history to see if there was a change on the given date index.
+    return Number(contentHistory[index]?.date) === Number(allHistory[index + 1].date);
+  }
+
+  if (hasDirectMatch(WEEK_INDEX)) {
+    // There have been changes in the past week.
+    weekly = contentHistory[WEEK_INDEX].grades;
+  }
+
+  if (contentHistory.length === 1) {
+    // There is only one historic entry and we've processed it already, no need to continue.
+    return {
+      weekly,
+      monthly: weekly,
+      yearly: weekly,
+    } as gradeChangeOverTime;
+  }
+
+  const getOldestChange = (cutOffDate: number) => {
+    // Find the oldest piece of content history prior to the provided cut off date. 
+    const changes = contentHistory.filter(entry => Number(entry.date) > cutOffDate);
+    return changes[changes.length - 1];
+  }
+
+  if (hasDirectMatch(MONTH_INDEX)) {
+    // There have been changes in the past month and this is the furthest date.
+    monthly = contentHistory[MONTH_INDEX].grades;
   } else {
-    // Otherwise we need to calculate how many weeks have passed since the last history change occurred.
-    const latest = Number(history[0].date);
-    const weeksSinceLastUpdate = Math.floor((now - latest) / WEEK_MILLISECONDS);
-
-    weekly = {};
-    monthly = weeksSinceLastUpdate <= 5 ? history[5 - weeksSinceLastUpdate]?.grades : {};
-    yearly = history[51 - weeksSinceLastUpdate]?.grades;
+    // Otherwise grab the oldest change within the 5 week period.
+    monthly = getOldestChange(Number(allHistory[MONTH_INDEX + 1].date))?.grades;
   }
 
-  const defaultValue = history[history.length - 1].grades;
-
-  if (!monthly) {
-    return {
-      weekly,
-      monthly: defaultValue,
-      yearly: defaultValue,
-    } as gradeChangeOverTime;
-  }
-  
-  if (!yearly) {
-    return {
-      weekly,
-      monthly,
-      yearly: defaultValue,
-    } as gradeChangeOverTime;
+  if (hasDirectMatch(YEAR_INDEX)) {
+    // There have been changes in the past year and this is the furthest date.
+    yearly = contentHistory[YEAR_INDEX].grades;
+  } else {
+    yearly = getOldestChange(Number(allHistory[YEAR_INDEX + 1].date))?.grades;
   }
 
   return {

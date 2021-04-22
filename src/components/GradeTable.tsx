@@ -13,10 +13,14 @@ import TableRow from '@material-ui/core/TableRow';
 import Typography from '@material-ui/core/Typography';
 import Modal from './Modal';
 import GradeTableHelp from '../help/GradeTable';
+import withSingleContentLoad from '../hocs/withSingleContentLoad';
 import TableData, {
   historicBackground,
   totalBackground,
 } from './GradeTable/TableData';
+import {
+  getHistory,
+} from '../utils/api';
 import {
   flattenGrades,
   getGradeChangeOverTime,
@@ -62,6 +66,7 @@ const Wrapper = withTheme(styled.article(({ theme }) => ({
 })));
 
 type GradeTableProps = {
+  content: gradeHistory[]
   hideHelpButton?: boolean
   history: gradeHistory[]
   historyDeductsFromTotal?: boolean
@@ -69,6 +74,7 @@ type GradeTableProps = {
 }
 
 const GradeTable: React.FC<GradeTableProps> = ({
+  content: allHistory,
   hideHelpButton = false,
   history,
   historyDeductsFromTotal = true,
@@ -109,7 +115,7 @@ const GradeTable: React.FC<GradeTableProps> = ({
             <TableBody>
               <TableData
                 data={flattenGrades(total)}
-                history={getGradeChangeOverTime(history)}
+                history={getGradeChangeOverTime(history, allHistory)}
                 historyDeductsFromTotal={historyDeductsFromTotal}
               />
             </TableBody>
@@ -127,4 +133,8 @@ const GradeTable: React.FC<GradeTableProps> = ({
   );
 }
 
-export default GradeTable;
+
+export default withSingleContentLoad(
+  GradeTable,
+  () => getHistory,
+);
