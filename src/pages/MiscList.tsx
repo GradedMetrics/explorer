@@ -40,7 +40,7 @@ const MiscList = () => {
       >
         This page allows you to search for cards which do not feature a Pokémon in their name. This includes cards like
         {' '}
-        <Link component={ReactRouterLink} to="/misc/MiracleDiamond/10z1m">
+        <Link component={ReactRouterLink} to="/misc/Miracle%20Diamond/10z1m">
           Miracle Diamond
         </Link>
         {' '}
