@@ -177,8 +177,6 @@ export const getGradeChangeOverTime: ((
   let monthly;
   let yearly;
 
-  console.log(contentHistory, allHistory);
-
   const hasDirectMatch = (index: number) => {
     // Compare the content history with the full history to see if there was a change on the given date index.
     return Number(contentHistory[index]?.date) === Number(allHistory[index + 1].date);

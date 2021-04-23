@@ -83,7 +83,7 @@ const GradeTableHelp: React.FC<GradeTableHelpProps> = ({
         grade: -10,
       },
       '8': {
-        half: -15,
+        half: -17,
       }
     }
   }]
@@ -144,6 +144,9 @@ const GradeTableHelp: React.FC<GradeTableHelpProps> = ({
       </Typography>
       <Typography variant="body1" paragraph>
         In the past 5 weeks, <Variant>2</Variant> PSA 10 grades and <Variant>5</Variant> PSA 9 grades have been added along with <Variant>10</Variant> PSA 8.5 grades. These numbers include the numbers from the &lsquo;1 week&rsquo; column, allowing us to say that 1 of the <Variant>2</Variant> PSA 10 grades which appeared in the past 5 weeks was from the past week and the other happened at some point between 5 weeks ago and the end of the week before last. Here the yellow background on the PSA 9 grade is less prominent as the PSA 8.5 grade accounts for a larger share of the total graded in this period. 
+      </Typography>
+      <Typography variant="body1" paragraph>
+        In the 52 weeks column <Variant>17</Variant> PSA 8.5 grades have been added. The word <Variant><em>new</em></Variant> is used to denote that this grade was not present before this point and was newly added during this time.
       </Typography>
       <Typography>
         None of the <Variant>3</Variant> PSA 9 qualifier grades were graded in the past 52 weeks, so nothing is displayed in the historic section.
