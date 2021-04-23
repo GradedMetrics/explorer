@@ -7,91 +7,19 @@ import GradeTable, {
   totalBackground,
 } from '../components/GradeTable';
 import Variant from '../components/Variant';
+import withSingleContentLoad from '../hocs/withSingleContentLoad';
+import {
+  getHistory,
+} from '../utils/api';
+import {
+  gradeHistory,
+} from '../types';
 
 const headingVariantMapping = {
   h4: 'h1',
   h5: 'h2',
   h6: 'h3',
 };
-
-const fakeGradeTotal = {
-  total: {
-    grade: 60,
-    half: 10,
-    qualifier: 30,
-  },
-  '10': {
-    grade: 40,
-  },
-  '9': {
-    grade: 20,
-    qualifier: 3,
-  },
-  '8': {
-    half: 17
-  }
-};
-
-const fakeGradeHistory = new Array(52).fill({
-  date: 0,
-  grades: {
-    total: {},
-  },
-});
-
-// 1 week
-fakeGradeHistory[0] = {
-  date: Number(new Date()),
-  grades: {
-    total: {
-      grade: -6,
-    },
-    '10': {
-      grade: -1,
-    },
-    '9': {
-      grade: -5,
-    }
-  }
-}
-
-// 5 weeks
-fakeGradeHistory[4] = {
-  date: Number(new Date()),
-  grades: {
-    total: {
-      grade: -17,
-    },
-    '10': {
-      grade: -2,
-    },
-    '9': {
-      grade: -5,
-    },
-    '8': {
-      half: -10,
-    }
-  }
-}
-
-// 52 weeks
-fakeGradeHistory[51] = {
-  date: Number(new Date()),
-  grades: {
-    total: {
-      grade: -23,
-    },
-    '10': {
-      grade: -3,
-    },
-    '9': {
-      grade: -10,
-    },
-    '8': {
-      half: -15,
-    }
-  }
-}
 
 const Greenie = styled.span({
   background: `rgba(${totalBackground}, 0.34)`,
@@ -103,7 +31,63 @@ const Yellowie = styled(Greenie)({
   background: `rgba(${historicBackground}, 0.34)`,
 });
 
-const GradeTableHelp = () => {
+type GradeTableHelpProps = {
+  content: gradeHistory[]
+}
+
+const GradeTableHelp: React.FC<GradeTableHelpProps> = ({
+  content: allHistory,
+}) => {
+  const fakeGradeHistory = [{
+    // 1 week - the indices are offset by 1 as allHistory[0] is the current total.
+    date: allHistory[1].date,
+    grades: {
+      total: {
+        grade: -6,
+      },
+      '10': {
+        grade: -1,
+      },
+      '9': {
+        grade: -5,
+      }
+    },
+  }, {
+    // 5 weeks.
+    date: allHistory[4].date,
+    grades: {
+      total: {
+        grade: -17,
+      },
+      '10': {
+        grade: -2,
+      },
+      '9': {
+        grade: -5,
+      },
+      '8': {
+        half: -10,
+      }
+    }
+  }, {
+    // 52 weeks.
+    date: allHistory[51].date,
+    grades: {
+      total: {
+        grade: -23,
+      },
+      '10': {
+        grade: -3,
+      },
+      '9': {
+        grade: -10,
+      },
+      '8': {
+        half: -15,
+      }
+    }
+  }]
+
   return (
     <>
       <Typography variant="h5" gutterBottom variantMapping={headingVariantMapping}>
@@ -115,7 +99,23 @@ const GradeTableHelp = () => {
       <GradeTable
         hideHelpButton
         history={fakeGradeHistory}
-        total={fakeGradeTotal}
+        total={{
+          total: {
+            grade: 60,
+            half: 10,
+            qualifier: 30,
+          },
+          '10': {
+            grade: 40,
+          },
+          '9': {
+            grade: 20,
+            qualifier: 3,
+          },
+          '8': {
+            half: 17
+          }
+        }}
       />
       <Typography variant="body1" paragraph>
         The Total Graded column reveals that the total example population is <Variant>100</Variant> and is made up of <Variant>40</Variant> PSA 10 grades, <Variant>3</Variant> PSA 9 qualifier grades, <Variant>20</Variant> PSA 9 grades, and <Variant>17</Variant> PSA 8.5 grades.
@@ -128,7 +128,7 @@ const GradeTableHelp = () => {
         between the grade name and the population represents the overall percentage that grade makes up in relation to the total population, allowing for quickly seeing which grades have the largest (or smallest) shares - the PSA 10 grade, with a population of <Variant>40</Variant>, makes up <Variant>40%</Variant> of the total population meaning this green background makes up 40% of the total area.
       </Typography>
       <Typography variant="body1" paragraph>
-        In the past week, <Variant>6</Variant> new entries were graded, made up of <Variant>1</Variant> new PSA 10 (accounting for <Variant>2.5%</Variant> of the total PSA 10 population) and <Variant>5</Variant> new PSA 9s (accounting for <Variant>25%</Variant> of the total PSA 9 population). No new PSA 9 qualifier or PSA 8.5 grades were added at all.
+        In the past week, <Variant>6</Variant> new entries were graded, made up of <Variant>1</Variant> new PSA 10 (an increase of <Variant>2.56%</Variant>) and <Variant>5</Variant> new PSA 9s (an increase of <Variant>33.33%</Variant>). No new PSA 9 qualifier or PSA 8.5 grades were added at all.
       </Typography>
       <Hidden smUp>
         <Typography variant="caption" paragraph>
@@ -152,4 +152,7 @@ const GradeTableHelp = () => {
   );
 }
 
-export default GradeTableHelp;
+export default withSingleContentLoad(
+  GradeTableHelp,
+  () => getHistory,
+);
