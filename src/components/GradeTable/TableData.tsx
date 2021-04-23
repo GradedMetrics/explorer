@@ -83,7 +83,7 @@ const GradeCount: React.FC<GradeCountProps> = ({
       value: current,
     } = compare;
 
-    const offset = historyDeductsFromTotal ? current + value : current - value;
+    const offset = historyDeductsFromTotal ? current + value : value;
     const percentageValueOffset = historyDeductsFromTotal ? (current + value) : (current - value);
     const percentage = historyDeductsFromTotal ? ((100 / percentageValueOffset) * -value) : (100 / value) * percentageValueOffset;
 
