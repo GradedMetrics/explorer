@@ -84,7 +84,7 @@ const GradeCount: React.FC<GradeCountProps> = ({
     } = compare;
 
     const offset = historyDeductsFromTotal ? current + value : current - value;
-    const percentage = historyDeductsFromTotal ? 100 - ((100 / current) * offset) : (100 / current) * offset;
+    const percentage = historyDeductsFromTotal ? ((100 / (current + value)) * -value) : (100 / current) * offset;
 
     if (!historyDeductsFromTotal && compare.value - value === 0) {
       return noData;
@@ -98,7 +98,7 @@ const GradeCount: React.FC<GradeCountProps> = ({
           ({offset.toLocaleString()})
         </Typography>
         <Typography variant="caption" color="textSecondary" display="block" style={totalRowStyle}>
-          ({Math.floor(percentage * 100) / 100}%)
+          +{Math.floor(percentage * 100) / 100}%
         </Typography>
       </>
     );
