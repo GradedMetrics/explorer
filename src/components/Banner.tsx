@@ -32,7 +32,7 @@ const Banner: React.FC<BannerProps> = ({
       <Container maxWidth="md">
         <Typography align="center">
           {icon ? (
-            <Box display="inline-block" className={classes.icon}>
+            <Box component="span" display="inline-block" className={classes.icon}>
               {icon}
             </Box>
           ) : undefined}
