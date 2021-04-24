@@ -102,22 +102,23 @@ export const getExpansion = async (expansionId: string): Promise<expansionDetail
   return {
     cards: [...cards].map(card => ({
       ...card,
-      pokemon: pokemonList.find(pokemon => card.name.toLowerCase().indexOf(pokemon.name.toLowerCase()) !== -1),
+      // Pull any matching Pokémon names through. Cards like "Reshiram & Charizard GX" have multiple, so an array is required.
+      pokemon: pokemonList.filter(pokemon => card.name.toLowerCase().indexOf(pokemon.name.toLowerCase()) !== -1),
     })).map(card => {
       const output = {
         ...card,
-        pokemon:  card.pokemon?.name,
+        pokemon:  card.pokemon?.map((entry: pokemon) => entry.name),
       }
 
-      if (output.pokemon) {
-        output.rank = card.pokemon.rank;
-        output.rankTotal = card.pokemon.total;
-      } else {
-        const miscData = miscList.find(misc => card.name.toLowerCase() === misc.name.toLowerCase());
+      // if (output.pokemon) {
+      //   output.rank = card.pokemon.rank;
+      //   output.rankTotal = card.pokemon.total;
+      // } else {
+      //   const miscData = miscList.find(misc => card.name.toLowerCase() === misc.name.toLowerCase());
 
-        output.rank = miscData?.rank;
-        output.rankTotal = miscData?.total;
-      }
+      //   output.rank = miscData?.rank;
+      //   output.rankTotal = miscData?.total;
+      // }
 
       return output
     }).sort((a, b) => {

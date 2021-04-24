@@ -3,7 +3,7 @@ export type card = {
   id: string
   name?: string
   number?: string
-  pokemon?: string
+  pokemon?: string[]
   psa10Pop?: number
   psaName?: string
   rank?: number

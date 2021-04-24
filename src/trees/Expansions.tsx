@@ -186,25 +186,29 @@ const Expansions: React.FC<ExpansionsProps> = ({
               {totalCards === 1 ? (
                 <PSASetLink id={expansionId} />
               ) : undefined}
-              {selectedCard.pokemon ? (
+              {selectedCard.pokemon ? selectedCard.pokemon.map(entry => (
                 <Typography
+                  key={entry}
                   paragraph
                   variant="body1"
                   align="right"
                 >
-                  <Link component={ReactRouterLink} to={`/pokemon/${urlFriendlyPokemonName(selectedCard as pokemon)}`}>
+                  <Link component={ReactRouterLink} to={`/pokemon/${urlFriendlyPokemonName({
+                    ...selectedCard,
+                    name: entry
+                  } as pokemon)}`}>
                     <ArrowRightAltIcon />
                     {' '}
                     Find other
                     {' '}
                     <FaceIcon />
                     {' '}
-                    {selectedCard.pokemon}
+                    {entry}
                     {' '}
                     cards...
                   </Link>
                 </Typography>
-              ) : (
+              )) : (
                 <Typography
                   paragraph
                   variant="body1"
