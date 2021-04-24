@@ -9,6 +9,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import BubbleChartIcon from '@material-ui/icons/BubbleChart';
+import CallSplitIcon from '@material-ui/icons/CallSplit';
 import FaceIcon from '@material-ui/icons/Face';
 import FormatListNumberedIcon from '@material-ui/icons/FormatListNumbered';
 import NaturePeopleIcon from '@material-ui/icons/NaturePeople';
@@ -69,6 +70,10 @@ const pages = [{
   icon: <NaturePeopleIcon />,
   path: '/misc',
   text: 'Misc',
+}, {
+  icon: <CallSplitIcon />,
+  path: '/variants',
+  text: 'Variants',
 }, {
   icon: <BubbleChartIcon />,
   path: '/stats',

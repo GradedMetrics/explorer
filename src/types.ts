@@ -111,6 +111,12 @@ export type pokemonData = {
   total: number
 }
 
+export type contentRank = {
+  name: string
+  rank: number
+  total: number
+}
+
 /** Rank Info */
 export type cardRanking = {
   set: expansion
@@ -140,6 +146,8 @@ export type ranking = {
   highestPerformingWeeklySets: expansionRanking[]
   highestPerformingYearlySets: expansionRanking[]
 }
+
+export type variant = contentRank;
 
 export type version = {
   v: number

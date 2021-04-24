@@ -42,7 +42,7 @@ const headingVariantMapping = {
 }
 
 type PokemonExpansionsProps = {
-  base: "misc" | "pokemon",
+  base: "misc" | "pokemon" | "variants",
   content: pokemonData,
   name: string,
 }
