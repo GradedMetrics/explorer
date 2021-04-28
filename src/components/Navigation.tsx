@@ -85,7 +85,7 @@ const useStyles = makeStyles((theme) => ({
 const pages = [{
   exact: true,
   icon: <LocalFloristIcon />,
-  isHiddenMobile: true,
+  isHidden: true,
   path: '/',
   text: 'Home',
 }, {
@@ -125,7 +125,7 @@ const Navigation = () => {
   return (
     <Box alignContent="center">
       <Toolbar className={classes.toolbar} disableGutters>
-        {(isMobileDisplay ? pages.filter(page => !page.isHiddenMobile) : pages).map(({ icon, path, text }) => (
+        {(isMobileDisplay ? pages.filter(page => !page.isHiddenMobile && !page.isHidden) : pages.filter(page => !page.isHidden)).map(({ icon, path, text }) => (
           <Link
             key={path}
             component={ReactRouterLink}
