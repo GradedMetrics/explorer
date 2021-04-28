@@ -142,6 +142,7 @@ export type ranking = {
 }
 
 export type version = {
+  d: number
   v: number
   '@': number
 }

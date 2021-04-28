@@ -11,6 +11,10 @@ import Navigation from './Navigation';
 import {
   version,
 } from '../types';
+import {
+  getDataReliability,
+  getVersion,
+} from '../utils/version';
 
 const useStyles = makeStyles(theme => ({
   link: {
@@ -69,15 +73,29 @@ const PageHeader: React.FC<PageHeaderProps> = ({
             Metrics
           </Typography>
           {version ? (
-            <Typography
-              align="left"
-              color="textSecondary"
-              className={classes.version}
-              display="block"
-              variant="overline"
-            >
-              API v0.{version.v}.{version['@'].toString().substr(6, 16)}
-            </Typography>
+            <Box mt={1}>
+              {version.d ? (
+                <Typography
+                  align="left"
+                  color="textSecondary"
+                  className={classes.version}
+                  display="block"
+                  variant="subtitle2"
+                  gutterBottom
+                >
+                  Data updated weekly &middot; {getDataReliability(version)}
+                </Typography>
+              ) : undefined}
+              <Typography
+                align="left"
+                color="textSecondary"
+                className={classes.version}
+                display="block"
+                variant="subtitle2"
+              >
+                {getVersion(version)}
+              </Typography>
+            </Box>
           ) : undefined}
         </Link>
       </Box>
