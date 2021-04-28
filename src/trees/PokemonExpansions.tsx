@@ -191,7 +191,7 @@ const PokemonExpansions: React.FC<PokemonExpansionsProps> = ({
           distinct
         </Tooltip>
         {' '}
-        {pokemon} card{total === 1 ? '' : 's'}...
+        {pokemon} {base === 'variants' ? 'variant' : 'card'}{total === 1 ? '' : 's'}...
       </Typography>
       <AutoComplete
         defaultSelectedOption={selectedCard}
