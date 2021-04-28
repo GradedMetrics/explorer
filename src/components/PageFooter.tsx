@@ -63,7 +63,7 @@ const PageFooter = () => {
         <Typography variant="caption" display="block" color="textSecondary" paragraph>
           <Link
             className={classes.discord}
-            href="https://discord.gg/WNbxZJ93"
+            href="https://discord.gg/vvEGvJ6bSF"
             target="blank"
           >
             Join the Discord!

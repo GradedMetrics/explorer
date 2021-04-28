@@ -99,7 +99,7 @@ function App() {
   return (
     <>
       <GlobalStyle />
-      <Link href="https://discord.gg/WNbxZJ93" style={{ textDecoration: 'none' }} rel="noopener">
+      <Link href="https://discord.gg/vvEGvJ6bSF" style={{ textDecoration: 'none' }} rel="noopener">
         <Banner
           icon={<PowerOffIcon />}
           text="Beta test active. #beta on Discord."

@@ -75,12 +75,12 @@ const Home = () => {
         <Typography variant="body1">
           Have a suggestion? Run into a problem? Hop into the
           {' '}
-          <Link href="https://discord.gg/WNbxZJ93" rel="noopener">
+          <Link href="https://discord.gg/vvEGvJ6bSF" rel="noopener">
             <img src={DiscordLogo} height="40px" style={{marginBottom: '-17px'}} alt="Discord Logo" />
           </Link>
           {' '}
           server (
-          <Link href="https://discord.gg/WNbxZJ93" rel="noopener">https://discord.gg/WNbxZJ93</Link>
+          <Link href="https://discord.gg/vvEGvJ6bSF" rel="noopener">https://discord.gg/vvEGvJ6bSF</Link>
           ) or message
           {' '}
           <Link href="https://instagram.com/pichucollector" rel="noopener">@pichucollector</Link>
