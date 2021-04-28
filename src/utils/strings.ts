@@ -256,5 +256,5 @@ export const getRawIdentifier: (identifier: string) => number = (identifier) => 
  * @param {string} name The name to make friendly.
  */
 export const urlFriendlyName = (name: string): string => {
-  return name.replace(/[!?:/]/g, '');
+  return name.replace(/[!?:/'"]/g, '');
 }

@@ -2,6 +2,7 @@ import {
   card,
   expansion,
   pokemon,
+  variant,
 } from '../types';
 
 /**
@@ -32,13 +33,13 @@ export const urlFriendlyExpansionName = (expansion?: expansion): string => {
 
 /**
  * Create a URL-friendly Pokémon name from a Pokémon object.
- * @param {pokemon} pokemon The Pokémon object.
+ * @param {pokemon | variant} pokemon The Pokémon object.
  * @returns {string} A URL-friendly Pokémon name.
  */
-export const urlFriendlyPokemonName = (pokemon?: pokemon): string => {
+export const urlFriendlyPokemonName = (pokemon?: pokemon | variant): string => {
   if (!pokemon?.name) {
     return '';
   }
 
-  return pokemon.name.replace(/[!?:/]/g, '');
+  return pokemon.name.replace(/[!?:/"']/g, '');
 }

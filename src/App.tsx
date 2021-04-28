@@ -21,6 +21,7 @@ import MiscList from './pages/MiscList';
 import PokemonList from './pages/PokemonList';
 import Ranks from './pages/Ranks';
 import Stats from './pages/Stats';
+import VariantsList from './pages/VariantsList';
 import {
   keys,
   version,
@@ -129,6 +130,9 @@ function App() {
               </Route>
               <Route exact path="/stats">
                 <Stats />
+              </Route>
+              <Route path="/variants">
+                <VariantsList />
               </Route>
               <Route path="*">
                 <Error404 />

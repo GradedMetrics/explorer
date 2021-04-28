@@ -3,12 +3,14 @@ import {
 } from './keys';
 import {
   card,
+  contentRank,
   expansion,
   expansionCard,
   expansionDetailed,
   pokemon,
   pokemonData,
   ranking,
+  variant,
   version as versionType,
 } from '../types';
 import {
@@ -185,7 +187,7 @@ export const getExpansions = async (): Promise<expansion[]> => {
  * @param {string} name The name of the Pokémon content to fetch data for.
  * @returns {Promise<pokemonData>} Pokémon API data.
  */
-export const getPokemon = async (base: "misc" | "pokemon", name: string): Promise<pokemonData> => {
+export const getPokemon = async (base: "misc" | "pokemon" | "variants", name: string): Promise<pokemonData> => {
   const response = await fetch(`${base}/${name}`);
 
   if (!response) {
@@ -248,6 +250,35 @@ export const getMiscList = async (): Promise<pokemon[]> => {
   }));
 }
 
+/**
+ * Variants returned from /variants.json.
+ * @returns {Promise<variant[]>} Variants API data.
+ */
+export const getVariantsList = async (): Promise<variant[]> => {
+  const data = await fetch('variants');
+  const ranks = await getVariantRanks();
+
+  return data.sort((a: string, b: string) => a > b ? 1 : -1).map((variant: string) => {
+    const rank = ranks.find(entry => entry.name === variant);
+
+    const output = {
+      name: variant,
+    } as variant
+
+    if (rank) {
+      output.rank = rank.rank;
+      output.total = rank.total;
+    }
+
+    return output;
+  });
+
+  // return (mapKeys(data) as variant[]).sort(({ name: a }, { name: b }) => a.toLowerCase() > b.toLowerCase() ? 1 : -1).map(entry => ({
+  //   ...entry,
+  //   ...withRankInfo(entry, ranks)
+  // }));
+}
+
 export const getHistory = async (): Promise<expansion[]> => {
   const data = await fetch('history');
   return mapKeys(data.reverse());
@@ -264,18 +295,29 @@ export const getRanks = async (): Promise<ranking> => {
 
 /**
  * Ranking data returned from /misc-ranks.json.
- * @returns {Promise<pokemon[]>} Misc ranks API data.
+ * @returns {Promise<contentRank[]>} Misc ranks API data.
  */
-export const getMiscRanks = async (): Promise<pokemon[]> => {
+export const getMiscRanks = async (): Promise<contentRank[]> => {
   const data = await fetch('misc-ranks');
   return mapKeys(data);
 }
 
 /**
  * Ranking data returned from /pokemon-ranks.json.
- * @returns {Promise<pokemon[]>} Pokémon ranks API data.
+ * @returns {Promise<contentRank[]>} Pokémon ranks API data.
  */
-export const getPokemonRanks = async (): Promise<pokemon[]> => {
+export const getPokemonRanks = async (): Promise<contentRank[]> => {
   const data = await fetch('pokemon-ranks');
+  return mapKeys(data);
+}
+
+/**
+ * Ranking data returned from /variant-ranks.json.
+ * @returns {Promise<contentRank[]>} Variant ranks API data.
+ */
+export const getVariantRanks = async (): Promise<contentRank[]> => {
+  const data = await fetch('variant-ranks');
+  console.log(data);
+  return [];
   return mapKeys(data);
 }
