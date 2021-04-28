@@ -168,6 +168,7 @@ const Expansions: React.FC<ExpansionsProps> = ({
         optionFormatter={(card) => formatCardName(card, { numberPrefix: true })}
         onChange={handleSelect}
         placeholder={getDynamicCardSearchPlaceholder(cards)}
+        showNextPrev
       />
       {!isLoading ? (
         <Box mt={2}>

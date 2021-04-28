@@ -119,6 +119,7 @@ const SearchPage: React.FC<SearchPageProps> = ({
         optionGroupFormatter={optionGroupFormatter}
         onChange={handleSelect}
         placeholder={placeholder}
+        showNextPrev
       />
       {!isLoading && selected ? (
         <Box mt={2}>
