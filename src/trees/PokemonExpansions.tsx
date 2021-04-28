@@ -207,6 +207,7 @@ const PokemonExpansions: React.FC<PokemonExpansionsProps> = ({
         }}
         onChange={handleSelect}
         placeholder={getDynamicCardSearchPlaceholder(data)}
+        showNextPrev
       />
       {!isLoading ? (
         <Box mt={2}>

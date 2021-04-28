@@ -17,6 +17,8 @@ const useStyles = makeStyles((theme) => ({
     border: 'none',
     boxShadow: theme.shadows[5],
     boxSizing: 'border-box',
+    maxHeight: '90%',
+    overflow: 'auto',
     padding: theme.spacing(2, 4, 3),
     position: 'absolute',
     right: `calc(50% - ${theme.breakpoints.values.md / 2}px)`,

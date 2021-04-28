@@ -150,6 +150,7 @@ export type ranking = {
 export type variant = contentRank;
 
 export type version = {
+  d: number
   v: number
   '@': number
 }
