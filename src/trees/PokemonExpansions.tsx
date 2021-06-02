@@ -36,6 +36,9 @@ import GradeTable from '../components/GradeTable';
 import Loading from '../components/Loading';
 import Note from '../components/Note';
 import Tooltip from '../components/Tooltip';
+import {
+  sortPokemonExpansions,
+} from '../utils/data';
 
 const headingVariantMapping = {
   h4: 'h1',
@@ -171,6 +174,8 @@ const PokemonExpansions: React.FC<PokemonExpansionsProps> = ({
     return <Loading />;
   }
 
+  console.log(data);
+
   return (
     <Box my={2}>
       <Typography
@@ -200,7 +205,7 @@ const PokemonExpansions: React.FC<PokemonExpansionsProps> = ({
         disabled={data.length === 1}
         id={`${pokemon}-expansions`}
         label={`Select a ${pokemon} card...`}
-        options={data}
+        options={sortPokemonExpansions(data)}
         optionFormatter={({ expansion, ...rest }) => {
           return `${formatCardName(rest, { defaultName: pokemon, numberParens: false, })} · ${formatExpansionName(expansion)}`;
         }}
