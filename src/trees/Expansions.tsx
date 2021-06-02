@@ -29,10 +29,12 @@ import Typography from '@material-ui/core/Typography';
 import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt';
 import FaceIcon from '@material-ui/icons/Face';
 import NaturePeopleIcon from '@material-ui/icons/NaturePeople';
+import WarningIcon from '@material-ui/icons/Warning';
 import AutoComplete from '../components/AutoComplete';
 import ExpansionCard from '../components/ExpansionCard';
 import GradeTable from '../components/GradeTable';
 import Loading from '../components/Loading';
+import Note from '../components/Note';
 import PSASetLink from '../components/PSASetLink';
 
 const headingVariantMapping = {
@@ -144,6 +146,8 @@ const Expansions: React.FC<ExpansionsProps> = ({
     return <Loading />;
   }
 
+  console.log(expansion);
+
   return (
     <Box my={2}>
       <Typography
@@ -159,6 +163,9 @@ const Expansions: React.FC<ExpansionsProps> = ({
       >
         There {totalCards === 1 ? 'is only 1 card in this set' : `are ${totalCards} different cards in this set`}...
       </Typography>
+      {expansion.note ? (
+        <Note text={expansion.note} icon={<WarningIcon />} />
+      ) : undefined}
       <AutoComplete
         defaultSelectedOption={selectedCard}
         disabled={cards.length === 1}

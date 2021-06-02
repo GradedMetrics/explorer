@@ -27,12 +27,14 @@ import Link from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
 import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt';
 import StyleIcon from '@material-ui/icons/Style';
+import WarningIcon from '@material-ui/icons/Warning';
 import withSingleContentLoad from '../hocs/withSingleContentLoad';
 import AutoComplete from '../components/AutoComplete';
 import CardName from '../components/CardName';
 import ExpansionCard from '../components/ExpansionCard';
 import GradeTable from '../components/GradeTable';
 import Loading from '../components/Loading';
+import Note from '../components/Note';
 import Tooltip from '../components/Tooltip';
 
 const headingVariantMapping = {
@@ -220,6 +222,9 @@ const PokemonExpansions: React.FC<PokemonExpansionsProps> = ({
                 variant="h5"
                 variantMapping={headingVariantMapping}
               />
+              {selectedCard.expansion!.note ? (
+                <Note text={selectedCard.expansion!.note} icon={<WarningIcon />} />
+              ) : undefined}
               <ExpansionCard
                 cardId={selectedCard.id}
                 expansionId={selectedCard.expansion!.id} 

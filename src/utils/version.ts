@@ -11,12 +11,14 @@ export const getDataReliability = (version: version) => {
   const now = Date.now();
   let updated;
 
+  const days = Math.ceil((now - version.d) / DAY_LENGTH);
+
   if (now - version.d < DAY_LENGTH) {
     updated = 'today';
   } else if (now - version.d < DAY_LENGTH * 2) {
     updated = 'yesterday';
   } else {
-    updated = `${Math.ceil((now - version.d) / DAY_LENGTH)} days ago`;
+    updated = `${days > 7 ? 7 : days} days ago`;
   }
 
   return `Last updated ${updated}`;

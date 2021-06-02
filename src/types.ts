@@ -19,6 +19,7 @@ export type expansion = {
   id: string
   language?: string
   name: string
+  note?: string
   total: number
   variant: string
   year: string
