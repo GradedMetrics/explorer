@@ -65,7 +65,6 @@ export const sortPokemonExpansions: ((cards: card[]) => card[]) = (cards) => {
     const bName = formatExpansionName(b);
 
     if (aName === bName) {
-      console.error(`Encountered two expansions with identical formatted names: ${aName}.`);
       return 0;
     }
 
