@@ -99,7 +99,7 @@ const GradeCount: React.FC<GradeCountProps> = ({
           ({offset.toLocaleString()})
         </Typography>
         <Typography variant="caption" color="textSecondary" display="block" style={totalRowStyle}>
-          {percentageValueOffset === 0 ? <em>New</em> : `+${Math.floor(percentage * 100) / 100}%`}
+          {percentageValueOffset === 0 ? <em>New</em> : `${percentage > 0 ? '+' : ''}${Math.floor(percentage * 100) / 100}%`}
         </Typography>
       </>
     );
