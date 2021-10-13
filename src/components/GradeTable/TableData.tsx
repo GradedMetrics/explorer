@@ -214,7 +214,7 @@ const TableData: React.FC<TableDataProps> = ({
                           Has a qualifier.
                         </Typography>
                         <Typography variant="body2" paragraph>
-                          Qualifiers reduce the grade by 1 full point and may be one of the following: MC (miscut), MK (marked), OC (off-center), OF (out of focus), PD (print defect), or ST (stained).
+                          Qualifiers allow the grade to retain a higher score than it otherwise would have received due to a notable defect recorded as follows: MC (miscut), MK (marked), OC (off-center), OF (out of focus), PD (print defect), or ST (stained).
                         </Typography>
                         <Typography variant="body2">
                           PSA's population report does not differentiate between these.

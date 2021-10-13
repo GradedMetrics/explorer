@@ -39,106 +39,106 @@ export const flattenGrades: ((grades: grades) => flattenedGrade[]) = ({
           name: 'PSA 10',
           value: psa10?.grade,
         }, {
-          hasQualifier: true,
-          name: 'PSA 9',
-          value: psa9?.qualifier,
-        }, {
           description: 'Mint',
           name: 'PSA 9',
           value: psa9?.grade,
         }, {
+          hasQualifier: true,
+          name: 'PSA 9',
+          value: psa9?.qualifier,
+        }, {
           name: 'PSA 8.5',
           value: psa8?.half,
-        }, {
-          hasQualifier: true,
-          name: 'PSA 8',
-          value: psa8?.qualifier,
         }, {
           description: 'Near Mint - Mint',
           name: 'PSA 8',
           value: psa8?.grade,
         }, {
+          hasQualifier: true,
+          name: 'PSA 8',
+          value: psa8?.qualifier,
+        }, {
           name: 'PSA 7.5',
           value: psa7?.half,
-        }, {
-          hasQualifier: true,
-          name: 'PSA 7',
-          value: psa7?.qualifier,
         }, {
           description: 'Near Mint',
           name: 'PSA 7',
           value: psa7?.grade,
         }, {
+          hasQualifier: true,
+          name: 'PSA 7',
+          value: psa7?.qualifier,
+        }, {
           name: 'PSA 6.5',
           value: psa6?.half,
-        }, {
-          hasQualifier: true,
-          name: 'PSA 6',
-          value: psa6?.qualifier,
         }, {
           description: 'Excellent - Mint',
           name: 'PSA 6',
           value: psa6?.grade,
         }, {
+          hasQualifier: true,
+          name: 'PSA 6',
+          value: psa6?.qualifier,
+        }, {
           name: 'PSA 5.5',
           value: psa5?.half,
-        }, {
-          hasQualifier: true,
-          name: 'PSA 5',
-          value: psa5?.qualifier,
         }, {
           description: 'Excellent',
           name: 'PSA 5',
           value: psa5?.grade,
         }, {
+          hasQualifier: true,
+          name: 'PSA 5',
+          value: psa5?.qualifier,
+        }, {
           name: 'PSA 4.5',
           value: psa4?.half,
-        }, {
-          hasQualifier: true,
-          name: 'PSA 4',
-          value: psa4?.qualifier,
         }, {
           description: 'Very Good - Excellent',
           name: 'PSA 4',
           value: psa4?.grade,
         }, {
+          hasQualifier: true,
+          name: 'PSA 4',
+          value: psa4?.qualifier,
+        }, {
           name: 'PSA 3.5',
           value: psa3?.half,
-        }, {
-          hasQualifier: true,
-          name: 'PSA 3',
-          value: psa3?.qualifier,
         }, {
           description: 'Very Good',
           name: 'PSA 3',
           value: psa3?.grade,
         }, {
+          hasQualifier: true,
+          name: 'PSA 3',
+          value: psa3?.qualifier,
+        }, {
           name: 'PSA 2.5',
           value: psa2?.half,
-        }, {
-          hasQualifier: true,
-          name: 'PSA 2',
-          value: psa2?.qualifier,
         }, {
           description: 'Good',
           name: 'PSA 2',
           value: psa2?.grade,
         }, {
           hasQualifier: true,
-          name: 'PSA 1.5',
-          value: psa1Half?.qualifier,
+          name: 'PSA 2',
+          value: psa2?.qualifier,
         }, {
           description: 'Fair',
           name: 'PSA 1.5',
           value: psa1Half?.half,
         }, {
           hasQualifier: true,
-          name: 'PSA 1',
-          value: psa1?.qualifier,
+          name: 'PSA 1.5',
+          value: psa1Half?.qualifier,
         }, {
           description: 'Poor',
           name: 'PSA 1',
           value: psa1?.grade,
+        }, {
+          hasQualifier: true,
+          name: 'PSA 1',
+          value: psa1?.qualifier,
         }, {
           name: 'Authentic',
           value: auth?.grade,
