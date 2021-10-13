@@ -99,12 +99,6 @@ function App() {
   return (
     <>
       <GlobalStyle />
-      <Link href="https://discord.gg/vvEGvJ6bSF" style={{ textDecoration: 'none' }} rel="noopener">
-        <Banner
-          icon={<PowerOffIcon />}
-          text="Beta test active. #beta on Discord."
-        />
-      </Link>
       <Container maxWidth="md">
         <Router>
           <PageHeader version={apiVersion} />
