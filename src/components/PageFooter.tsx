@@ -20,7 +20,7 @@ const socialButtonProps: CSSProperties = {
   lineHeight: '26px',
   height: 32,
   padding: '4px 12px 4px 32px',
-  width: 162,
+  width: 164,
 
   '&:hover, &:focus': {
     textDecoration: 'none',
@@ -31,7 +31,7 @@ const useStyles = makeStyles(theme => ({
   discord: {
     backgroundColor: '#7289DA',
     backgroundImage: `url(${DiscordIcon})`,
-    marginRight: theme.spacing(2),
+    marginRight: theme.spacing(1.5),
     ...socialButtonProps
   },
   patreon: {
