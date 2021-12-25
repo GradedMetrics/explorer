@@ -25,6 +25,7 @@ const headingVariantMapping = {
 }
 
 type RankSegmentProps = {
+  allTime?: cardRanking[] | expansionRanking[],
   monthly?: cardRanking[] | expansionRanking[],
   weekly?: cardRanking[] | expansionRanking[],
   yearly?: cardRanking[] | expansionRanking[],
@@ -70,6 +71,8 @@ const RankList: React.FC<RankListProps> = ({
     return (
       <Box component={RankListElement} my={2} p={2}>
         {(data as cardRanking[]).map((card, index) => {
+          const hasPopIncrease = typeof card.popIncrease === 'number';
+
           return (
             <Typography
               component="li"
@@ -78,9 +81,13 @@ const RankList: React.FC<RankListProps> = ({
               key={card.id}
             >
               <Typography display="block" variant="body2">
-                <AddIcon fontSize="small" />
-                {' '}
-                {card.popIncrease.toLocaleString()}
+                {hasPopIncrease ? (
+                  <>
+                    <AddIcon fontSize="small" />
+                    {' '}
+                    {(card.popIncrease as number).toLocaleString()}
+                  </>
+                ) : card.total.toLocaleString()}
               </Typography>
               <Link component={ReactRouterLink} to={`/sets/${card.set.id}/${Number(card.id).toString(36)}`}>
                 {formatCardName(card)} {formatExpansionName(card.set)}
@@ -95,6 +102,9 @@ const RankList: React.FC<RankListProps> = ({
   return (
     <Box component={RankListElement} my={2} p={2}>
       {(data as expansionRanking[]).map((expansion, index) => {
+         const hasPopIncrease = typeof expansion.popIncrease === 'number';
+         console.log(expansion);
+
         return (
           <Typography
             component="li"
@@ -103,9 +113,13 @@ const RankList: React.FC<RankListProps> = ({
             key={expansion.id}
           >
             <Typography display="block" variant="body2">
-              <AddIcon fontSize="small" />
-              {' '}
-              {expansion.popIncrease.toLocaleString()}
+              {hasPopIncrease ? (
+                <>
+                  <AddIcon fontSize="small" />
+                  {' '}
+                  {(expansion.popIncrease as number).toLocaleString()}
+                </>
+              ) : expansion.total.toLocaleString()}
             </Typography>
             <Link component={ReactRouterLink} to={`/sets/${expansion.id}`}>
               {formatExpansionName(expansion)}
@@ -118,6 +132,7 @@ const RankList: React.FC<RankListProps> = ({
 }
 
 const RankSegment: React.FC<RankSegmentProps> = ({
+  allTime,
   monthly,
   weekly,
   yearly,
@@ -144,10 +159,12 @@ const RankSegment: React.FC<RankSegmentProps> = ({
         <Tab label="Weekly" />
         <Tab label="Monthly" />
         <Tab label="Yearly" />
+        <Tab label="All Time" />
       </Tabs>
       <RankList data={weekly} hidden={selected !== 0} />
       <RankList data={monthly} hidden={selected !== 1} />
       <RankList data={yearly} hidden={selected !== 2} />
+      <RankList data={allTime} hidden={selected !== 3} />
     </Box>
   )
 }

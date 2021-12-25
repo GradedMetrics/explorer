@@ -124,7 +124,7 @@ export type cardRanking = {
   id: string
   name: string
   number?: string
-  popIncrease: number
+  popIncrease?: number
   psaName?: string
   total: number
   variants?: string[]
@@ -134,15 +134,18 @@ export type expansionRanking = {
   id: string
   language?: string
   name: string
-  popIncrease: number
+  popIncrease?: number
+  total: number
   variant: string
   year: string
 }
 
 export type ranking = {
+  highestPerformingCards: cardRanking[]
   highestPerformingMonthlyCards: cardRanking[]
   highestPerformingWeeklyCards: cardRanking[]
   highestPerformingYearlyCards: cardRanking[]
+  highestPerformingSets: expansionRanking[]
   highestPerformingMonthlySets: expansionRanking[]
   highestPerformingWeeklySets: expansionRanking[]
   highestPerformingYearlySets: expansionRanking[]

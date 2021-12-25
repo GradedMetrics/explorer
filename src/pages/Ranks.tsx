@@ -26,9 +26,11 @@ const Ranks: React.FC<RanksProps> = ({
   content,
 }) => {
   const {
+    highestPerformingCards,
     highestPerformingMonthlyCards,
     highestPerformingWeeklyCards,
     highestPerformingYearlyCards,
+    highestPerformingSets,
     highestPerformingMonthlySets,
     highestPerformingWeeklySets,
     highestPerformingYearlySets,
@@ -56,6 +58,7 @@ const Ranks: React.FC<RanksProps> = ({
         Be aware that data is only updated once per week, so the data below may be offset by up to 7 days.
       </Typography>
       <RankSegment
+        allTime={highestPerformingCards}
         monthly={highestPerformingMonthlyCards}
         weekly={highestPerformingWeeklyCards}
         yearly={highestPerformingYearlyCards}
@@ -63,6 +66,7 @@ const Ranks: React.FC<RanksProps> = ({
       />
       <Divider />
       <RankSegment
+        allTime={highestPerformingSets}
         monthly={highestPerformingMonthlySets}
         weekly={highestPerformingWeeklySets}
         yearly={highestPerformingYearlySets}
