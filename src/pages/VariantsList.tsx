@@ -11,9 +11,6 @@ import {
 } from '../utils/api';
 import PokemonExpansions from '../trees/PokemonExpansions';
 import {
-  formatPokemonName,
-} from '../utils/strings';
-import {
   urlFriendlyPokemonName,
 } from '../utils/urls';
 import Link from '@material-ui/core/Link';

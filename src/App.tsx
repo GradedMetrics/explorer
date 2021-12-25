@@ -7,9 +7,6 @@ import {
 import { createGlobalStyle } from 'styled-components';
 import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container';
-import Link from '@material-ui/core/Link';
-import PowerOffIcon from '@material-ui/icons/PowerOff';
-import Banner from './components/Banner';
 import Loading from './components/Loading';
 import PageFooter from './components/PageFooter';
 import PageHeader from './components/PageHeader';

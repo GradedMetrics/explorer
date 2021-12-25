@@ -93,7 +93,7 @@ export const keys = async (): Promise<Object> => {
  */
 export const getExpansion = async (expansionId: string): Promise<expansionDetailed> => {
   const response = await fetch(`sets/${expansionId}`);
-  const miscList = await getMiscList();
+  await getMiscList();
   const pokemonList = await getPokemonList();
 
   const {
@@ -316,7 +316,7 @@ export const getPokemonRanks = async (): Promise<contentRank[]> => {
  * @returns {Promise<contentRank[]>} Variant ranks API data.
  */
 export const getVariantRanks = async (): Promise<contentRank[]> => {
-  const data = await fetch('variant-ranks');
+  // const data = await fetch('variant-ranks');
   return [];
-  return mapKeys(data);
+  // return mapKeys(data);
 }
