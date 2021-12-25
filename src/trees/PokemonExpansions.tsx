@@ -174,8 +174,6 @@ const PokemonExpansions: React.FC<PokemonExpansionsProps> = ({
     return <Loading />;
   }
 
-  console.log(data);
-
   return (
     <Box my={2}>
       <Typography

@@ -103,7 +103,6 @@ const RankList: React.FC<RankListProps> = ({
     <Box component={RankListElement} my={2} p={2}>
       {(data as expansionRanking[]).map((expansion, index) => {
          const hasPopIncrease = typeof expansion.popIncrease === 'number';
-         console.log(expansion);
 
         return (
           <Typography

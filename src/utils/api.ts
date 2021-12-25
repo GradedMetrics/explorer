@@ -317,7 +317,6 @@ export const getPokemonRanks = async (): Promise<contentRank[]> => {
  */
 export const getVariantRanks = async (): Promise<contentRank[]> => {
   const data = await fetch('variant-ranks');
-  console.log(data);
   return [];
   return mapKeys(data);
 }

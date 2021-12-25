@@ -146,8 +146,6 @@ const Expansions: React.FC<ExpansionsProps> = ({
     return <Loading />;
   }
 
-  console.log(expansion);
-
   return (
     <Box my={2}>
       <Typography
