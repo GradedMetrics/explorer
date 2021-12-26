@@ -26,6 +26,8 @@ import {
   getGradeChangeOverTime,
 } from '../utils/grades';
 import {
+  card,
+  expansion,
   gradeHistory,
   grades,
 } from '../types';
@@ -67,17 +69,23 @@ const Wrapper = withTheme(styled.article(({ theme }) => ({
 
 type GradeTableProps = {
   content: gradeHistory[]
+  entries?: card[]
+  expansion?: expansion
   hideHelpButton?: boolean
   history: gradeHistory[]
   historyDeductsFromTotal?: boolean
+  name?: string
   total: grades,
 }
 
 const GradeTable: React.FC<GradeTableProps> = ({
   content: allHistory,
+  entries,
+  expansion,
   hideHelpButton = false,
   history,
   historyDeductsFromTotal = true,
+  name,
   total,
 }) => {
   const mainHeadingStyle = { background: '#789839', color: '#fff' };
@@ -115,8 +123,11 @@ const GradeTable: React.FC<GradeTableProps> = ({
             <TableBody>
               <TableData
                 data={flattenGrades(total)}
+                entries={entries}
+                expansion={expansion}
                 history={getGradeChangeOverTime(history, allHistory)}
                 historyDeductsFromTotal={historyDeductsFromTotal}
+                name={name}
               />
             </TableBody>
           </Table>

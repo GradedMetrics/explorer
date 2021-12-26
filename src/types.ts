@@ -39,30 +39,30 @@ export type expansionCard = {
 export type flattenedGrade = {
   description?: string
   hasQualifier?: boolean
+  ids?: gradeIds
   name: string
   percentageOfTotal?: number
   value: number
 }
 
+export type gradeIds = {
+  [key: string]: number
+}
+
 export type grade = {
   grade?: number
+  gradeIds?: gradeIds
   half?: number
+  halfIds?: gradeIds
   qualifier?: number
+  qualifierIds?: gradeIds
 }
 
-export type grade1Or9 = {
-  grade?: number
-  qualifier?: number
-}
+export type grade1Or9 = Omit<grade, "half" | "halfIds">;
 
-export type grade1Half = {
-  half?: number
-  qualifier?: number
-}
+export type grade1Half = Omit<grade, "grade" | "gradeIds">;
 
-export type grade10OrAuth = {
-  grade?: number
-}
+export type grade10OrAuth = Pick<grade, "grade" | "gradeIds">;
 
 export type gradeChangeOverTime = {
   weekly?: grades

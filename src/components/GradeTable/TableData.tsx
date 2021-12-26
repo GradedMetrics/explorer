@@ -1,16 +1,22 @@
 import React from 'react';
 import Hidden from '@material-ui/core/Hidden';
+import { useTheme } from '@material-ui/core/styles';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 import Typography from '@material-ui/core/Typography';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 import Tooltip from '../Tooltip';
 import {
+  card,
+  expansion,
   flattenedGrade,
   gradeChangeOverTime,
 } from '../../types';
 import {
   flattenGrades,
 } from '../../utils/grades';
+import Modal from '../Modal';
+import Entries from './Entries';
 
 export const historicBackground = `255, 246, 143`;
 export const totalBackground = `205, 238, 140`;
@@ -18,18 +24,29 @@ export const totalBackground = `205, 238, 140`;
 type GradeCountProps = {
   compare?: flattenedGrade,
   data?: flattenedGrade,
+  entries?: card[],
+  expansion?: expansion
   historyDeductsFromTotal?: boolean,
   isHistoric?: boolean,
+  name?: string,
+  period?: string,
   total?: flattenedGrade,
 }
 
 const GradeCount: React.FC<GradeCountProps> = ({
   compare,
   data,
+  entries,
+  expansion,
   historyDeductsFromTotal = true,
   isHistoric = false,
+  name: tableName,
+  period,
   total,
 }) => {
+  const theme = useTheme();
+  const isLargeScreen = useMediaQuery(theme.breakpoints.up('sm'))
+
   const noData = (
     <TableCell
       style={{
@@ -70,13 +87,16 @@ const GradeCount: React.FC<GradeCountProps> = ({
   }
 
   const {
+    hasQualifier,
+    ids,
+    name,
     percentageOfTotal,
     value,
   } = data;
 
   let content;
 
-  const totalRowStyle = data.name === 'Total' ? { fontWeight: 700 } : undefined;
+  const totalRowStyle = name === 'Total' ? { fontWeight: 700 } : undefined;
 
   if (isHistoric && compare) {
     const {
@@ -91,9 +111,28 @@ const GradeCount: React.FC<GradeCountProps> = ({
       return noData;
     }
 
+    const displayValue = (historyDeductsFromTotal ? -value : compare.value - value);
+
     content = (
       <>
-        {(historyDeductsFromTotal ? -value : compare.value - value).toLocaleString()}
+        {isLargeScreen && ids && entries ? (
+          <Modal inline opener={displayValue.toLocaleString()}>
+            <Entries
+              data={entries}
+              expansion={expansion}
+              grade={`${name}${hasQualifier ? ` with qualifier` : ''}`}
+              historyDeductsFromTotal={historyDeductsFromTotal}
+              ids={ids}
+              name={tableName as string}
+              period={period}
+              total={displayValue}
+            />
+          </Modal>
+        ) : (
+          <>
+            {displayValue.toLocaleString()}
+          </>
+        )}
         {' '}
         <Typography variant="caption" color="textSecondary" style={totalRowStyle}>
           ({offset.toLocaleString()})
@@ -106,7 +145,20 @@ const GradeCount: React.FC<GradeCountProps> = ({
   } else {
     content = (
       <>
-        {value.toLocaleString()}
+        {isLargeScreen && ids && entries ? (
+          <Modal inline opener={value.toLocaleString()}>
+            <Entries
+              data={entries}
+              expansion={expansion}
+              grade={`${name}${hasQualifier ? ` with qualifier` : ''}`}
+              historyDeductsFromTotal={false}
+              ids={ids}
+              name={tableName as string}
+              period={period}
+              total={value}
+            />
+          </Modal>
+        ) : value.toLocaleString()}
         <Typography variant="caption" color="textSecondary" display="block">
           ({percentageOfTotal !== undefined ? percentageOfTotal : '100'}%)
         </Typography>
@@ -132,14 +184,20 @@ const GradeCount: React.FC<GradeCountProps> = ({
 
 type TableDataProps = {
   data: flattenedGrade[]
+  expansion?: expansion
+  entries?: card[]
   history: gradeChangeOverTime
   historyDeductsFromTotal: boolean
+  name?: string
 };
 
 const TableData: React.FC<TableDataProps> = ({
   data,
+  entries,
+  expansion,
   history,
   historyDeductsFromTotal,
+  name: tableName,
 }) => {
   const {
     weekly,
@@ -164,6 +222,7 @@ const TableData: React.FC<TableDataProps> = ({
         const {
           description,
           hasQualifier = false,
+          ids,
           name,
           percentageOfTotal = 0,
         } = entry;
@@ -236,11 +295,11 @@ const TableData: React.FC<TableDataProps> = ({
                 </>
               ) : undefined}
             </TableCell>
-            <GradeCount data={entry} total={total} />
+            <GradeCount data={entry} entries={entries} name={tableName} total={total} expansion={expansion} />
             <Hidden xsDown>
-              <GradeCount data={weeklyData} historyDeductsFromTotal={historyDeductsFromTotal} isHistoric compare={entry} total={totalWeekly} />
-              <GradeCount data={monthlyData} historyDeductsFromTotal={historyDeductsFromTotal} isHistoric compare={entry} total={totalMonthly} />
-              <GradeCount data={yearlyData} historyDeductsFromTotal={historyDeductsFromTotal} isHistoric compare={entry} total={totalYearly} />
+              <GradeCount data={weeklyData} entries={entries} historyDeductsFromTotal={historyDeductsFromTotal} isHistoric compare={entry} total={totalWeekly} name={tableName} period="1 week" expansion={expansion} />
+              <GradeCount data={monthlyData} entries={entries} historyDeductsFromTotal={historyDeductsFromTotal} isHistoric compare={entry} total={totalMonthly} name={tableName} period="5 weeks" expansion={expansion} />
+              <GradeCount data={yearlyData} entries={entries} historyDeductsFromTotal={historyDeductsFromTotal} isHistoric compare={entry} total={totalYearly} name={tableName} period="52 weeks" expansion={expansion} />
             </Hidden>
           </TableRow>
         );

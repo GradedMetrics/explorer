@@ -243,7 +243,13 @@ const Expansions: React.FC<ExpansionsProps> = ({
               >
                 All Grades
               </Typography>
-              <GradeTable history={gradeHistory} total={total} />
+              <GradeTable
+                entries={cards}
+                expansion={expansion}
+                history={gradeHistory}
+                name={formatExpansionName(expansion)}
+                total={total}
+              />
               <PSASetLink id={expansionId} />
             </>
           )}

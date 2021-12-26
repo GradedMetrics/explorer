@@ -11,6 +11,14 @@ import Typography from '@material-ui/core/Typography';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import ContactSupportIcon from '@material-ui/icons/ContactSupport';
 
+type ModalProps = {
+  children: any
+  inline?: boolean
+  isHelp?: boolean
+  mobileLink?: string
+  opener: React.ReactNode | string
+}
+
 const useStyles = makeStyles((theme) => ({
   modal: {
     background: theme.palette.background.paper,
@@ -21,28 +29,32 @@ const useStyles = makeStyles((theme) => ({
     overflow: 'auto',
     padding: theme.spacing(2, 4, 3),
     position: 'absolute',
-    right: `calc(50% - ${theme.breakpoints.values.md / 2}px)`,
+    right: ({ mobileLink }: ModalProps) => mobileLink ? `calc(50% - ${(theme.breakpoints.values.md) / 2}px)` : `5%`,
     top: 50,
-    width: theme.breakpoints.values.md,
+    width: ({ mobileLink }: ModalProps) => mobileLink ? theme.breakpoints.values.md : '90%',
+  },
+  inline: {
+    '&.MuiButton-root': {
+      minWidth: 'initial',
+      padding: 0,
+      textDecoration: 'underline',
+      width: 'auto',
+    },
   },
 }));
 
-type ModalProps = {
-  children: any
-  isHelp?: boolean
-  mobileLink?: string
-  opener: React.ReactNode | string
-}
+const Modal: React.FC<ModalProps> = (props) => {
+  const {
+    children,
+    inline = false,
+    isHelp = false,
+    mobileLink,
+    opener,
+  } = props;
 
-const Modal: React.FC<ModalProps> = ({
-  children,
-  isHelp = false,
-  mobileLink,
-  opener,
-}) => {
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.down('md'));
-  const classes = useStyles();
+  const classes = useStyles(props);
   const [isOpen, setOpen] = React.useState<boolean>(false);
 
   if (mobileLink && matches) {
@@ -70,6 +82,7 @@ const Modal: React.FC<ModalProps> = ({
         type="button"
         color="primary"
         onClick={() => setOpen(true)}
+        className={inline ? classes.inline : undefined}
       >
         {isHelp ? (
           <>

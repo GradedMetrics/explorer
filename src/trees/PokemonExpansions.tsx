@@ -174,6 +174,8 @@ const PokemonExpansions: React.FC<PokemonExpansionsProps> = ({
     return <Loading />;
   }
 
+  const options = sortPokemonExpansions(data);
+
   return (
     <Box my={2}>
       <Typography
@@ -203,7 +205,7 @@ const PokemonExpansions: React.FC<PokemonExpansionsProps> = ({
         disabled={data.length === 1}
         id={`${pokemon}-expansions`}
         label={`Select a ${pokemon} card...`}
-        options={sortPokemonExpansions(data)}
+        options={options}
         optionFormatter={({ expansion, ...rest }) => {
           return `${formatCardName(rest, { defaultName: pokemon, numberParens: false, })} · ${formatExpansionName(expansion)}`;
         }}
@@ -255,7 +257,12 @@ const PokemonExpansions: React.FC<PokemonExpansionsProps> = ({
               >
                 All Grades
               </Typography>
-              <GradeTable history={gradeHistory} total={grades} />
+              <GradeTable
+                entries={options}
+                history={gradeHistory}
+                name={pokemon}
+                total={grades}
+              />
             </>
           )}
         </Box>
