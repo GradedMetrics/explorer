@@ -227,7 +227,7 @@ export const getGradeChangeOverTime: ((
 
   const getOldestChange = (cutOffDate: number) => {
     // Find the oldest piece of content history prior to the provided cut off date. 
-    const changes = contentHistory.filter(entry => Number(entry.date) > cutOffDate);
+    const changes = contentHistory.filter(entry => Number(entry.date) >= cutOffDate);
     return changes[changes.length - 1];
   }
 
