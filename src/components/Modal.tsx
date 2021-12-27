@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
     maxHeight: '90%',
     overflow: 'auto',
     padding: theme.spacing(2, 4, 3),
-    maxWidth: theme.breakpoints.values.md,
+    maxWidth: theme.breakpoints.values.md - ((theme.breakpoints.values.md - theme.breakpoints.values.sm) / 2),
     marginTop: '5vh',
     width: '90%',
 
