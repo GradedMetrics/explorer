@@ -20,6 +20,16 @@ type ModalProps = {
 }
 
 const useStyles = makeStyles((theme) => ({
+  wrapper: {
+    alignItems: 'flex-start',
+    bottom: 0,
+    display: 'flex',
+    justifyContent: 'center',
+    left: 0,
+    position: 'absolute',
+    right: 0,
+    top: 0,
+  },
   modal: {
     background: theme.palette.background.paper,
     border: 'none',
@@ -28,10 +38,13 @@ const useStyles = makeStyles((theme) => ({
     maxHeight: '90%',
     overflow: 'auto',
     padding: theme.spacing(2, 4, 3),
-    position: 'absolute',
-    right: ({ mobileLink }: ModalProps) => mobileLink ? `calc(50% - ${(theme.breakpoints.values.md) / 2}px)` : `5%`,
-    top: 50,
-    width: ({ mobileLink }: ModalProps) => mobileLink ? theme.breakpoints.values.md : '90%',
+    maxWidth: theme.breakpoints.values.md,
+    marginTop: '5vh',
+    width: '90%',
+
+    [theme.breakpoints.down('xs')]: {
+      padding: theme.spacing(2),
+    },
   },
   inline: {
     '&.MuiButton-root': {
@@ -93,6 +106,7 @@ const Modal: React.FC<ModalProps> = (props) => {
         ) : opener}
       </Button>
       <MUIModal
+        className={classes.wrapper}
         open={isOpen}
         onClose={() => setOpen(false)}
       >

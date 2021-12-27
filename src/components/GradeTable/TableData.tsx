@@ -1,10 +1,8 @@
 import React from 'react';
 import Hidden from '@material-ui/core/Hidden';
-import { useTheme } from '@material-ui/core/styles';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 import Typography from '@material-ui/core/Typography';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
 import Tooltip from '../Tooltip';
 import {
   card,
@@ -44,9 +42,6 @@ const GradeCount: React.FC<GradeCountProps> = ({
   period,
   total,
 }) => {
-  const theme = useTheme();
-  const isLargeScreen = useMediaQuery(theme.breakpoints.up('sm'))
-
   const noData = (
     <TableCell
       style={{
@@ -115,7 +110,7 @@ const GradeCount: React.FC<GradeCountProps> = ({
 
     content = (
       <>
-        {isLargeScreen && ids && entries ? (
+        {ids && entries ? (
           <Modal inline opener={displayValue.toLocaleString()}>
             <Entries
               data={entries}
@@ -145,7 +140,7 @@ const GradeCount: React.FC<GradeCountProps> = ({
   } else {
     content = (
       <>
-        {isLargeScreen && ids && entries ? (
+        {ids && entries ? (
           <Modal inline opener={value.toLocaleString()}>
             <Entries
               data={entries}
