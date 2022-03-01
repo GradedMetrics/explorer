@@ -7,6 +7,8 @@ import {
 import { createGlobalStyle } from 'styled-components';
 import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container';
+import NewReleasesIcon from '@material-ui/icons/NewReleases';
+import Banner from './components/Banner';
 import Loading from './components/Loading';
 import PageFooter from './components/PageFooter';
 import PageHeader from './components/PageHeader';
@@ -96,6 +98,12 @@ function App() {
   return (
     <>
       <GlobalStyle />
+      <Banner
+        dismissibleId="2.0-banner"
+        href="https://www.patreon.com/posts/63162147"
+        icon={<NewReleasesIcon />}
+        text="PokéMetrics 2.0 is coming soon. Click here to read about it."
+      />
       <Container maxWidth="md">
         <Router>
           <PageHeader version={apiVersion} />

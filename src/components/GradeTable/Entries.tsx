@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
   },
   dataset: {
     color: theme.palette.grey[700],
-    fontWeight: theme.typography.fontWeightLight,
+    'font-weight': theme.typography.fontWeightLight,
   },
   list: {
     marginTop: theme.spacing(2),
@@ -125,8 +125,34 @@ const Entries: React.FC<EntriesProps> = (props: EntriesProps) => {
       <List className={classes.list}>
         {entries.sort(([, a], [, b]) => (historyDeducts ? a > b : a < b) ? 1 : -1).map(([key, value]) => {
           const entry = data.find(({ id }) => id === key) as card;
-          const evaluatedExpansion = entry.expansion || expansion as expansion;
           const quantity = historyDeducts ? -value : value;
+
+          if (!entry) {
+            return (
+              <ListItem
+                className={classes.listItem}
+                disableGutters
+                key={key}
+                style={{
+                  paddingBottom: 0,
+                  paddingTop: 0,
+                }}
+              >
+                <ListItemText>
+                  <Box className={classes.listItemText}>
+                    <Box component="span" className={classes.count}>
+                      {quantity.toLocaleString()}
+                    </Box>
+                    <Box component="span" className={classes.name}>
+                      <em>Entry removed from PSA's pop report</em>
+                    </Box>
+                  </Box>
+                </ListItemText>
+              </ListItem>
+            )
+          }
+
+          const evaluatedExpansion = entry.expansion || expansion as expansion;
 
           const progress = (100/total)*quantity;
 
