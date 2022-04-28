@@ -1,4 +1,5 @@
 import React from 'react';
+import { useMediaQuery, useTheme } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { CSSProperties } from "@material-ui/core/styles/withStyles";
 import Box from '@material-ui/core/Box';
@@ -42,6 +43,8 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const PageFooter = () => {
+  const theme = useTheme();
+  const isSmallScreenDisplay = useMediaQuery(theme.breakpoints.down('md'));
   const classes = useStyles();
 
   return (
@@ -75,6 +78,139 @@ const PageFooter = () => {
           >
             Become a Patron!
           </Link>
+        </Typography>
+      </Box>
+      <Box my={4} style={{
+        background: '#fafafa',
+        border: '1px solid #ccc',
+        padding: 24,
+      }}>
+        <Typography variant="h4" style={{
+          fontSize: isSmallScreenDisplay ? 32 : undefined,
+          fontWeight: '100',
+          marginBottom: isSmallScreenDisplay ? 8 : undefined,
+          textAlign: 'center',
+        }}>
+          PokéMetrics EX early access has arrived!
+        </Typography>
+        <Typography style={{
+          fontSize: 24,
+          marginBottom: 16,
+          textAlign: 'center',
+        }}>
+          <Link href="https://ex.pokemetrics.org">https://ex.pokemetrics.org</Link>
+        </Typography>
+        <Divider />
+        <Typography variant="h6" style={{ marginTop: 16 }}>
+          What is PokéMetrics EX?
+        </Typography>
+        <Typography gutterBottom>
+          PokéMetrics EX is a complete rework of PokéMetrics from the ground up.
+        </Typography>
+        <Typography gutterBottom>
+          Everything from how the data is stored to how the UI behaves has been completely rewritten with the goal being to greatly improve flexibility, scalability and performance.
+        </Typography>
+        <Typography gutterBottom>
+          It&#39;s still a work in progress, but it already includes a lot of features the standard PokéMetrics website is missing, including fully paginated ranking leaderboards with new meaningful rankings added, and the ability to view 2 years back and travel back in time to view previous weekly updates as if they were the current week.
+        </Typography>
+        <Typography gutterBottom>
+          Screenshots (click to open in a new tab)
+        </Typography>
+        <Box style={{
+          marginBottom: 24,
+          textAlign: 'center',
+        }}>
+          <Link
+            href={`https://ex.pokemetrics.org/preview/variant-filter.png`}
+            target="_blank"
+            style={{
+              borderBottomColor: '#ccc',
+              borderBottomStyle: 'solid',
+              borderBottomWidth: isSmallScreenDisplay ? 1 : 0,
+              display: 'inline-block',
+              paddingBottom: isSmallScreenDisplay ? 28 : undefined,
+              margin: 8,
+              marginBottom: isSmallScreenDisplay ? 0 : 24,
+              textAlign: 'center',
+              verticalAlign: 'top',
+              width: isSmallScreenDisplay ? '60vmin' : '20vmin',
+            }}
+          >
+            <Box role="presentation" style={{
+              background: `url(https://ex.pokemetrics.org/preview/variant-filter.png)`,
+              backgroundPosition: 'center',
+              backgroundRepeat: 'no-repeat',
+              backgroundSize: 'contain',
+              height: isSmallScreenDisplay ? '60vmin' : '20vmin',
+            }} />
+            <Typography>
+              Set variant filter: Base Set (Shadowless) - Holofoil
+            </Typography>
+          </Link>
+          <Link
+            component={Link}
+            href={`https://ex.pokemetrics.org/preview/stats-preview.png`}
+            target="_blank"
+            style={{
+              borderBottomColor: '#ccc',
+              borderBottomStyle: 'solid',
+              borderBottomWidth: isSmallScreenDisplay ? 1 : 0,
+              display: 'inline-block',
+              paddingBottom: isSmallScreenDisplay ? 28 : undefined,
+              margin: 8,
+              marginBottom: isSmallScreenDisplay ? 0 : 24,
+              textAlign: 'center',
+              verticalAlign: 'top',
+              width: isSmallScreenDisplay ? '60vmin' : '20vmin',
+            }}
+          >
+            <Box role="presentation" style={{
+              background: `url(https://ex.pokemetrics.org/preview/stats-preview.png)`,
+              backgroundPosition: 'center',
+              backgroundRepeat: 'no-repeat',
+              backgroundSize: 'contain',
+              height: isSmallScreenDisplay ? '60vmin' : '20vmin',
+            }} />
+            <Typography>
+              PSA grade Statistics with grade histogram
+            </Typography>
+          </Link>
+          <Link
+            component={Link}
+            href={`https://ex.pokemetrics.org/preview/snapshot-set-ranking.png`}
+            target="_blank"
+            style={{
+              display: 'inline-block',
+              margin: 8,
+              marginBottom: 24,
+              textAlign: 'center',
+              verticalAlign: 'top',
+              width: isSmallScreenDisplay ? '60vmin' : '20vmin',
+            }}
+          >
+            <Box role="presentation" style={{
+              background: `url(https://ex.pokemetrics.org/preview/snapshot-set-ranking.png)`,
+              backgroundPosition: 'center',
+              backgroundRepeat: 'no-repeat',
+              backgroundSize: 'contain',
+              height: isSmallScreenDisplay ? '60vmin' : '20vmin',
+            }} />
+            <Typography>
+              Set-specific weekly cards ranking: Hidden Fates - 16th March 2022
+            </Typography>
+          </Link>
+        </Box>
+        <Typography style={{
+          fontSize: isSmallScreenDisplay ? 14 : 18,
+          textAlign: 'center'
+        }}>
+          Learn more and view a feature comparison list at
+          {' '}
+          <Link href="https://ex.pokemetrics.org/early-access" style={{
+            fontWeight: isSmallScreenDisplay ? 600 : undefined,
+          }}>
+            https://ex.pokemetrics.org/early-access
+          </Link>.
         </Typography>
       </Box>
     </Container>

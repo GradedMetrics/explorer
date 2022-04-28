@@ -8,10 +8,14 @@ import CloseIcon from '@material-ui/icons/Close';
 
 const useStyles = makeStyles(theme => ({
   banner: {
-    background: theme.palette.primary.main,
+    background: theme.palette.grey[800],
     borderBottom: `${theme.spacing(1)}px solid ${theme.palette.grey[200]}`,
     boxShadow: `0 0 1px 0 ${theme.palette.grey[700]}`,
     color: theme.palette.primary.contrastText,
+
+    '&:hover': {
+      background: theme.palette.grey[900],
+    }
   },
   container: {
     display: 'flex',
@@ -95,7 +99,7 @@ const Banner: React.FC<BannerProps> = ({
 
   if (href) {
     return (
-      <Link href={href}>
+      <Link href={href} color="inherit">
         {content}
       </Link>
     )

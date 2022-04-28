@@ -99,10 +99,9 @@ function App() {
     <>
       <GlobalStyle />
       <Banner
-        dismissibleId="2.0-banner"
-        href="https://www.patreon.com/posts/63162147"
+        href="https://ex.pokemetrics.org"
         icon={<NewReleasesIcon />}
-        text="PokéMetrics 2.0 is coming soon. Click here to read about it."
+        text="PokéMetrics EX early access has arrived! Click here to learn more."
       />
       <Container maxWidth="md">
         <Router>
