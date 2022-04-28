@@ -99,6 +99,7 @@ function App() {
     <>
       <GlobalStyle />
       <Banner
+        dismissibleId="pokemetrics-ex-banner"
         href="https://ex.pokemetrics.org"
         icon={<NewReleasesIcon />}
         text="PokéMetrics EX early access has arrived! Click here to learn more."
